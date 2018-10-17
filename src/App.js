@@ -2,6 +2,15 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+
+import RootReducer from './reducers'
+import Stepper from './containers/Stepper'
+
+
+const store = createStore(RootReducer)
+
 class App extends Component {
   render() {
     return (
@@ -19,6 +28,9 @@ class App extends Component {
           >
             Learn React
           </a>
+          <Provider store={store}>
+            <Stepper />
+          </Provider>
         </header>
       </div>
     );
