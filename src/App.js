@@ -1,40 +1,36 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
+import scrollama from 'scrollama'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 
+import { setScrollStep } from './actions'
 import RootReducer from './reducers'
-import Stepper from './containers/Stepper'
+import Scroller from './components/Scroller'
 
 
 const store = createStore(RootReducer)
 
 class App extends Component {
+  componentDidMount() {
+    this.scrollama_ = scrollama()
+                        .setup({step: '.step', 'offset': .4})
+                        .onStepEnter(stepAttrs => {
+                          store.dispatch(setScrollStep(stepAttrs.index + 1))
+                        })
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          <Provider store={store}>
-            <Stepper />
-          </Provider>
-        </header>
-      </div>
+      <article>
+        <Provider store={store}>
+          <Scroller />
+        </Provider>
+      </article>
     );
   }
 }
+
 
 export default App;
