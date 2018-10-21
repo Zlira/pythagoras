@@ -5,6 +5,11 @@ function RootReducer(state={}, action) {
               ...state,
               activeStep: action.activeStep,
           }
+        case 'SET_HIGHLIGHT_ID':
+          return {
+              ...state,
+              highlightId: action.highlightId,
+          }
         default:
           return state
     }

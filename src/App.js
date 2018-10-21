@@ -15,6 +15,7 @@ const store = createStore(RootReducer)
 class App extends Component {
   componentDidMount() {
     // todo maybe this shouldn't be here
+    // todo rewrite this using connect (to avoid using store directly)
     // todo deal with step when reloading the page
     this.scrollama_ = scrollama()
                         .setup({step: '.step', 'offset': .3})

@@ -1,5 +1,7 @@
 import React from 'react'
 
+import HighlightText from './HighlightText'
+
 
 const steps = [
     // todo maybe each step should be able to have more than one paragraph
@@ -7,7 +9,13 @@ const steps = [
         Ось теорема Піфагора ще раз: «Сума квадратів катетів прямокутного трикутника рівна 
         квадрату гіпотенузи». Для початку впевнимося, що ти добре розумієш всі слова 
         у цьому реченні. Наводь мишкою на кожен із термінів, щоби побачити визначення: 
-        прямокутний трикутник, катет, гіпотенуза, квадрат числа.
+        <span> </span> 
+        <HighlightText highlightId="highlight-right-triangle">прямокутний трикутник</HighlightText>, 
+        <span> </span> 
+        <HighlightText highlightId='highlight-cathetus'>катет</HighlightText>, 
+        <span> </span> 
+        <HighlightText highlightId='highlight-hypothenuse'>гіпотенуза</HighlightText>, 
+        квадрат числа.
     </p>,
     <p>
         Піфагор і вчитель/ка математики кажуть, що це правило працює для будь-якого 
