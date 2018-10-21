@@ -1,20 +1,15 @@
 import React from 'react'
 
-import CurrentStep from '../containers/CurrentStep'
-import ScrollamaStep from './ScrollamaStep'
+import StepIndicator from './StepIndicator'
+import ScrollerSteps from './ScrollerSteps'
 
 
 function Scroller() {
     return (
         <div className="scroller-container">
-          <div className="scroller-steps">
-            <ScrollamaStep children={'1'}/>
-            <ScrollamaStep children={'2'}/>
-            <ScrollamaStep children={'3'}/>
-            <ScrollamaStep children={'4'}/>
-          </div>
+          <ScrollerSteps />
           <div className="scroller-response-els">
-           <CurrentStep />
+           <StepIndicator />
           </div>
         </div>
     )

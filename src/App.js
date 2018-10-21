@@ -5,7 +5,7 @@ import scrollama from 'scrollama'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 
-import { setScrollStep } from './actions'
+import { setScrollerStep } from './actions'
 import RootReducer from './reducers'
 import Scroller from './components/Scroller'
 
@@ -14,10 +14,12 @@ const store = createStore(RootReducer)
 
 class App extends Component {
   componentDidMount() {
+    // todo maybe this shouldn't be here
+    // todo deal with step when reloading the page
     this.scrollama_ = scrollama()
-                        .setup({step: '.step', 'offset': .4})
+                        .setup({step: '.step', 'offset': .3})
                         .onStepEnter(stepAttrs => {
-                          store.dispatch(setScrollStep(stepAttrs.index + 1))
+                          store.dispatch(setScrollerStep(stepAttrs.index))
                         })
   }
 

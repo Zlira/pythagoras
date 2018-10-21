@@ -14,22 +14,30 @@ article {
 
 .scroller-steps {
   grid-column: 1;
+  position: relative;
+  top: 100px;
 }
 
-.scroller-graphic {
+.scroller-response-els {
   grid-column: 2;
+  margin-top: 60px;
 }
 
 .step {
-  font-size: 1.1em;
+  font-size: 1.2em;
+  line-height: 1.5;
   margin: 60px 20px;
   padding: 20px;
   min-height: 200px;
+  color: #666;
+  /* outline: thin solid red; */
+}
+
+.step.active {
   color: #c9c9c9;
-  outline: thin solid red;
 }
 
 .scroller-response-els p {
   position: sticky;
-  top: 20px;
+  top: 160px;
 }

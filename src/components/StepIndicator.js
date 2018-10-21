@@ -1,8 +1,19 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 
-const StepInidicator = ({scrollStep}) => (
-    <p>Current step: { scrollStep }</p>
-)
+function StepInidicator({activeStep}) {
+    return(
+      <p>Current step: { activeStep }</p>
+    )
+}
 
-export default StepInidicator
+function mapStateToProps(state) {
+    return {
+        activeStep: state.activeStep
+    }
+}
+
+export default connect(
+    mapStateToProps
+)(StepInidicator)

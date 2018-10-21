@@ -1,4 +1,4 @@
-export const setScrollStep = scrollStep => ({
-    type: 'SET_SCROLL_STEP',
-    scrollStep
+export const setScrollerStep = activeStep => ({
+    type: 'SET_SCROLLER_STEP',
+    activeStep,
 })
