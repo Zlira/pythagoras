@@ -37,7 +37,22 @@ article {
   color: #c9c9c9;
 }
 
-.scroller-response-els p {
+.scroller-response-els > * {
   position: sticky;
   top: 160px;
+}
+
+/*
+svg {
+  outline: thin solid salmon;
+}
+*/
+
+svg text {
+  fill: #c9c9c9;
+}
+
+svg .triangle text {
+  font-weight: bold;
+  font-size: 1.3em;
 }
