@@ -107,6 +107,21 @@ function HypothenuseDefinition() {
 }
 
 
+function GlowFilter({ filterId }) {
+    return (
+        <filter id={filterId} filterUnits="userSpaceOnUse">
+          <feGaussianBlur stdDeviation={3} result="blur"/>
+          <feFlood flood-color="grey" />
+          <feComposite in2="blur" operator="in" />
+          <feMerge>
+              <feMergeNode/>
+              <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+    )
+}
+
+
 function RightTriangleParts({ highlightId }) {
     const width = 500,
           height = 250
@@ -117,6 +132,9 @@ function RightTriangleParts({ highlightId }) {
     }
     return (
       <svg width={width} height={height}>
+        <defs>
+          <GlowFilter filterId='highlight-glow-filter' />
+        </defs>
         <Triangle contWidth={width} contHeight={height} highlightId={highlightId} />
         <g className='definition'
            transform="translate(135, 60)">

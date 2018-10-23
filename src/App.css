@@ -1,3 +1,4 @@
+
 body {
   background-color: #282c34;
 }
@@ -40,6 +41,7 @@ article {
 
 .step span.highlight {
   text-decoration: underline dotted;
+  text-decoration-skip-ink: none;
 }
 
 .step span.highlight.active {
@@ -71,5 +73,6 @@ svg .definition text {
 }
 
 svg line.highlighted {
-  filter: drop-shadow(0px 0px 5px grey)
+  /* filter: drop-shadow(0px 0px 5px grey) */
+  filter: url('#highlight-glow-filter')
 }
