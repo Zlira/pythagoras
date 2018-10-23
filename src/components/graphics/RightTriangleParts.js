@@ -1,76 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-const colors = {
-    red: '#d12200',
-    green: '#759800',
-    blue: '#2d719d',
-    yellow: '#f29b00',
-}
+import GlowFilter from './GlowFilter'
+import colors from './colors'
+import Triangle from './Triangle'
 
-function SupScript({child}) {
-    // this contains an ugly hack for dealing with
-    // superscript in ff
-    return (
-        <tspan>
-          <tspan dy="-10" fontSize=".8em">{child}</tspan>
-          <tspan dy="+10"> </tspan>
-        </tspan>
-    )
-}
-
-function Triangle({contWidth, contHeight, highlightId}) {
-    const padding = 20
-    // todo triangle side length should move to state
-    const A = {
-            x: padding, y: contHeight * .2 - padding
-        },
-        B = {
-            x: padding, y: contHeight - padding
-        },
-        C = {
-            x: contWidth * .7 + padding, y: contHeight - padding
-        }
-
-    // todo move strokeWidth to stylesheet
-    // todo make a TriangleSide component
-    return (
-        <g className='triangle'>
-            <line x1={A.x} x2={C.x} y1={A.y} y2={C.y} 
-                  stroke={colors.red}
-                  className={
-                      highlightId === 'highlight-hypothenuse' || highlightId === 'highlight-right-triangle'
-                      ? 'highlighted'
-                      : ''
-                    }
-                  strokeWidth='3px' />
-            <line x1={A.x} x2={B.x} y1={A.y} y2={B.y}
-                  stroke={colors.blue}
-                  className={
-                    highlightId === 'highlight-cathetus' || highlightId === 'highlight-right-triangle'
-                    ? 'highlighted'
-                    : ''
-                  }
-                  strokeWidth='3px' />
-            <line x1={B.x} x2={C.x} y1={B.y} y2={C.y}
-                  stroke={colors.yellow}
-                  className={
-                    highlightId === 'highlight-cathetus' || highlightId === 'highlight-right-triangle'
-                    ? 'highlighted'
-                    : ''
-                  }
-                  strokeWidth='3px' />
-            <text x={A.x} y={A.y - 5}>A</text>
-            <text x={B.x} y={B.y} dominantBaseline='hanging'>B</text>
-            <text x={C.x} y={C.y} dominantBaseline='hanging'>C</text>
-            <text x={B.x + 45} y={B.y - 45}>
-                <tspan fill={colors.blue} > AB</tspan><SupScript child='2'/> +  
-                <tspan fill={colors.yellow}> BC</tspan><SupScript child='2'/> = 
-                <tspan fill={colors.red}> AC</tspan><SupScript child='2'/>
-            </text>
-        </g>
-    )
-}
 
 
 function RightTriangleDefinition() {
@@ -103,21 +37,6 @@ function HypothenuseDefinition() {
                 Гіпотенуза
             </tspan> — сторона напроти прямого кута
         </text>
-    )
-}
-
-
-function GlowFilter({ filterId }) {
-    return (
-        <filter id={filterId} filterUnits="userSpaceOnUse">
-          <feGaussianBlur stdDeviation={3} result="blur"/>
-          <feFlood flood-color="grey" />
-          <feComposite in2="blur" operator="in" />
-          <feMerge>
-              <feMergeNode/>
-              <feMergeNode in="SourceGraphic"/>
-          </feMerge>
-        </filter>
     )
 }
 
