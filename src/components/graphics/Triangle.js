@@ -1,6 +1,5 @@
 import React from 'react'
 
-import SupScript from './SupScript'
 import colors from './colors'
 
 

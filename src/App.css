@@ -75,3 +75,15 @@ svg line.highlighted {
   /* filter: drop-shadow(0px 0px 5px grey) */
   filter: url('#highlight-glow-filter')
 }
+
+/* todo split the stylesheet */
+
+.label {
+  position: absolute;
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.label .triangle-side {
+  font-weight: bold;
+}
