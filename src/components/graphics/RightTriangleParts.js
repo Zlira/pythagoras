@@ -54,7 +54,9 @@ function RightTriangleParts({ highlightId }) {
         <defs>
           <GlowFilter filterId='highlight-glow-filter' />
         </defs>
-        <Triangle contWidth={width} contHeight={height} highlightId={highlightId} />
+        <Triangle contHeight={height} highlightId={highlightId}
+          bCoords={{x: 20, y: 20}} width={width * .7}
+          height={height * .7} />
         <g className='definition'
            transform="translate(135, 60)">
             {definitions[highlightId] || null}

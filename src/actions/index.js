@@ -8,3 +8,15 @@ export const setHighlightId = highlightId => ({
     type: 'SET_HIGHLIGHT_ID',
     highlightId,
 })
+
+
+export const setTriangleWidth = triangleWidth => ({
+    type: 'SET_TRIANGLE_WIDTH',
+    triangleWidth,
+})
+
+
+export const setTriangleHeight = triangleHeight => ({
+    type: 'SET_TRIANGLE_HEIGHT',
+    triangleHeight,
+})

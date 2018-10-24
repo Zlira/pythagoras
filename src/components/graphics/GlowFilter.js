@@ -5,7 +5,7 @@ function GlowFilter({ color='grey', stdDeviation=3, filterId }) {
     return (
         <filter id={filterId} filterUnits="userSpaceOnUse">
           <feGaussianBlur stdDeviation={stdDeviation} result="blur"/>
-          <feFlood flood-color={color} />
+          <feFlood floodColor={color} />
           <feComposite in2="blur" operator="in" />
           <feMerge>
               <feMergeNode/>

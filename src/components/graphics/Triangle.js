@@ -4,17 +4,18 @@ import SupScript from './SupScript'
 import colors from './colors'
 
 
-function Triangle({contWidth, contHeight, highlightId}) {
-    const padding = 20
+function Triangle({bCoords, width, height,
+                   contHeight, highlightId}) {
+    const by = contHeight - bCoords.y
     // todo triangle side lengths should move to state
     const A = {
-            x: padding, y: contHeight * .2 - padding
+            x: bCoords.x, y: by - height
         },
         B = {
-            x: padding, y: contHeight - padding
+            x: bCoords.x, y: by
         },
         C = {
-            x: contWidth * .7 + padding, y: contHeight - padding
+            x: bCoords.x + width, y: by
         }
 
     // todo move strokeWidth to stylesheet

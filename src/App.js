@@ -10,7 +10,17 @@ import RootReducer from './reducers'
 import Scroller from './components/Scroller'
 
 
-const store = createStore(RootReducer)
+const store = createStore(
+  RootReducer, {
+    // todo calculate this based on postion
+    activeStep: 0,
+    // todo fire the appropriate events after mounting 
+    // the triangle in step 2
+    triangleWidth: 350,
+    triangleHeight: 280,
+  },
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)
 
 class App extends Component {
   componentDidMount() {
