@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import GlowFilter from './GlowFilter'
 import colors from './colors'
 import Triangle from './Triangle'
+import PythagorasFormula from './PythagorasFormula'
 
 
 
@@ -57,6 +58,7 @@ function RightTriangleParts({ highlightId }) {
         <Triangle contHeight={height} highlightId={highlightId}
           bCoords={{x: 20, y: 20}} width={width * .7}
           height={height * .7} />
+        <PythagorasFormula x={65} y={height - 65} />
         <g className='definition'
            transform="translate(135, 60)">
             {definitions[highlightId] || null}

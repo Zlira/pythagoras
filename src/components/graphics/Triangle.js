@@ -49,11 +49,6 @@ function Triangle({bCoords, width, height,
             <text x={A.x} y={A.y - 5}>A</text>
             <text x={B.x} y={B.y} dominantBaseline='hanging'>B</text>
             <text x={C.x} y={C.y} dominantBaseline='hanging'>C</text>
-            <text x={B.x + 45} y={B.y - 45}>
-                <tspan fill={colors.blue} > AB</tspan><SupScript child='2'/> +  
-                <tspan fill={colors.yellow}> BC</tspan><SupScript child='2'/> = 
-                <tspan fill={colors.red}> AC</tspan><SupScript child='2'/>
-            </text>
         </g>
     )
 }

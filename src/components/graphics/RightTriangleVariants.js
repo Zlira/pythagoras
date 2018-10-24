@@ -39,6 +39,9 @@ function RightTriangleVariants() {
           triangleWidth = width * .7,
           triangleHeight = height * .8,
           padding = 20
+    // todo fix a bug: after moving the sliders, going to the next (or prev) step, and
+    // returning to this one again the triangle 'remembers' the changes to the width and
+    // height but the sliders are at their default positions
     return (
         <svg width={width} height={height}>
             <ResizableTriangle contHeight={height} bCoords={{x: padding, y: padding}}

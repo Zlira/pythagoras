@@ -62,7 +62,7 @@ svg text {
   fill: #c9c9c9;
 }
 
-svg .triangle text {
+svg .triangle text, svg text.pythagoras-formula {
   font-weight: bold;
   font-size: 1.3em;
 }
