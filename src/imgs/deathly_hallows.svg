@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="162.39008mm"
+   height="81.452728mm"
+   viewBox="0 0 162.39008 81.452728"
+   version="1.1"
+   id="svg1678"
+   inkscape:version="0.92.2 2405546, 2018-03-11"
+   sodipodi:docname="deathly_hallows.svg">
+  <defs
+     id="defs1672" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.72734375"
+     inkscape:cx="72.528281"
+     inkscape:cy="101.55388"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1366"
+     inkscape:window-height="713"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata1675">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-21.776363,-10.49758)">
+    <path
+       id="path1039"
+       style="opacity:0.5;fill:none;stroke:#999999;stroke-width:5.29166651;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 102.92162,14.244884 v 74.801583 m 30.4049,-31.076574 c 0,16.928924 -13.72358,30.652534 -30.6525,30.652574 -16.928945,1e-5 -30.652585,-13.72362 -30.652585,-30.652574 0,-16.928959 13.72364,-30.652587 30.652585,-30.652569 16.92892,3.8e-5 30.6525,13.72365 30.6525,30.652569 z m -30.4049,-43.725009 74.86807,75.025293 -149.641457,0.0329 z"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccscscscccc" />
+  </g>
+</svg>

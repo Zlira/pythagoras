@@ -20,3 +20,15 @@ export const setTriangleHeight = triangleHeight => ({
     type: 'SET_TRIANGLE_HEIGHT',
     triangleHeight,
 })
+
+
+export const setLawfullness = lawfullness => ({
+    type: 'SET_LAWFULLNESS',
+    lawfullness,
+})
+
+
+export const setGoodness = goodness => ({
+    type: 'SET_GOODNESS',
+    goodness,
+})

@@ -1,4 +1,4 @@
-body {
+html, body {
   background-color: #282c34;
 }
 
@@ -86,4 +86,72 @@ svg line.highlighted {
 
 .label .triangle-side {
   font-weight: bold;
+}
+
+/* input range */
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  background: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+
+input[type=range]:focus {
+  outline: none;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  height: 15px;
+  width: 15px;
+  background: silver;
+  border-radius: 100%;
+  cursor: pointer;
+  -webkit-appearance: none;
+  /* this is strange but at least it works */
+  margin-top: -5px;
+}
+
+input[type=range]::-moz-range-thumb {
+  height: 15px;
+  width: 15px;
+  background: silver;
+  border: none;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+input[type=range].lawfullness::-moz-range-thumb {
+  background: #f29b00;
+}
+
+input[type=range].lawfullness::-webkit-slider-thumb {
+  background: #f29b00;
+}
+
+input[type=range].goodness::-moz-range-thumb {
+  background: #2d719d;
+}
+
+input[type=range].goodness::-webkit-slider-thumb {
+  background: #2d719d;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  border-radius: 1.3px;
+  background: gray;
+  -webkit-appearance: none;
+}
+
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  background: gray;
+  border-radius: 3px;
 }

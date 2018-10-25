@@ -36,7 +36,7 @@ const DraggableVertical = connect()(({ initialHeight, x, y, dispatch }) => {
 
 function Label({posSettings, children}) {
     return (
-        <p class="label" style={posSettings}>{children}</p>
+        <p className="label" style={posSettings}>{children}</p>
     )
 }
 

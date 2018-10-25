@@ -20,6 +20,16 @@ function RootReducer(state={}, action) {
             ...state,
             triangleHeight: action.triangleHeight,
           }
+        case 'SET_LAWFULLNESS':
+          return {
+            ...state,
+            lawfullness: action.lawfullness,
+          }
+        case 'SET_GOODNESS':
+          return {
+            ...state,
+            goodness: action.goodness,
+          }
         default:
           return state
     }
