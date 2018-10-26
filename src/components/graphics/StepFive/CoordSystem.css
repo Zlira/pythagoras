@@ -1,0 +1,54 @@
+svg .coord-grid {
+    stroke: gray;
+    stroke-width: 1px;
+    stroke-dasharray: 1 2;
+}
+
+svg .coord-axes {
+    stroke: gray;
+    stroke-width: 2px;
+}
+
+svg .test-values line {
+    stroke-width: 4px;
+}
+
+svg .test-values line.axis-to-val {
+    stroke-width: 2px;
+    stroke-dasharray: 1 2;
+}
+
+svg .test-values circle {
+    stroke: #282c34;
+    stroke-width: 1;
+}
+
+svg .test-values text {
+    dominant-baseline: middle;
+    text-anchor: middle;
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+svg .lawfullness-value line {
+    stroke: #f29b00;
+}
+
+svg .lawfullness-value circle,
+svg .lawfullness-value text {
+    fill: #f29b00;
+}
+
+svg .goodness-value line {
+    stroke: #2d719d;
+}
+
+svg .goodness-value circle,
+svg .goodness-value text {
+    fill: #2d719d;
+}
+
+svg .combined-value circle {
+    stroke: white;
+    fill-opacity: 0;
+}

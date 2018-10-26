@@ -24,11 +24,11 @@ export const setTriangleHeight = triangleHeight => ({
 
 export const setLawfullness = lawfullness => ({
     type: 'SET_LAWFULLNESS',
-    lawfullness,
+    lawfullness: parseInt(lawfullness),
 })
 
 
 export const setGoodness = goodness => ({
     type: 'SET_GOODNESS',
-    goodness,
+    goodness: parseInt(goodness),
 })
