@@ -4,6 +4,9 @@ import { connect } from 'react-redux'
 import Scale from '../Scale'
 
 
+// todo add labels, add user alignment
+// todo add transition from the previous step
+// todo maybe leave the sliders
 function Values({width, height, lawfullness=0, goodness=0}) {
     const xCenter = Math.round(width / 2),
           yCenter = Math.round(height / 2),

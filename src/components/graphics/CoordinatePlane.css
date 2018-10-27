@@ -1,0 +1,10 @@
+svg .coord-grid {
+    stroke: gray;
+    stroke-width: 1px;
+    stroke-dasharray: 1 2;
+}
+
+svg .coord-axes {
+    stroke: gray;
+    stroke-width: 2px;
+}

@@ -51,7 +51,7 @@ function RightTriangleParts({ highlightId }) {
         "highlight-hypothenuse": <HypothenuseDefinition/>,
     }
     return (
-      <svg width={width} height={height}>
+      <svg width={width} height={height} xmlns="http://www.w3.org/2000/svg"> 
         <defs>
           <GlowFilter filterId='highlight-glow-filter' />
         </defs>

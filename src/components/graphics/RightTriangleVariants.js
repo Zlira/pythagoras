@@ -56,7 +56,7 @@ function RightTriangleVariants() {
     // height but the sliders are at their default positions
     return (
         <div className='step-2' style={{width: width}}>
-          <svg width={width} height={height}>
+          <svg width={width} height={height} xmlns="http://www.w3.org/2000/svg">
               <ResizableTriangle
                 contHeight={height}
                 bCoords={{x: paddingLeft, y: paddingBottom}}

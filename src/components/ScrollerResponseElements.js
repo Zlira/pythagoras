@@ -6,6 +6,7 @@ import RightTriangleVariants from './graphics/RightTriangleVariants'
 import DeathlyHallows from './graphics/StepThree/DeathlyHallows'
 import HarryPotterTest from './graphics/StepFour/HarryPotterTest'
 import CoordSystem from './graphics/StepFive/CoordSystem'
+import CharacterIntro from './graphics/StepSix/CharectersIntro'
 
 
 function ScrollerResponseElements({ activeStep }) {
@@ -15,6 +16,7 @@ function ScrollerResponseElements({ activeStep }) {
         2: <DeathlyHallows />,
         3: <HarryPotterTest />,
         4: <CoordSystem />,
+        5: <CharacterIntro />,
     }
     return (
           <div className="scroller-response-els">
