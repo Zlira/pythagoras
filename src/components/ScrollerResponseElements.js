@@ -7,6 +7,7 @@ import DeathlyHallows from './graphics/StepThree/DeathlyHallows'
 import HarryPotterTest from './graphics/StepFour/HarryPotterTest'
 import CoordSystem from './graphics/StepFive/CoordSystem'
 import CharacterIntro from './graphics/StepSix/CharectersIntro'
+import ValuesDifference from './graphics/StepSeven/ValuesDifference'
 
 
 function ScrollerResponseElements({ activeStep }) {
@@ -17,6 +18,7 @@ function ScrollerResponseElements({ activeStep }) {
         3: <HarryPotterTest />,
         4: <CoordSystem />,
         5: <CharacterIntro />,
+        6: <ValuesDifference />,
     }
     return (
           <div className="scroller-response-els">

@@ -32,3 +32,9 @@ export const setGoodness = goodness => ({
     type: 'SET_GOODNESS',
     goodness: parseInt(goodness),
 })
+
+
+export const selectCharacter = character => ({
+    type: 'SELECT_CHARACTER',
+    selectedCharacter: character,
+})

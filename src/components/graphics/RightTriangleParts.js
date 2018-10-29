@@ -5,13 +5,14 @@ import GlowFilter from './GlowFilter'
 import colors from './colors'
 import Triangle from './Triangle'
 import PythagorasFormula from './PythagorasFormula'
+import Svg from './Svg'
 
 
 
 function RightTriangleDefinition() {
     return (
         <text>
-            <tspan fontWeight="bold">Прямокутний трикутник</tspan> — трикутник із 
+            <tspan fontWeight="bold">Прямокутний трикутник</tspan> — трикутник із
             <tspan x="0" dy='1.5em'>одним прямим кутом (90&deg;)</tspan>
         </text>
     )
@@ -51,7 +52,7 @@ function RightTriangleParts({ highlightId }) {
         "highlight-hypothenuse": <HypothenuseDefinition/>,
     }
     return (
-      <svg width={width} height={height} xmlns="http://www.w3.org/2000/svg"> 
+      <Svg width={width} height={height}>
         <defs>
           <GlowFilter filterId='highlight-glow-filter' />
         </defs>
@@ -63,7 +64,7 @@ function RightTriangleParts({ highlightId }) {
            transform="translate(135, 60)">
             {definitions[highlightId] || null}
         </g>
-      </svg>
+      </Svg>
     )
 }
 

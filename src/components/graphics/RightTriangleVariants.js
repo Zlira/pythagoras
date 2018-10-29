@@ -4,9 +4,11 @@ import React from 'react'
 import Draggable from 'react-draggable'
 import { connect } from 'react-redux'
 
+import Svg from './Svg'
 import ResizableTriangle from './ResizableTriangle'
 import { Hypothenuse, Catheti } from './StepTwo/Lables'
 import { setTriangleWidth, setTriangleHeight } from '../../actions'
+
 
 // todo make vertical and horizontal into one
 const DraggableHorizontal = connect()(({ initialWidth, x, y, dispatch }) => {
@@ -56,7 +58,7 @@ function RightTriangleVariants() {
     // height but the sliders are at their default positions
     return (
         <div className='step-2' style={{width: width}}>
-          <svg width={width} height={height} xmlns="http://www.w3.org/2000/svg">
+          <Svg width={width} height={height}>
               <ResizableTriangle
                 contHeight={height}
                 bCoords={{x: paddingLeft, y: paddingBottom}}
@@ -67,7 +69,7 @@ function RightTriangleVariants() {
               <DraggableVertical initialHeight={triangleHeight}
                 x={paddingLeft}
                 y={height - paddingBottom - triangleHeight} />
-          </svg>
+          </Svg>
           <Label posSettings={{top: '80px', right: '120px'}}>
             <Catheti />
           </Label>

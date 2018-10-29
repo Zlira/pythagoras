@@ -30,6 +30,11 @@ function RootReducer(state={}, action) {
             ...state,
             goodness: action.goodness,
           }
+        case 'SELECT_CHARACTER':
+          return {
+            ...state,
+            selectedCharacter: action.selectedCharacter,
+          }
         default:
           return state
     }
