@@ -1,4 +1,6 @@
 import React from 'react'
+// todo state is local to the left side of this step
+// so I should really use local state instead of global
 import { connect } from 'react-redux'
 
 import colors from '../colors'
@@ -15,12 +17,12 @@ function HypothenuseLabel({triangleWidth, triangleHeight}) {
     const hypothenuseLen = Math.sqrt(
         sumOfSquares(triangleHeight, triangleWidth)
     )
-    // todo check if the rounding agrees with the cathetus label 
+    // todo check if the rounding agrees with the cathetus label
     return (
       <span>
         <span style={{color: colors.red}} className="triangle-side">
           {hypothenuseLen.toFixed(signDigits)}
-        </span><sup>2</sup> = 
+        </span><sup>2</sup> =
         {' ' + (hypothenuseLen ** 2).toFixed(signDigits)}
       </span>
     )
@@ -33,10 +35,10 @@ function CathetiLabel({triangleWidth, triangleHeight}) {
       <span>
         <span style={{color: colors.blue}} className="triangle-side">
           {triangleHeight}
-        </span><sup>2</sup> + 
+        </span><sup>2</sup> +
         <span style={{color: colors.yellow}} className="triangle-side">
           {' ' + triangleWidth}
-        </span><sup>2</sup> = 
+        </span><sup>2</sup> =
         {' ' + sumOSqrs}
       </span>
     )

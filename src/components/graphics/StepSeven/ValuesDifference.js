@@ -9,6 +9,7 @@ import CoordPlane from '../CoordinatePlane'
 import GlowFilter from '../GlowFilter'
 import { ValuePoint, UserValuePoint } from '../TestValuesPoint'
 import characterAlignments from '../Characters/index'
+import TwoPointDistances from '../ValueSections/index'
 
 
 class ValuesDifference extends React.Component {
@@ -43,6 +44,10 @@ class ValuesDifference extends React.Component {
               lawfullness={selectedCharVals[0]}
               goodness={selectedCharVals[1]}
               />
+            <TwoPointDistances xScale={xScale} yScale={yScale}
+              userGoodness={this.props.goodness} userLawfullness={this.props.lawfullness}
+              otherLawfullness={selectedCharVals[0]} otherGoodness={selectedCharVals[1]}
+              drawLines={['solid', 'solid', null, null]}/>
           </g>
         </Svg>
     )

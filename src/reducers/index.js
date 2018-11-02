@@ -5,16 +5,19 @@ function RootReducer(state={}, action) {
               ...state,
               activeStep: action.activeStep,
           }
+        // todo maybe move this to a step level
         case 'SET_HIGHLIGHT_ID':
           return {
               ...state,
               highlightId: action.highlightId,
           }
+        // todo move this to a local level
         case 'SET_TRIANGLE_WIDTH':
           return {
               ...state,
               triangleWidth:  action.triangleWidth,
           }
+        // todo move this to a local level
         case 'SET_TRIANGLE_HEIGHT':
           return {
             ...state,
@@ -30,6 +33,7 @@ function RootReducer(state={}, action) {
             ...state,
             goodness: action.goodness,
           }
+        // todo maybe move this to a step level
         case 'SELECT_CHARACTER':
           return {
             ...state,
