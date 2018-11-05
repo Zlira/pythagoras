@@ -3,6 +3,7 @@ import React from 'react'
 import HighlightText from './HighlightText'
 import SelectedCharacter from './graphics/StepSeven/SelectedCharacter'
 import DifferenceValue from './graphics/StepSeven/DifferenceValue'
+import ResultingCharacter from './graphics/StepTwelve/ResultingCharacter'
 import StepP from '../containers/StepParagraph'
 
 
@@ -90,8 +91,8 @@ const steps = [
         але різна по знаку — 5 і -5. Але у твоїй формулі це не має значення (вибач за каламбур),
         бо різниці підносяться до квадрату і відстань завжди виходить додатною.
     </p>,
-    <p>
-        Ну ось, тепер ми знаємо, що, по-перше, ти (  ), по-друге,
+    <StepP>
+        Ну ось, тепер ми знаємо, що, по-перше, ти <ResultingCharacter />, по-друге,
         теорему Піфагора використовують для вимірювання відстані між точками на площині.
         Хоча Піфагор і його учні, можливо, й не передбачили саме такого її використання
         (бо вони всі точно знали, що Піфагор — однозначно Ґілдерой Локгарт).
@@ -100,7 +101,7 @@ const steps = [
         обраховують що-небудь на основі теореми Піфагора, всі можливі прямокутні трикутники
         люди ще не перебробували, і ніколи не перепробують. На щастя, у нас є 367 доведень,
         які працюють для будь-якого з них.
-    </p>
+    </StepP>
 ]
 
 export default steps

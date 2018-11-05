@@ -10,6 +10,7 @@ import CharacterIntro from './graphics/StepSix/CharectersIntro'
 import ValuesDifference from './graphics/StepSeven/ValuesDifference'
 import DistanceToCharacter from './graphics/StepEight/DistanceToCharacter'
 import DistanceToCharacters from './graphics/StepNine/DistanceToCharacters'
+import Result from './graphics/StepTwelve/Result'
 
 
 function ScrollerResponseElements({ activeStep }) {
@@ -23,6 +24,9 @@ function ScrollerResponseElements({ activeStep }) {
         <ValuesDifference />,
         <DistanceToCharacter />,
         <DistanceToCharacters/>,
+        <p>10</p>,
+        <p>11</p>,
+        <Result />,
     ]
     return (
           <div className="scroller-response-els">

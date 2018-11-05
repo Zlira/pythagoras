@@ -1,0 +1,23 @@
+.test-result {
+    font-size: 1.5em;
+    font-weight: bolder;
+    color: #ffcc5e;
+    margin-right: 50px;
+    margin-left: 70px;
+}
+
+.test-result span, .test-result img {
+    display: block;
+}
+
+.test-result span {
+    text-shadow: 1px 1px 4px black;
+    position: relative;
+    top: -40px;
+    width: 400px;
+}
+
+.test-result img {
+    position: relative;
+    left: 20px;
+}
