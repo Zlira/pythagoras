@@ -2,7 +2,7 @@ svg .test-values line {
     stroke-width: 4px;
 }
 
-svg .test-values line.dashed {
+svg line.dashed {
     stroke-width: 2px;
     stroke-dasharray: 1 2;
 }
@@ -30,6 +30,10 @@ svg .lawfullness-value text {
 
 svg line.goodness-value {
     stroke: #2d719d;
+}
+
+svg line.distance-value {
+    stroke: #dc3723;
 }
 
 svg .goodness-value circle,

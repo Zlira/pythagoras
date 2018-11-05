@@ -8,18 +8,22 @@ import HarryPotterTest from './graphics/StepFour/HarryPotterTest'
 import CoordSystem from './graphics/StepFive/CoordSystem'
 import CharacterIntro from './graphics/StepSix/CharectersIntro'
 import ValuesDifference from './graphics/StepSeven/ValuesDifference'
+import DistanceToCharacter from './graphics/StepEight/DistanceToCharacter'
+import DistanceToCharacters from './graphics/StepNine/DistanceToCharacters'
 
 
 function ScrollerResponseElements({ activeStep }) {
-    const stepToElement = {
-        0: <RightTriangleParts />,
-        1: <RightTriangleVariants />,
-        2: <DeathlyHallows />,
-        3: <HarryPotterTest />,
-        4: <CoordSystem />,
-        5: <CharacterIntro />,
-        6: <ValuesDifference />,
-    }
+    const stepToElement = [
+        <RightTriangleParts />,
+        <RightTriangleVariants />,
+        <DeathlyHallows />,
+        <HarryPotterTest />,
+        <CoordSystem />,
+        <CharacterIntro />,
+        <ValuesDifference />,
+        <DistanceToCharacter />,
+        <DistanceToCharacters/>,
+    ]
     return (
           <div className="scroller-response-els">
             {stepToElement[activeStep]}

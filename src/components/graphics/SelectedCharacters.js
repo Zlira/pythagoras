@@ -1,18 +1,19 @@
 import React from 'react'
 
-import CharacterPic from '../Characters/CharacterPic'
-import characterAlignment from '../Characters/index'
+import CharacterPic from './Characters/CharacterPic'
+import characterAlignment from './Characters/index'
 
 
 
-function Characters({xScale, yScale, selectedCharacter}) {
+function Characters({xScale, yScale, selectedCharacter, handleClick}) {
     const imgs = []
     for (const [name, vals] of Object.entries(characterAlignment)) {
         imgs.push(
             <CharacterPic picSrc={vals.src} alignementVals={vals.vals}
                 xScale={xScale} yScale={yScale}
+                name={name}
                 state={name === selectedCharacter? 'selected' : 'deselected'}
-                key={name} />
+                key={name} handleClick={handleClick}/>
         )
     }
     return <g>

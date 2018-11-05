@@ -23,10 +23,22 @@ function HorizontalLine({dashed, x1, x2, y}) {
     )
 }
 
+
+function DiagonalLine({dashed, x1, x2, y1, y2}) {
+    const className = 'distance-value' + (
+        dashed? ' dashed' : ''
+    )
+    return (
+      <line x1={x1} x2={x2} y1={y1} y2={y2}
+        className={className}/>
+    )
+}
+
+
 function TwoPointDistances({
     drawLines, userLawfullness, userGoodness,
     otherLawfullness, otherGoodness,
-    xScale, yScale,
+    xScale, yScale, diagonal=null,
 }) {
     const xVal1 = xScale(userLawfullness),
       yVal1 = yScale(userGoodness),
@@ -51,6 +63,13 @@ function TwoPointDistances({
                 dashed={dashed} key={'line' + i}/>
             )
         }
+    }
+    if (diagonal) {
+        lines.push(
+            <DiagonalLine x1={xVal1} y1={yVal1} x2={xVal2}
+              y2={yVal2} dashed={diagonal === 'dashed'}
+              key={'line_diagonal'}/>
+        )
     }
     return (
         <g className="test-values">
