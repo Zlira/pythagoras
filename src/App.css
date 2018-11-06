@@ -8,7 +8,10 @@ article {
 
 .scroller-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 5px 560px;
+  justify-content: center;
+  max-width: 1120px;
+  margin: 0 auto;
   margin-bottom: 200px;
 }
 
@@ -16,25 +19,30 @@ article {
   grid-column: 1;
   position: relative;
   top: 100px;
+  /* outline: #333 solid thin; */
 }
 
 .scroller-response-els {
-  grid-column: 2;
-  margin-top: 60px;
+  grid-column: 3;
+  margin-top: 20px;
 }
 
 .step {
   font-size: 1.2em;
   line-height: 1.5;
-  margin: 60px 20px;
-  padding: 20px;
-  min-height: 200px;
-  color: #666;
-  /* outline: thin solid red; */
+  margin: 20px 10px 60px 20px;
+  padding: 10px;
+  min-height: 240px;
+  color: #444;
+  /* outline: #333 solid thin; */
 }
 
 .step.active {
   color: #c9c9c9;
+}
+
+.step.active em {
+  color: #ffcc5e;
 }
 
 
@@ -49,14 +57,8 @@ article {
 
 .scroller-response-els > * {
   position: sticky;
-  top: 160px;
+  top: 100px;
 }
-
-/*
-svg {
-  outline: thin solid salmon;
-}
-*/
 
 svg text {
   fill: #c9c9c9;

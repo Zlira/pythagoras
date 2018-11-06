@@ -4,5 +4,10 @@ import dhLogo from '../../../imgs/deathly_hallows.svg'
 
 
 export default () => {
-    return <img src={dhLogo} alt="Смертельні реліквії" width="400"/>
+    return (
+      <div>
+      <img src={dhLogo} style={{position: 'relative', left: '80px'}}
+        alt="Смертельні реліквії" width="400"/>
+      </div>
+    )
 }

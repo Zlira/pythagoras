@@ -57,9 +57,9 @@ function RightTriangleParts({ highlightId }) {
           <GlowFilter filterId='highlight-glow-filter' />
         </defs>
         <Triangle contHeight={height} highlightId={highlightId}
-          bCoords={{x: 20, y: 20}} width={width * .7}
-          height={height * .7} />
-        <PythagorasFormula x={65} y={height - 65} />
+          bCoords={{x: 80, y: 20}} width={width * .7}
+          height={height * .8} />
+        <PythagorasFormula x={125} y={height - 65} />
         <g className='definition'
            transform="translate(135, 60)">
             {definitions[highlightId] || null}

@@ -8,6 +8,7 @@ import Svg from './Svg'
 import ResizableTriangle from './ResizableTriangle'
 import { Hypothenuse, Catheti } from './StepTwo/Lables'
 import { setTriangleWidth, setTriangleHeight } from '../../actions'
+import './resizibleTriangle.css'
 
 
 // todo make vertical and horizontal into one
@@ -51,13 +52,13 @@ function RightTriangleVariants() {
           height = 350,
           triangleWidth = width * .7,
           triangleHeight = height * .8,
-          paddingLeft = 20,
+          paddingLeft = 80,
           paddingBottom = 20
     // todo fix a bug: after moving the sliders, going to the next (or prev) step, and
     // returning to this one again the triangle 'remembers' the changes to the width and
     // height but the sliders are at their default positions
     return (
-        <div className='step-2' style={{width: width}}>
+        <div className='step-2 resizible-triangle' style={{width: width}}>
           <Svg width={width} height={height}>
               <ResizableTriangle
                 contHeight={height}
