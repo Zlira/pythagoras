@@ -5,14 +5,14 @@ import characterAlignment from './Characters/index'
 
 
 
-function Characters({xScale, yScale, selectedCharacter, handleClick}) {
+function Characters({xScale, yScale, selectedCharacters, handleClick}) {
     const imgs = []
     for (const [name, vals] of Object.entries(characterAlignment)) {
         imgs.push(
             <CharacterPic picSrc={vals.src} alignementVals={vals.vals}
                 xScale={xScale} yScale={yScale}
                 name={name}
-                state={name === selectedCharacter? 'selected' : 'deselected'}
+                state={selectedCharacters.includes(name)? 'selected' : 'deselected'}
                 key={name} handleClick={handleClick}/>
         )
     }

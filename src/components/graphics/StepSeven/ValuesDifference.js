@@ -38,7 +38,7 @@ class ValuesDifference extends React.Component {
           <g transform={`translate(${paddingLeft}, ${paddingTop})`}>
             <CoordPlane width={width} height={height}/>
             <SelectedCharacters yScale={yScale} xScale={xScale}
-              selectedCharacter={this.props.selectedCharacter} />
+              selectedCharacters={[this.props.selectedCharacter]} />
             <UserValuePoint yScale={yScale} xScale={xScale} />
             <ValuePoint yScale={yScale} xScale={xScale}
               lawfullness={selectedCharVals[0]}

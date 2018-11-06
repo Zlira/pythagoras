@@ -10,6 +10,7 @@ import CharacterIntro from './graphics/StepSix/CharectersIntro'
 import ValuesDifference from './graphics/StepSeven/ValuesDifference'
 import DistanceToCharacter from './graphics/StepEight/DistanceToCharacter'
 import DistanceToCharacters from './graphics/StepNine/DistanceToCharacters'
+import CharVsChar from './graphics/StepTen/CharacterVsCharacter'
 import Result from './graphics/StepTwelve/Result'
 
 
@@ -24,8 +25,8 @@ function ScrollerResponseElements({ activeStep }) {
         <ValuesDifference />,
         <DistanceToCharacter />,
         <DistanceToCharacters/>,
-        <p>10</p>,
-        <p>11</p>,
+        <CharVsChar char1="snape" char2="hermione"/>,
+        <CharVsChar char1="snape" char2="harry"/>,
         <Result />,
     ]
     return (

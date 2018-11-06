@@ -69,7 +69,7 @@ class DistanceToCharacters extends React.Component {
             <g transform={`translate(${paddingLeft}, ${paddingTop})`}>
                 <CoordPlane width={width} height={height}/>
                 <SelectedCharacters yScale={yScale} xScale={xScale}
-                  selectedCharacter={this.state.selectedCharacter}
+                  selectedCharacters={[this.state.selectedCharacter]}
                   handleClick={this.handlePicClick} />
                 <UserValuePoint yScale={yScale} xScale={xScale} />
                 <ValuePoint yScale={yScale} xScale={xScale}

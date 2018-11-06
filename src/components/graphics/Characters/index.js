@@ -38,7 +38,7 @@ export default {
         ukNameINS: 'Ґілдероєм Локгартом',
         quote: 'I know, I know — it’s not quite as good as winning Witch Weekly’s Most-Charming-Smile Award five times in a row, as I have — but it’s a start, Harry, it’s a start.',
     },
-    'spane': {
+    'snape': {
         src: snape,
         vals: [0, 0],
         ukName: 'Северус Снейп',
