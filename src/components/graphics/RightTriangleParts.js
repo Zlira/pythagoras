@@ -4,9 +4,11 @@ import { connect } from 'react-redux'
 import GlowFilter from './GlowFilter'
 import colors from './colors'
 import Triangle from './RightTriangle/index'
-import PythagorasFormula from './PythagorasFormula'
 import Svg from './Svg'
-import { RightTriangleDefinition, HypothenuseDefinition, CathetusDefinition} from './Definitions/'
+import {
+    RightTriangleDefinition, HypothenuseDefinition,
+    CathetusDefinition, PythagorasFormula
+} from './Definitions/'
 
 
 function RightTriangleParts({ highlightId }) {
@@ -21,7 +23,7 @@ function RightTriangleParts({ highlightId }) {
           <HypothenuseDefinition width="350px" top="0px" left="180px"/>,
     }
     // todo maybe make one element with content g
-    // and padding
+    // and padding and use scales
     return (
       <div>
         <Svg width={width} height={height}>
@@ -30,9 +32,10 @@ function RightTriangleParts({ highlightId }) {
             </defs>
             <Triangle contHeight={height} highlightId={highlightId}
               bCoords={{x: 80, y: 30}} width={width * .7}
-              height={height * .8} />
-            <PythagorasFormula x={125} y={height - 65} />
+              height={height * .8}
+              showRightAngle={highlightId}/>
         </Svg>
+        <PythagorasFormula left={115} top={165} highlightId={highlightId}/>
         {definitions[highlightId]}
       </div>
     )

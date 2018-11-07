@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-function GlowFilter({ color='grey', stdDeviation=3, filterId }) {
+function GlowFilter({ color='#161b26', stdDeviation=3, filterId }) {
     return (
         <filter id={filterId} filterUnits="userSpaceOnUse">
           <feGaussianBlur stdDeviation={stdDeviation} result="blur"/>

@@ -9,4 +9,16 @@
 
 .graphics-definition dfn {
     font-weight: bold;
+    font-style: normal;
+    text-shadow: 0px 0px 3px black;
+}
+
+p.pythagoras-formula {
+    font-size: 1.3rem;
+}
+
+p.pythagoras-formula span.highlighted {
+    text-shadow: 0px 0px 1px black;
+    font-weight: bold;
+    font-size: 1.1em;
 }
