@@ -1,0 +1,12 @@
+.graphics-definition {
+    font-size: 1.2rem;
+}
+
+.graphics-definition p {
+    padding: 0;
+    margin: 0;
+}
+
+.graphics-definition dfn {
+    font-weight: bold;
+}

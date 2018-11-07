@@ -1,0 +1,14 @@
+svg .triangle line {
+    stroke-width: 3px;
+    stroke-linecap: square;
+}
+
+svg .triangle line.highlighted {
+  /* filter: drop-shadow(0px 0px 5px grey) */
+  filter: url('#highlight-glow-filter')
+}
+
+svg .triangle text, {
+  font-weight: bold;
+  font-size: 1.3rem;
+}
