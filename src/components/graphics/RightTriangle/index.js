@@ -1,6 +1,7 @@
 import React from 'react'
 
 import colors from '../colors'
+import '../animationKeyframes.css'
 import './triangle.css'
 
 
@@ -43,16 +44,19 @@ function Triangle({bCoords, width, height,
           <line x1={A.x} x2={C.x} y1={A.y} y2={C.y}
                 stroke={colors.red}
                 className={
+                    'hypothenuse ' +
                     currHighlightClass(['highlight-hypothenuse', 'highlight-right-triangle'])
                   } />
           <line x1={B.x} x2={C.x} y1={B.y} y2={C.y}
                 stroke={colors.yellow}
                 className={
+                  'cathetus-1 ' +
                   currHighlightClass(['highlight-cathetus', 'highlight-right-triangle'])
                 } />
           <line x1={A.x} x2={B.x} y1={A.y} y2={B.y}
-                stroke={colors.blue}
+                stroke={colors.green}
                 className={
+                  'cathetus-2 ' +
                   currHighlightClass(['highlight-cathetus', 'highlight-right-triangle'])
                 }/>
           <g className='point-labels'>

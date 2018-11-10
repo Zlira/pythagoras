@@ -21,7 +21,7 @@ function Triangle({bCoords, width, height,
     // todo make a TriangleSide component
     return (
         <g className='triangle'>
-            <line x1={A.x} x2={C.x} y1={A.y} y2={C.y} 
+            <line x1={A.x} x2={C.x} y1={A.y} y2={C.y}
                   stroke={colors.red}
                   className={
                       highlightId === 'highlight-hypothenuse' || highlightId === 'highlight-right-triangle'
@@ -30,7 +30,7 @@ function Triangle({bCoords, width, height,
                     }
                   strokeWidth='3px' />
             <line x1={A.x} x2={B.x} y1={A.y} y2={B.y}
-                  stroke={colors.blue}
+                  stroke={colors.green}
                   className={
                     highlightId === 'highlight-cathetus' || highlightId === 'highlight-right-triangle'
                     ? 'highlighted'

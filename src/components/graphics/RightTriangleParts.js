@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import GlowFilter from './GlowFilter'
 import colors from './colors'
 import Triangle from './RightTriangle/index'
 import Svg from './Svg'
@@ -18,7 +17,7 @@ function RightTriangleParts({ highlightId }) {
         "highlight-right-triangle":
           <RightTriangleDefinition width="350px" top="0px" left="180px" />,
         "highlight-cathetus":
-          <CathetusDefinition width="350px" top="0px" left="180px" color={colors.blue}/>,
+          <CathetusDefinition width="350px" top="0px" left="180px" color={colors.green}/>,
         "highlight-hypothenuse":
           <HypothenuseDefinition width="350px" top="0px" left="180px"/>,
     }
@@ -27,15 +26,12 @@ function RightTriangleParts({ highlightId }) {
     return (
       <div>
         <Svg width={width} height={height}>
-            <defs>
-              <GlowFilter filterId='highlight-glow-filter' />
-            </defs>
             <Triangle contHeight={height} highlightId={highlightId}
               bCoords={{x: 80, y: 30}} width={width * .7}
               height={height * .8}
               showRightAngle={highlightId}/>
         </Svg>
-        <PythagorasFormula left={115} top={165} highlightId={highlightId}/>
+        <PythagorasFormula left={160} top={height - 10} highlightId={highlightId}/>
         {definitions[highlightId]}
       </div>
     )

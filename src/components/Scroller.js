@@ -7,8 +7,8 @@ import ScrollerResponseElements from './ScrollerResponseElements'
 function Scroller() {
     return (
         <div className="scroller-container">
-          <ScrollerSteps />
           <ScrollerResponseElements />
+          <ScrollerSteps />
         </div>
     )
 }

@@ -1,15 +1,22 @@
 html, body {
-  background-color: #282c34;
+  background-color: white;
   font-size: 16px;
+  color: #2F343F;
 }
 
-article {
+.step blockquote {
+  padding: 16px;
+  font-style: italic;
   color: white;
+  background-color: #2d719d;
+  border: #2d719d solid 3px;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
 .scroller-container {
   display: grid;
-  grid-template-columns: 1fr 5px 560px;
+  grid-template-columns: 560px 5px 1fr;
   justify-content: center;
   max-width: 1120px;
   margin: 0 auto;
@@ -17,14 +24,14 @@ article {
 }
 
 .scroller-steps {
-  grid-column: 1;
+  grid-column: 3;
   position: relative;
   top: 100px;
   /* outline: #333 solid thin; */
 }
 
 .scroller-response-els {
-  grid-column: 3;
+  grid-column: 1;
   margin-top: 20px;
 }
 
@@ -34,17 +41,18 @@ article {
   margin: 20px 10px 60px 20px;
   padding: 10px;
   min-height: 240px;
-  color: #444;
+  color: rgb(177, 177, 177);
   /* outline: #333 solid thin; */
 }
 
 .step.active {
-  color: #c9c9c9;
+  color: #2F343F;
 }
 
+/*
 .step.active em {
   color: #ffcc5e;
-}
+} */
 
 
 .step span.highlight {
@@ -53,8 +61,7 @@ article {
 }
 
 .step span.highlight.active {
-  text-shadow: 0px 0px 3px black;
-  font-weight: bold;
+  color: black;
 }
 
 .scroller-response-els > * {

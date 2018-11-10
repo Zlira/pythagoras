@@ -33,7 +33,7 @@ function CathetiLabel({triangleWidth, triangleHeight}) {
     const sumOSqrs = sumOfSquares(triangleHeight, triangleWidth).toFixed(signDigits)
     return (
       <span>
-        <span style={{color: colors.blue}} className="triangle-side">
+        <span style={{color: colors.green}} className="triangle-side">
           {triangleHeight}
         </span><sup>2</sup> +
         <span style={{color: colors.yellow}} className="triangle-side">

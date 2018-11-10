@@ -1,0 +1,20 @@
+p.pythagoras-formula {
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+p.pythagoras-formula span.highlighted {
+    text-decoration: underline;
+}
+
+p.pythagoras-formula span.highlighted.hypothenuse {
+  animation: pulse-red 1s linear 0s 3 normal running;
+}
+
+p.pythagoras-formula span.highlighted.cathetus-2 {
+  animation: pulse-green 1s linear 0s 3 normal running;
+}
+
+p.pythagoras-formula span.highlighted.cathetus-1 {
+  animation: pulse-yellow 1s linear 0s 3 normal running;
+}

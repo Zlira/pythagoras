@@ -4,22 +4,39 @@ import HighlightText from './HighlightText'
 import SelectedCharacter from './graphics/StepSeven/SelectedCharacter'
 import DifferenceValue from './graphics/StepSeven/DifferenceValue'
 import ResultingCharacter from './graphics/StepTwelve/ResultingCharacter'
+import PythagorasFormula from './PythagorasFormula'
 import StepP from '../containers/StepParagraph'
 
 
 const steps = [
-    <p>
-        Ось теорема Піфагора ще раз: <em>«Сума квадратів катетів прямокутного трикутника рівна
-        квадрату гіпотенузи»</em>. Для початку впевнимося, що ти добре розумієш всі слова
+    <>
+      <p>
+        Ось теорема Піфагора:
+      </p>
+      <blockquote>
+        Сума квадратів катетів прямокутного трикутника рівна
+        квадрату гіпотенузи.
+      </blockquote>
+      <PythagorasFormula />
+      <p>
+        Для початку впевнимося, що ти добре розумієш всі слова
         у цьому реченні. Наводь мишкою на кожен із термінів, щоби побачити визначення:
-        <span> </span>
-        <HighlightText highlightId="highlight-right-triangle">прямокутний трикутник</HighlightText>,
-        <span> </span>
-        <HighlightText highlightId='highlight-cathetus'>катет</HighlightText>,
-        <span> </span>
-        <HighlightText highlightId='highlight-hypothenuse'>гіпотенуза</HighlightText>,
-        квадрат числа.
-    </p>,
+        <ul>
+          <li>
+            <HighlightText highlightId="highlight-right-triangle">прямокутний трикутник</HighlightText>
+          </li>
+          <li>
+            <HighlightText highlightId='highlight-cathetus'>катет</HighlightText>
+          </li>
+          <li>
+            <HighlightText highlightId='highlight-hypothenuse'>гіпотенуза</HighlightText>
+          </li>
+          <li>
+            квадрат числа.
+          </li>
+        </ul>
+      </p>
+    </>,
     <p>
         Піфагор і вчитель/ка математики кажуть, що це правило працює для будь-якого
         прямокутного трикутника. Так ніби вони всіх їх перевірили!

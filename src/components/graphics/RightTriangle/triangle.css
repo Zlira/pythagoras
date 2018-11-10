@@ -5,17 +5,29 @@ svg .triangle line {
 
 svg .triangle line.highlighted {
   /* filter: drop-shadow(0px 0px 5px grey) */
-  filter: url('#highlight-glow-filter');
   stroke-width: 4px;
+}
+
+svg .triangle line.highlighted.hypothenuse {
+  animation: pulse-red 1s linear 0s 3 normal running;
+}
+
+svg .triangle line.highlighted.cathetus-2 {
+  animation: pulse-green 1s linear 0s 3 normal running;
+}
+
+svg .triangle line.highlighted.cathetus-1 {
+  animation: pulse-yellow 1s linear 0s 3 normal running;
 }
 
 svg .triangle text {
   font-weight: bold;
   font-size: 1.3rem;
+  fill: #2F343F;
 }
 
 svg .right-angle polyline {
-    stroke: white;
+    stroke: grey;
     stroke-width: 2px;
     fill: none;
 }

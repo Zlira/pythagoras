@@ -1,8 +1,9 @@
 import React from 'react'
 
+import '../animationKeyframes.css'
 import './definitions.css'
-import { highlightClass } from '../RightTriangle'
 import colors from '../colors'
+import Formula from '../../PythagorasFormula'
 
 
 function Definition({top, left, width, children}) {
@@ -39,24 +40,9 @@ export function CathetusDefinition({top, left, width, color}) {
 }
 
 export function PythagorasFormula({top, left, highlightId}) {
-    const currHighlightClass =
-      idsMatchingEl => highlightClass(highlightId, idsMatchingEl)
     return (
         <Definition top={top} left={left}>
-          <p className="pythagoras-formula">
-            <span style={{color: colors.blue}}
-              className={currHighlightClass(['highlight-cathetus'])}>
-              AB
-            </span><sup>2</sup> +
-            <span style={{color: colors.yellow}}
-              className={currHighlightClass(['highlight-cathetus'])}>
-               {' BC'}
-            </span><sup>2</sup> =
-            <span style={{color: colors.red}}
-              className={currHighlightClass(['highlight-hypothenuse'])}>
-              {' AC'}
-            </span><sup>2</sup>
-          </p>
+          <Formula highlightId={highlightId}/>
         </Definition>
     )
 }
