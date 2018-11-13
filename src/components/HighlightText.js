@@ -4,9 +4,11 @@ import { connect } from 'react-redux'
 import { setHighlightId } from '../actions'
 
 
-function HighlightText({ children, highlightId, isActive, activate, inactivate}) {
+function HighlightText({ children, highlightId, step, isActive, activate, inactivate}) {
+    const className = highlightId + ' highlight' +
+      (isActive? ' highlighted' : '')
     return (
-        <span className={'highlight ' + (isActive? 'active' : '')}
+        <span className={className}
               onMouseOver={activate}
               onMouseOut={inactivate}>
           {children}
@@ -17,7 +19,7 @@ function HighlightText({ children, highlightId, isActive, activate, inactivate})
 
 function mapStateToProps(state, ownProps) {
     return {
-        isActive: state.highlightId === ownProps.highlightId
+        isActive: state.highlightId === ownProps.highlightId,
     }
 }
 
@@ -25,7 +27,7 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch, ownProps) {
     return {
         activate: () => {
-            dispatch(setHighlightId(ownProps.highlightId))
+            dispatch(setHighlightId(ownProps.highlightId, ownProps.step))
         },
         inactivate: () => dispatch(setHighlightId(null))
     }

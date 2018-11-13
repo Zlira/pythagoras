@@ -4,9 +4,10 @@ export const setScrollerStep = activeStep => ({
 })
 
 // todo think of a better name
-export const setHighlightId = highlightId => ({
+export const setHighlightId = (highlightId, step) => ({
     type: 'SET_HIGHLIGHT_ID',
     highlightId,
+    step,
 })
 
 

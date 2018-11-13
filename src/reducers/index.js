@@ -9,7 +9,7 @@ function RootReducer(state={}, action) {
         case 'SET_HIGHLIGHT_ID':
           return {
               ...state,
-              highlightId: action.highlightId,
+              highlightId: action.step === state.activeStep? action.highlightId : null,
           }
         // todo move this to a local level
         case 'SET_TRIANGLE_WIDTH':

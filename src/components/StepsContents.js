@@ -1,17 +1,17 @@
 import React from 'react'
 
-import HighlightText from './HighlightText'
 import SelectedCharacter from './graphics/StepSeven/SelectedCharacter'
 import DifferenceValue from './graphics/StepSeven/DifferenceValue'
 import ResultingCharacter from './graphics/StepTwelve/ResultingCharacter'
 import PythagorasFormula from './PythagorasFormula'
 import StepP from '../containers/StepParagraph'
+import HighlightElement from '../containers/HighlightElement'
 
 
 const steps = [
     <>
       <p>
-        Ось теорема Піфагора:
+        Ось теорема Піфагора
       </p>
       <blockquote>
         Сума квадратів катетів прямокутного трикутника рівна
@@ -21,21 +21,29 @@ const steps = [
       <p>
         Для початку впевнимося, що ти добре розумієш всі слова
         у цьому реченні. Наводь мишкою на кожен із термінів, щоби побачити визначення:
-        <ul>
-          <li>
-            <HighlightText highlightId="highlight-right-triangle">прямокутний трикутник</HighlightText>
-          </li>
-          <li>
-            <HighlightText highlightId='highlight-cathetus'>катет</HighlightText>
-          </li>
-          <li>
-            <HighlightText highlightId='highlight-hypothenuse'>гіпотенуза</HighlightText>
-          </li>
-          <li>
-            квадрат числа.
-          </li>
-        </ul>
       </p>
+      <ul>
+        <li>
+          <HighlightElement highlightId="highlight-right-triangle" step={0}>
+            <span>прямокутний трикутник</span>
+          </HighlightElement>
+        </li>
+        <li>
+          <HighlightElement highlightId='highlight-cathetus' step={0}>
+            <span>катет</span>
+          </HighlightElement>
+        </li>
+        <li>
+          <HighlightElement highlightId='highlight-hypothenuse' step={0}>
+            <span>гіпотенуза</span>
+          </HighlightElement>
+        </li>
+        <li>
+          <HighlightElement highlightId='highlight-square' step={0}>
+            <span>квадрат числа.</span>
+          </HighlightElement>
+        </li>
+      </ul>
     </>,
     <p>
         Піфагор і вчитель/ка математики кажуть, що це правило працює для будь-якого

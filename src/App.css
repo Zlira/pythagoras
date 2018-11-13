@@ -1,5 +1,5 @@
 html, body {
-  background-color: white;
+  background-color: rgb(241, 241, 241);
   font-size: 16px;
   color: #2F343F;
 }
@@ -7,9 +7,8 @@ html, body {
 .step blockquote {
   padding: 16px;
   font-style: italic;
-  color: white;
-  background-color: #2d719d;
-  border: #2d719d solid 3px;
+  color: rgb(240, 236, 236);
+  background-color:#0883FF;
   margin-left: 0px;
   margin-right: 0px;
 }
@@ -55,7 +54,7 @@ html, body {
 } */
 
 
-.step span.highlight {
+.step .highlight {
   text-decoration: underline dotted;
   text-decoration-skip-ink: none;
 }

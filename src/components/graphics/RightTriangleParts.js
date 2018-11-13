@@ -12,14 +12,19 @@ import {
 
 function RightTriangleParts({ highlightId }) {
     const width = 500,
-          height = 250
+          height = 250,
+          paddingLeft = 80,
+          defsPosition = {
+            top: height + 36,
+            left: paddingLeft - 3,
+          }
     const definitions = {
         "highlight-right-triangle":
-          <RightTriangleDefinition width="350px" top="0px" left="180px" />,
+          <RightTriangleDefinition width="350px" top={defsPosition.top} left={defsPosition.left} />,
         "highlight-cathetus":
-          <CathetusDefinition width="350px" top="0px" left="180px" color={colors.green}/>,
+          <CathetusDefinition width="350px" top={defsPosition.top} left={defsPosition.left} color={colors.green}/>,
         "highlight-hypothenuse":
-          <HypothenuseDefinition width="350px" top="0px" left="180px"/>,
+          <HypothenuseDefinition width="350px" top={defsPosition.top} left={defsPosition.left}/>,
     }
     // todo maybe make one element with content g
     // and padding and use scales
@@ -27,7 +32,7 @@ function RightTriangleParts({ highlightId }) {
       <div>
         <Svg width={width} height={height}>
             <Triangle contHeight={height} highlightId={highlightId}
-              bCoords={{x: 80, y: 30}} width={width * .7}
+              bCoords={{x: paddingLeft, y: 30}} width={width * .7}
               height={height * .8}
               showRightAngle={highlightId}/>
         </Svg>

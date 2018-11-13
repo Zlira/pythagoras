@@ -4,22 +4,27 @@ import { connect } from 'react-redux'
 import { setHighlightId } from '../actions'
 
 
-
-
-function HighlightText({
+function HighlightElement({
+    // todo make possible to pass other props
     children, highlightId, isActive, activate, inactivate
 }) {
     const className = highlightId + ' highlight' +
       (isActive? ' highlighted' : '')
+    const wrappedChildren = React.Children.map(
+        children,
+        child => React.cloneElement(child, {
+            ...child.props,
+            className: (child.props.className || '') + ' ' + className,
+            onMouseOver: activate,
+            onMouseOut: inactivate,
+        })
+    )
     return (
-        <span className={className}
-              onMouseOver={activate}
-              onMouseOut={inactivate}>
-          {children}
-        </span>
+        <>
+          {wrappedChildren}
+        </>
     )
 }
-
 
 function mapStateToProps(state, ownProps) {
     return {
@@ -31,13 +36,12 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch, ownProps) {
     return {
         activate: () => {
-            dispatch(setHighlightId(ownProps.highlightId))
+            dispatch(setHighlightId(ownProps.highlightId, ownProps.step))
         },
         inactivate: () => dispatch(setHighlightId(null))
     }
 }
 
-
 export default connect(
-    mapStateToProps, mapDispatchToProps
-)(HighlightText)
+    mapStateToProps, mapDispatchToProps,
+)(HighlightElement)
