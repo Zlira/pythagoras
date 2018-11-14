@@ -1,0 +1,8 @@
+.square-enter {
+    opacity: .01;
+}
+
+.square-enter-active {
+    opacity: 1;
+    transition: all 200ms ease-in;
+  }

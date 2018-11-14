@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { easeCubicIn } from 'd3-ease'
+import { CSSTransition } from 'react-transition-group'
 
 import colors from './colors'
 import Triangle from './RightTriangle/index'
@@ -10,7 +11,7 @@ import {
     RightTriangleDefinition, HypothenuseDefinition,
     CathetusDefinition, PythagorasFormula
 } from './Definitions/'
-
+import './RightTriangleParts.css'
 
 function rigthTrAngle(oppSide, adjSide) {
   const degreesInRad = 57.3
@@ -118,10 +119,6 @@ class RightTriangleParts extends React.Component {
     // todo maybe make one element with content g
     // and padding and use scales
     const bCoords = {x: paddingLeft, y: 30}
-    const square = this.state.width <= this.minTrWidth
-      ? <SquareOnHypothenuse bCoords={bCoords}
-              trWidth={this.state.width} trHeight={this.state.height}/>
-      : null
     return (
       <div>
         <Svg width={this.width} height={this.height}>
@@ -129,7 +126,12 @@ class RightTriangleParts extends React.Component {
               bCoords={bCoords} width={this.state.width}
               height={this.state.height}
               showRightAngle={this.props.highlightId && this.props.highlightId !== 'highlight-square'}/>
-            {square}
+            <CSSTransition timeout={200} in={this.state.width <= this.minTrWidth}
+              classNames='square' unmountOnExit>
+                <SquareOnHypothenuse bCoords={bCoords}
+                  trWidth={this.state.width} trHeight={this.state.height}
+                  key='square'/>
+            </CSSTransition>
         </Svg>
         <PythagorasFormula left={160} top={this.height - 10}
           highlightId={this.props.highlightId}/>
