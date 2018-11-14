@@ -9,7 +9,8 @@ import Svg from './Svg'
 import Scale from './Scale'
 import {
     RightTriangleDefinition, HypothenuseDefinition,
-    CathetusDefinition, PythagorasFormula
+    CathetusDefinition, PythagorasFormula,
+    SquareDefinintion
 } from './Definitions/'
 import './RightTriangleParts.css'
 
@@ -52,10 +53,12 @@ class RightTriangleParts extends React.Component {
     this.minTrHeight = this.initTrHeight * changeFactor
     this.trTransitionDuration = 480
     this.trTransitionFreq = 20
+    this.maxALabelShift = -16
     this.state = {
       width: this.initTrWidth,
       height: this.initTrHeight,
       transitionProgress: 0,
+      aLabelShift: 0,
     }
 
     this.animateSquare = this.animateSquare.bind(this)
@@ -87,7 +90,8 @@ class RightTriangleParts extends React.Component {
         this.trTransitionFreq / this.trTransitionDuration
       ) * (enlarge? -1 : 1)
       const width = this.minTrWidth + (this.initTrWidth - this.minTrWidth) * easeCubicIn(1 - progress),
-            height = this.minTrHeight + (this.initTrHeight - this.minTrHeight) * easeCubicIn(1 - progress)
+            height = this.minTrHeight + (this.initTrHeight - this.minTrHeight) * easeCubicIn(1 - progress),
+            aLabelShift = this.maxALabelShift * easeCubicIn(progress)
       if (shouldClear(progress)) {
         clearInterval(this.animateSquareTimer)
         return {
@@ -99,13 +103,14 @@ class RightTriangleParts extends React.Component {
         width: width,
         height: height,
         transitionProgress: progress,
+        aLabelShift: aLabelShift,
       }})
   }
 
   render() {
     const paddingLeft = 80,
           defsPosition = {
-            top: this.height + 36,
+            top: this.height + 40,
             left: paddingLeft - 3,
           }
     const definitions = {
@@ -115,6 +120,8 @@ class RightTriangleParts extends React.Component {
           <CathetusDefinition width="350px" top={defsPosition.top} left={defsPosition.left} color={colors.green}/>,
         "highlight-hypothenuse":
           <HypothenuseDefinition width="350px" top={defsPosition.top} left={defsPosition.left}/>,
+        "highlight-square":
+          <SquareDefinintion width="350px" top={defsPosition.top} left={defsPosition.left}/>
     }
     // todo maybe make one element with content g
     // and padding and use scales
@@ -125,15 +132,20 @@ class RightTriangleParts extends React.Component {
             <Triangle contHeight={this.height} highlightId={this.props.highlightId}
               bCoords={bCoords} width={this.state.width}
               height={this.state.height}
-              showRightAngle={this.props.highlightId && this.props.highlightId !== 'highlight-square'}/>
-            <CSSTransition timeout={200} in={this.state.width <= this.minTrWidth}
+              showRightAngle={this.props.highlightId && this.props.highlightId !== 'highlight-square'}
+              aLabelShift={this.state.aLabelShift}/>
+            <CSSTransition timeout={{enter: 200, exit: 0}} in={this.state.width <= this.minTrWidth}
               classNames='square' unmountOnExit>
-                <SquareOnHypothenuse bCoords={bCoords}
+                {
+                  state => {
+                return <SquareOnHypothenuse bCoords={bCoords}
                   trWidth={this.state.width} trHeight={this.state.height}
                   key='square'/>
+                  }
+                }
             </CSSTransition>
         </Svg>
-        <PythagorasFormula left={160} top={this.height - 10}
+        <PythagorasFormula left={160} top={this.height}
           highlightId={this.props.highlightId}/>
         {definitions[this.props.highlightId]}
       </div>

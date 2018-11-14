@@ -1,8 +1,9 @@
+/* todo this doesn't work in firefox */
 .square-enter {
-    opacity: .01;
+    opacity: .1;
 }
 
-.square-enter-active {
+.square-enter-active.square-enter {
     opacity: 1;
     transition: all 200ms ease-in;
   }

@@ -39,6 +39,18 @@ export function CathetusDefinition({top, left, width, color}) {
     )
 }
 
+
+export function SquareDefinintion({top, left, width}) {
+    return (
+      <Definition top={top} left={left} width={width}>
+        <p>
+          <dfn>Квадрат числа</dfn> — число, помножене саме на себе; а також площа квадрата, з
+          довжиною сторони, рівною цьому числу.
+        </p>
+      </Definition>
+    )
+}
+
 export function PythagorasFormula({top, left, highlightId}) {
     return (
         <Definition top={top} left={left}>
