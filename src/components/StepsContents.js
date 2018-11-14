@@ -14,36 +14,30 @@ const steps = [
         Ось теорема Піфагора
       </p>
       <blockquote>
-        Сума квадратів катетів прямокутного трикутника рівна
-        квадрату гіпотенузи.
+        {'Сума '}
+        <HighlightElement highlightId='highlight-square' step={0}>
+          <span>квадратів</span>
+        </HighlightElement>
+        {' '}
+        <HighlightElement highlightId='highlight-cathetus' step={0}>
+          <span>катетів</span>
+        </HighlightElement>
+        {' '}
+        <HighlightElement highlightId="highlight-right-triangle" step={0}>
+          <span>прямокутного трикутника</span>
+        </HighlightElement>
+        {' рівна квадрату '}
+        <HighlightElement highlightId='highlight-hypothenuse' step={0}>
+          <span>гіпотенузи</span>
+        </HighlightElement>
+        .
       </blockquote>
       <PythagorasFormula />
       <p>
         Для початку впевнимося, що ти добре розумієш всі слова
-        у цьому реченні. Наводь мишкою на кожен із термінів, щоби побачити визначення:
+        у цьому реченні. Наводь мишкою на підкреслені терміни, щоби побачити визначення
+        зліва.
       </p>
-      <ul>
-        <li>
-          <HighlightElement highlightId="highlight-right-triangle" step={0}>
-            <span>прямокутний трикутник</span>
-          </HighlightElement>
-        </li>
-        <li>
-          <HighlightElement highlightId='highlight-cathetus' step={0}>
-            <span>катет</span>
-          </HighlightElement>
-        </li>
-        <li>
-          <HighlightElement highlightId='highlight-hypothenuse' step={0}>
-            <span>гіпотенуза</span>
-          </HighlightElement>
-        </li>
-        <li>
-          <HighlightElement highlightId='highlight-square' step={0}>
-            <span>квадрат числа.</span>
-          </HighlightElement>
-        </li>
-      </ul>
     </>,
     <p>
         Піфагор і вчитель/ка математики кажуть, що це правило працює для будь-якого

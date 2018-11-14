@@ -121,7 +121,7 @@ class RightTriangleParts extends React.Component {
         "highlight-hypothenuse":
           <HypothenuseDefinition width="350px" top={defsPosition.top} left={defsPosition.left}/>,
         "highlight-square":
-          <SquareDefinintion width="350px" top={defsPosition.top} left={defsPosition.left}/>
+          <SquareDefinintion width="350px" top={defsPosition.top + 10} left={defsPosition.left}/>
     }
     // todo maybe make one element with content g
     // and padding and use scales

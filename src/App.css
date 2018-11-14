@@ -7,6 +7,7 @@ html, body {
 .step blockquote {
   padding: 16px;
   font-style: italic;
+  font-size: 1.1em;
   color: rgb(240, 236, 236);
   background-color:#0883FF;
   margin-left: 0px;
@@ -55,8 +56,7 @@ html, body {
 
 
 .step .highlight {
-  text-decoration: underline dotted;
-  text-decoration-skip-ink: none;
+  border-bottom: thin dotted white;
 }
 
 .step span.highlight.active {
