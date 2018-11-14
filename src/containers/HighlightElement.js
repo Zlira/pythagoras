@@ -6,7 +6,8 @@ import { setHighlightId } from '../actions'
 
 function HighlightElement({
     // todo make possible to pass other props
-    children, highlightId, isActive, activate, inactivate
+    children, highlightId, isActive, activate, inactivate,
+    otherMatchingIds
 }) {
     const className = highlightId + ' highlight' +
       (isActive? ' highlighted' : '')
@@ -27,8 +28,10 @@ function HighlightElement({
 }
 
 function mapStateToProps(state, ownProps) {
+    let matchingIds = ownProps.otherMatchingIds || []
+    matchingIds = matchingIds.concat([ownProps.highlightId])
     return {
-        isActive: state.highlightId === ownProps.highlightId
+        isActive: matchingIds.includes(state.highlightId)
     }
 }
 

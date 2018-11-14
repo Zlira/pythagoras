@@ -6,12 +6,6 @@ import '../animationKeyframes.css'
 import './triangle.css'
 
 
-// todo move this somewhere
-export function highlightClass(highlightId, idsMatchingElement) {
-    return idsMatchingElement.includes(highlightId)? 'highlighted' : ''
-}
-
-
 function RightAngleSign({x, y}) {
     return (
         <g className="right-angle" transform={`translate(${x}, ${y})`}>
@@ -38,34 +32,27 @@ function Triangle({bCoords, width, height,
         ? <RightAngleSign x={B.x} y={B.y - 15}/>
         : null
     // todo move strokeWidth to stylesheet
-    const currHighlightClass =
-      idsMatchingEl => highlightClass(highlightId, idsMatchingEl)
+    const triangleHighlightId = ['highlight-right-triangle']
     return (
         <g className='triangle'>
           {rightAngleSign}
-          <HighlightElement highlightId="highlight-hypothenuse" step={step}>
+          <HighlightElement highlightId="highlight-hypothenuse"
+            otherMatchingIds={triangleHighlightId} step={step}>
             <line x1={A.x} x2={C.x} y1={A.y} y2={C.y}
                     stroke={colors.red}
-                    className={
-                        'hypothenuse ' +
-                        currHighlightClass(['highlight-hypothenuse', 'highlight-right-triangle'])
-                    } />
+                    className='hypothenuse'/>
           </HighlightElement>
-          <HighlightElement highlightId="highlight-cathetus" step={step}>
+          <HighlightElement highlightId="highlight-cathetus"
+            otherMatchingIds={triangleHighlightId} step={step}>
             <line x1={B.x} x2={C.x} y1={B.y} y2={C.y}
                     stroke={colors.yellow}
-                    className={
-                    'cathetus-1 ' +
-                    currHighlightClass(['highlight-cathetus', 'highlight-right-triangle'])
-                    } />
+                    className='cathetus-1'/>
           </HighlightElement>
-          <HighlightElement highlightId="highlight-cathetus" step={step}>
+          <HighlightElement highlightId="highlight-cathetus"
+            otherMatchingIds={triangleHighlightId} step={step}>
             <line x1={A.x} x2={B.x} y1={A.y} y2={B.y}
                     stroke={colors.green}
-                    className={
-                    'cathetus-2 ' +
-                    currHighlightClass(['highlight-cathetus', 'highlight-right-triangle'])
-                    }/>
+                    className='cathetus-2'/>
           </HighlightElement>
           <g className='point-labels'>
             <text x={A.x - 1.5} y={A.y - 5}>A</text>
