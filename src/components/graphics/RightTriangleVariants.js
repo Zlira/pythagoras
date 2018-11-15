@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 
 import Svg from './Svg'
 import RightTriangle from './RightTriangle'
+import DraggingIcon from './DragginigIcon'
 import { Hypothenuse, Catheti } from './StepTwo/Lables'
 import { setTriangleWidth, setTriangleHeight } from '../../actions'
 import './resizibleTriangle.css'
@@ -33,7 +34,9 @@ const DraggableHorizontal = ({ initialWidth, x, y, setWidth }) => {
         <Draggable axis='x' onDrag={
             (e, ui) => setWidth(ui.x + initialWidth)
           } bounds={{left: -initialWidth, right: 50}}>
-          <circle r='10' cx={x} cy={y} fill='white' />
+          <g>
+            <DraggingIcon x={x} y={y} isHorizontal={true}/>
+          </g>
         </Draggable>
     )
 }
@@ -46,7 +49,9 @@ const DraggableVertical = ({ initialHeight, x, y, setHeight}) => {
         <Draggable axis='y' onDrag={
             (e, ui) => setHeight((-ui.y) + initialHeight)
           } bounds={{top: -20, bottom: initialHeight}}>
-          <circle r='10' cx={x} cy={y} fill='white' />
+          <g>
+            <DraggingIcon x={x} y={y}/>
+          </g>
         </Draggable>
     )
 }
