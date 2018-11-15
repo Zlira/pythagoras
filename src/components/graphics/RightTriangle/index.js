@@ -15,7 +15,7 @@ function RightAngleSign({x, y}) {
 }
 
 function Triangle({bCoords, width, height,
-                   contHeight, highlightId, showRightAngle=false,
+                   contHeight, showRightAngle=false,
                    step=0, aLabelShift=0}) {
     const by = contHeight - bCoords.y
     // todo triangle side lengths should move to state

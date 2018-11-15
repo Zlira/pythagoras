@@ -129,7 +129,7 @@ class RightTriangleParts extends React.Component {
     return (
       <div>
         <Svg width={this.width} height={this.height}>
-            <Triangle contHeight={this.height} highlightId={this.props.highlightId}
+            <Triangle contHeight={this.height}
               bCoords={bCoords} width={this.state.width}
               height={this.state.height}
               showRightAngle={this.props.highlightId && this.props.highlightId !== 'highlight-square'}

@@ -13,11 +13,9 @@ import Scroller from './components/Scroller'
 const store = createStore(
   RootReducer, {
     // todo calculate this based on postion
-    activeStep: 4,
-    // todo fire the appropriate events after mounting 
-    // the triangle in step 2
-    triangleWidth: 350,
-    triangleHeight: 280,
+    activeStep: 0,
+    triangleWidth: null,
+    triangleHeight: null,
     selectedCharacter: 'harry',
     lawfullness: 0,
     goodness: 0,

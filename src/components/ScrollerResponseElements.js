@@ -17,6 +17,7 @@ import Result from './graphics/StepTwelve/Result'
 function ScrollerResponseElements({ activeStep }) {
     const stepToElement = [
         <RightTriangleParts />,
+        <RightTriangleParts />,
         <RightTriangleVariants />,
         <DeathlyHallows />,
         <HarryPotterTest />,

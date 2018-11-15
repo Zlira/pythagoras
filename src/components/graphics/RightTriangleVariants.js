@@ -5,36 +5,51 @@ import Draggable from 'react-draggable'
 import { connect } from 'react-redux'
 
 import Svg from './Svg'
-import ResizableTriangle from './ResizableTriangle'
+import RightTriangle from './RightTriangle'
 import { Hypothenuse, Catheti } from './StepTwo/Lables'
 import { setTriangleWidth, setTriangleHeight } from '../../actions'
 import './resizibleTriangle.css'
 
 
+function mapStateToProps(state) {
+    return {
+        trWidth: state.triangleWidth,
+        trHeight: state.triangleHeight,
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        setTrWidth: width => dispatch(setTriangleWidth(width)),
+        setTrHeight: height => dispatch(setTriangleHeight(height)),
+    }
+}
+
 // todo make vertical and horizontal into one
-const DraggableHorizontal = connect()(({ initialWidth, x, y, dispatch }) => {
+const DraggableHorizontal = ({ initialWidth, x, y, setWidth }) => {
     // todo add bounds
     // todo when component mounts fire one event to set triange width to initialWidth
     return (
         <Draggable axis='x' onDrag={
-            (e, ui) => dispatch(setTriangleWidth(ui.x + initialWidth))
-          }>
+            (e, ui) => setWidth(ui.x + initialWidth)
+          } bounds={{left: -initialWidth, right: 50}}>
           <circle r='10' cx={x} cy={y} fill='white' />
         </Draggable>
     )
-})
+}
 
-const DraggableVertical = connect()(({ initialHeight, x, y, dispatch }) => {
+
+const DraggableVertical = ({ initialHeight, x, y, setHeight}) => {
     // todo add bounds
     // todo when component mounts fire one event to set triange width to initialWidth
     return (
         <Draggable axis='y' onDrag={
-            (e, ui) => dispatch(setTriangleHeight((-ui.y) + initialHeight))
-          }>
+            (e, ui) => setHeight((-ui.y) + initialHeight)
+          } bounds={{top: -20, bottom: initialHeight}}>
           <circle r='10' cx={x} cy={y} fill='white' />
         </Draggable>
     )
-})
+}
 
 
 function Label({posSettings, children}) {
@@ -43,33 +58,50 @@ function Label({posSettings, children}) {
     )
 }
 
-// todo make a transition of the formula to concrete values from
-// step 1 to step 2
-// todo make a grid to be able to measure the length visually
-// todo explain what the units are
-function RightTriangleVariants() {
-    const width = 500,
-          height = 350,
-          triangleWidth = width * .7,
-          triangleHeight = height * .8,
-          paddingLeft = 80,
-          paddingBottom = 20
-    // todo fix a bug: after moving the sliders, going to the next (or prev) step, and
-    // returning to this one again the triangle 'remembers' the changes to the width and
-    // height but the sliders are at their default positions
-    return (
-        <div className='step-2 resizible-triangle' style={{width: width}}>
-          <Svg width={width} height={height}>
-              <ResizableTriangle
-                contHeight={height}
-                bCoords={{x: paddingLeft, y: paddingBottom}}
-                width={triangleWidth} height={triangleHeight} />
-              <DraggableHorizontal initialWidth={triangleWidth}
-                x={triangleWidth + paddingLeft}
-                y={height - paddingBottom} />
-              <DraggableVertical initialHeight={triangleHeight}
-                x={paddingLeft}
-                y={height - paddingBottom - triangleHeight} />
+
+// fix bugs with sliders
+// create new slider icon
+// use appropriate cursor style to that sliders
+// (maybe add a grid)
+
+class RightTriangleVariants extends React.Component {
+    constructor(props) {
+        super(props)
+        // todo dry with prev steps
+        this.width = 500
+        this.height = 250
+        this.initTrWidth = this.width * .7
+        this.initTrHeight = this.height * .8
+        this.paddingLeft = 80
+        this.paddingBottom = 30
+    }
+
+    componentDidMount() {
+        //if (this.props.trHeight == null && this.props.trWidth == null) {
+        this.props.setTrHeight(this.initTrHeight)
+        this.props.setTrWidth(this.initTrWidth)
+        //}
+    }
+
+    render() {
+        return (
+        // todo maybe wrap all steps in divs whit step-n class?
+        // but this is step-3 now
+        // todo use yScale insted of contHeight for Triangle
+        <div className='step-2 resizible-triangle' style={{width: this.width}}>
+          <Svg width={this.width} height={this.height}>
+              <RightTriangle
+                contHeight={this.height}
+                bCoords={{x: this.paddingLeft, y: this.paddingBottom}}
+                width={this.props.trWidth} height={this.props.trHeight} />
+              <DraggableHorizontal initialWidth={this.initTrWidth}
+                x={this.initTrWidth + this.paddingLeft}
+                y={this.height - this.paddingBottom}
+                setWidth={this.props.setTrWidth}/>
+              <DraggableVertical initialHeight={this.initTrHeight}
+                x={this.paddingLeft}
+                y={this.height - this.paddingBottom - this.initTrHeight}
+                setHeight={this.props.setTrHeight} />
           </Svg>
           <Label posSettings={{top: '80px', right: '120px'}}>
             <Catheti />
@@ -78,7 +110,19 @@ function RightTriangleVariants() {
             <Hypothenuse />
           </Label>
         </div>
-    )
+        )
+    }
 }
 
-export default RightTriangleVariants
+// todo make a transition of the formula to concrete values from
+// step 1 to step 2
+// todo make a grid to be able to measure the length visually
+// todo explain what the units are
+    // todo fix a bug: after moving the sliders, going to the next (or prev) step, and
+    // returning to this one again the triangle 'remembers' the changes to the width and
+    // height but the sliders are at their default positions
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(RightTriangleVariants)
