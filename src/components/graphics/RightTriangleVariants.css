@@ -1,0 +1,13 @@
+.resizible-triangle .triangle line {
+    stroke-dasharray: 38px 2px;
+    stroke-linecap: butt;
+}
+
+.react-draggable {
+    cursor: grab;
+}
+
+.react-draggable.react-draggable-dragging,
+.react-draggable-transparent-selection {
+    cursor: grabbing;
+}

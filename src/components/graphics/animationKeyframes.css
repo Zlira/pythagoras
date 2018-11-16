@@ -53,3 +53,16 @@
     stroke-width: 4px;
   }
 }
+
+@keyframes pulse-opacity {
+  0% {
+    color: #0883ff;
+    opacity: 1;
+  }
+  50% {
+    opacity: .1;
+  }
+  100% {
+    opacity: 1;
+  }
+}

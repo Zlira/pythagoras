@@ -6,6 +6,7 @@ import ResultingCharacter from './graphics/StepTwelve/ResultingCharacter'
 import PythagorasFormula from './PythagorasFormula'
 import StepP from '../containers/StepParagraph'
 import HighlightElement from '../containers/HighlightElement'
+import DraggingIcon from './graphics/DragginigIcon'
 
 
 const steps = [
@@ -50,7 +51,24 @@ const steps = [
         не рівний сумі квадратів катетів, щоби назавжди спростувати цю, можливо,
         найвідомішу в світі теорему. Це було би величезне відкриття — гріх не спробувати.
         <br/>
-        Міняй трикутник ABC, совгаючи точками A і C, і спостерігай,
+        Міняй трикутник ABC, совгаючи точками A
+        <HighlightElement highlightId="highlight-drag-tr-v" step={2}>
+          <svg style={{
+            position: "relative", top: 8,
+            borderBottom: "thin dotted #2F343F",
+          }} height={30} width={20}>
+            <DraggingIcon x={10} y={15}/>
+          </svg>
+        </HighlightElement>
+        {" "}і C
+        <HighlightElement highlightId="highlight-drag-tr-h" step={2}>
+          <svg height={20} width={30} style={{
+            position: "relative", top: 2,
+            borderBottom: "thin dotted #2F343F",
+          }}>
+            <DraggingIcon x={15} y={10} isHorizontal={true}/>
+          </svg>
+        </HighlightElement>, і спостерігай,
         як міняється співвідношення між квадратам сторін.
     </p>,
     <p>

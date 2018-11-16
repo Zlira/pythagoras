@@ -9,13 +9,14 @@ import RightTriangle from './RightTriangle'
 import DraggingIcon from './DragginigIcon'
 import { Hypothenuse, Catheti } from './StepTwo/Lables'
 import { setTriangleWidth, setTriangleHeight } from '../../actions'
-import './resizibleTriangle.css'
+import './RightTriangleVariants.css'
 
 
 function mapStateToProps(state) {
     return {
         trWidth: state.triangleWidth,
         trHeight: state.triangleHeight,
+        highlightId: state.highlightId,
     }
 }
 
@@ -27,30 +28,30 @@ function mapDispatchToProps(dispatch) {
 }
 
 // todo make vertical and horizontal into one
-const DraggableHorizontal = ({ initialWidth, x, y, setWidth }) => {
-    // todo add bounds
-    // todo when component mounts fire one event to set triange width to initialWidth
+const DraggableHorizontal = ({
+    initialWidth, x, y, setWidth, highlighted=false
+}) => {
     return (
         <Draggable axis='x' onDrag={
             (e, ui) => setWidth(ui.x + initialWidth)
           } bounds={{left: -initialWidth, right: 50}}>
           <g>
-            <DraggingIcon x={x} y={y} isHorizontal={true}/>
+            <DraggingIcon x={x} y={y} isHorizontal={true} highlighted={highlighted}/>
           </g>
         </Draggable>
     )
 }
 
 
-const DraggableVertical = ({ initialHeight, x, y, setHeight}) => {
-    // todo add bounds
-    // todo when component mounts fire one event to set triange width to initialWidth
+const DraggableVertical = ({
+    initialHeight, x, y, setHeight, highlighted=false,
+}) => {
     return (
         <Draggable axis='y' onDrag={
             (e, ui) => setHeight((-ui.y) + initialHeight)
           } bounds={{top: -20, bottom: initialHeight}}>
           <g>
-            <DraggingIcon x={x} y={y}/>
+            <DraggingIcon x={x} y={y} highlighted={highlighted}/>
           </g>
         </Draggable>
     )
@@ -63,10 +64,6 @@ function Label({posSettings, children}) {
     )
 }
 
-
-// fix bugs with sliders
-// create new slider icon
-// use appropriate cursor style to that sliders
 // (maybe add a grid)
 
 class RightTriangleVariants extends React.Component {
@@ -102,16 +99,18 @@ class RightTriangleVariants extends React.Component {
               <DraggableHorizontal initialWidth={this.initTrWidth}
                 x={this.initTrWidth + this.paddingLeft}
                 y={this.height - this.paddingBottom}
-                setWidth={this.props.setTrWidth}/>
+                setWidth={this.props.setTrWidth}
+                highlighted={this.props.highlightId === 'highlight-drag-tr-h'}/>
               <DraggableVertical initialHeight={this.initTrHeight}
                 x={this.paddingLeft}
                 y={this.height - this.paddingBottom - this.initTrHeight}
-                setHeight={this.props.setTrHeight} />
+                setHeight={this.props.setTrHeight}
+                highlighted={this.props.highlightId === 'highlight-drag-tr-v'}/>
           </Svg>
-          <Label posSettings={{top: '80px', right: '120px'}}>
+          <Label posSettings={{top: this.height, right: '120px'}}>
             <Catheti />
           </Label>
-          <Label posSettings={{top: '40px', right: '120px'}}>
+          <Label posSettings={{top: this.height + 30, right: '120px'}}>
             <Hypothenuse />
           </Label>
         </div>
@@ -123,9 +122,6 @@ class RightTriangleVariants extends React.Component {
 // step 1 to step 2
 // todo make a grid to be able to measure the length visually
 // todo explain what the units are
-    // todo fix a bug: after moving the sliders, going to the next (or prev) step, and
-    // returning to this one again the triangle 'remembers' the changes to the width and
-    // height but the sliders are at their default positions
 
 export default connect(
     mapStateToProps,
