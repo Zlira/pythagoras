@@ -1,0 +1,15 @@
+.tr-grid {
+    stroke-width: .5px;
+}
+
+.tr-grid.vertical {
+    stroke: #f29b00;
+}
+
+.tr-grid.horizontal {
+    stroke: #009137;
+}
+
+.tr-grid-rotated .tr-grid {
+    stroke: #dc3723;
+}

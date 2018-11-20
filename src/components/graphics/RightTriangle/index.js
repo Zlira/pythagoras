@@ -38,7 +38,7 @@ function Triangle({bCoords, width, height,
           {rightAngleSign}
           <HighlightElement highlightId="highlight-hypothenuse"
             otherMatchingIds={triangleHighlightId} step={step}>
-            <line x1={A.x} x2={C.x} y1={A.y} y2={C.y}
+            <line x2={A.x} x1={C.x} y2={A.y} y1={C.y}
                     stroke={colors.red}
                     className='hypothenuse'/>
           </HighlightElement>
@@ -50,7 +50,7 @@ function Triangle({bCoords, width, height,
           </HighlightElement>
           <HighlightElement highlightId="highlight-cathetus"
             otherMatchingIds={triangleHighlightId} step={step}>
-            <line x1={A.x} x2={B.x} y1={A.y} y2={B.y}
+            <line x2={A.x} x1={B.x} y2={A.y} y1={B.y}
                     stroke={colors.green}
                     className='cathetus-2'/>
           </HighlightElement>

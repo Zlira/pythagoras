@@ -10,6 +10,8 @@ import DraggingIcon from './DragginigIcon'
 import { Hypothenuse, Catheti } from './StepTwo/Lables'
 import { setTriangleWidth, setTriangleHeight } from '../../actions'
 import './RightTriangleVariants.css'
+import TriangleGrid, { RotatedGrid } from './TriangleGrid'
+import { rightTrAngle } from './Helpers'
 
 
 function mapStateToProps(state) {
@@ -57,7 +59,7 @@ const DraggableVertical = ({
     )
 }
 
-
+// unify with lables from step 1
 function Label({posSettings, children}) {
     return (
         <p className="label" style={posSettings}>{children}</p>
@@ -90,22 +92,35 @@ class RightTriangleVariants extends React.Component {
         // todo maybe wrap all steps in divs whit step-n class?
         // but this is step-3 now
         // todo use yScale insted of contHeight for Triangle
+        // fix overflow and grid
         <div className='step-2 resizible-triangle' style={{width: this.width}}>
           <Svg width={this.width} height={this.height}>
-              <RightTriangle
-                contHeight={this.height}
-                bCoords={{x: this.paddingLeft, y: this.paddingBottom}}
-                width={this.props.trWidth} height={this.props.trHeight} />
-              <DraggableHorizontal initialWidth={this.initTrWidth}
-                x={this.initTrWidth + this.paddingLeft}
-                y={this.height - this.paddingBottom}
-                setWidth={this.props.setTrWidth}
-                highlighted={this.props.highlightId === 'highlight-drag-tr-h'}/>
-              <DraggableVertical initialHeight={this.initTrHeight}
-                x={this.paddingLeft}
-                y={this.height - this.paddingBottom - this.initTrHeight}
-                setHeight={this.props.setTrHeight}
-                highlighted={this.props.highlightId === 'highlight-drag-tr-v'}/>
+            <TriangleGrid orientation='vertical'
+              containerHeight={this.height} containerWidth={this.width}
+              snapToValue={this.paddingLeft}
+              />
+            <TriangleGrid orientation='horizontal'
+              containerHeight={this.height} containerWidth={this.width}
+              snapToValue={this.height - this.paddingBottom} />
+            <RotatedGrid
+              angle={rightTrAngle(this.props.trHeight, this.props.trWidth)}
+              containerHeight={this.height} containerWidth={this.width}
+              snapToX={this.paddingLeft + this.props.trWidth}
+              snapToY={this.height - this.paddingBottom}/>
+            <RightTriangle
+              contHeight={this.height}
+              bCoords={{x: this.paddingLeft, y: this.paddingBottom}}
+              width={this.props.trWidth} height={this.props.trHeight} />
+            <DraggableHorizontal initialWidth={this.initTrWidth}
+              x={this.initTrWidth + this.paddingLeft}
+              y={this.height - this.paddingBottom}
+              setWidth={this.props.setTrWidth}
+              highlighted={this.props.highlightId === 'highlight-drag-tr-h'}/>
+            <DraggableVertical initialHeight={this.initTrHeight}
+              x={this.paddingLeft}
+              y={this.height - this.paddingBottom - this.initTrHeight}
+              setHeight={this.props.setTrHeight}
+              highlighted={this.props.highlightId === 'highlight-drag-tr-v'}/>
           </Svg>
           <Label posSettings={{top: this.height, right: '120px'}}>
             <Catheti />

@@ -13,18 +13,14 @@ import {
     SquareDefinintion
 } from './Definitions/'
 import './RightTriangleParts.css'
-
-function rigthTrAngle(oppSide, adjSide) {
-  const degreesInRad = 57.3
-  return Math.atan(oppSide / adjSide) * degreesInRad
-}
+import { rightTrAngle } from './Helpers'
 
 
 function SquareOnHypothenuse({trWidth, trHeight, bCoords}) {
   // todo move scale to the parent element
   const yScale = Scale([250, 0], [0, 250])
   const len = Math.sqrt(trWidth ** 2 + trHeight ** 2),
-        rotateAngle = 90 - rigthTrAngle(trHeight, trWidth),
+        rotateAngle = 90 - rightTrAngle(trHeight, trWidth),
         startX = bCoords.x + trWidth,
         startY = yScale(bCoords.y)
   const points = [
@@ -128,7 +124,7 @@ class RightTriangleParts extends React.Component {
     const bCoords = {x: paddingLeft, y: 30}
     return (
       <div>
-        <Svg width={this.width} height={this.height}>
+        <Svg width={this.width} height={this.height} style={{overflow: 'visible'}}>
             <Triangle contHeight={this.height}
               bCoords={bCoords} width={this.state.width}
               height={this.state.height}
