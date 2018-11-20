@@ -1,6 +1,4 @@
 import React from 'react'
-// todo maybe shun react-draggable altogether and just
-// overlay a transparent range input on the triangle
 import Draggable from 'react-draggable'
 import { connect } from 'react-redux'
 
@@ -10,7 +8,7 @@ import DraggingIcon from './DragginigIcon'
 import { Hypothenuse, Catheti } from './StepTwo/Lables'
 import { setTriangleWidth, setTriangleHeight } from '../../actions'
 import './RightTriangleVariants.css'
-import TriangleGrid, { RotatedGrid } from './TriangleGrid'
+import TriangleGrids from './TriangleGrid'
 import { rightTrAngle } from './Helpers'
 
 
@@ -66,7 +64,6 @@ function Label({posSettings, children}) {
     )
 }
 
-// (maybe add a grid)
 
 class RightTriangleVariants extends React.Component {
     constructor(props) {
@@ -95,18 +92,12 @@ class RightTriangleVariants extends React.Component {
         // fix overflow and grid
         <div className='step-2 resizible-triangle' style={{width: this.width}}>
           <Svg width={this.width} height={this.height}>
-            <TriangleGrid orientation='vertical'
+            <TriangleGrids
               containerHeight={this.height} containerWidth={this.width}
-              snapToValue={this.paddingLeft}
-              />
-            <TriangleGrid orientation='horizontal'
-              containerHeight={this.height} containerWidth={this.width}
-              snapToValue={this.height - this.paddingBottom} />
-            <RotatedGrid
+              snapLeft={this.paddingLeft} snapRight={this.paddingLeft + this.props.trWidth}
+              snapBottom={this.height - this.paddingBottom}
               angle={rightTrAngle(this.props.trHeight, this.props.trWidth)}
-              containerHeight={this.height} containerWidth={this.width}
-              snapToX={this.paddingLeft + this.props.trWidth}
-              snapToY={this.height - this.paddingBottom}/>
+              />
             <RightTriangle
               contHeight={this.height}
               bCoords={{x: this.paddingLeft, y: this.paddingBottom}}

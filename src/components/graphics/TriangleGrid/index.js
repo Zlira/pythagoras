@@ -20,7 +20,7 @@ function getLines(linesStart, linesEnd, lenToCover, changingCoordName) {
 
 }
 
-function Grid({orientation='vertical', containerHeight, containerWidth, snapToValue=0}) {
+export function Grid({orientation='vertical', containerHeight, containerWidth, snapToValue=0}) {
     const linesStart = 0,
       [linesEnd, lenToCover, changingCoordName] = orientation === 'vertical'
       ? [containerHeight, containerWidth, 'x']
@@ -48,4 +48,24 @@ export function RotatedGrid({angle, containerHeight, containerWidth, snapToX, sn
     )
 }
 
-export default Grid
+
+function Grids({containerHeight, containerWidth, angle, snapRight, snapLeft, snapBottom}) {
+    return (
+        <g>
+          <Grid orientation='vertical'
+              containerHeight={containerHeight} containerWidth={containerWidth}
+              snapToValue={snapLeft} />
+          <Grid orientation='horizontal'
+              containerHeight={containerHeight} containerWidth={containerWidth}
+              snapToValue={snapBottom} />
+          <RotatedGrid
+              angle={angle}
+              containerHeight={containerHeight}
+              containerWidth={containerWidth}
+              snapToX={snapRight}
+              snapToY={snapBottom}/>
+        </g>
+    )
+}
+
+export default Grids
