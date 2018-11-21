@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import RightTriangleParts from './graphics/RightTriangleParts'
-import RightTriangleVariants from './graphics/RightTriangleVariants'
+import RightTriangleParts from './graphics/RightTriangleParts/index'
+import RightTriangleVariants from './graphics/RightTriangleVariants/index'
 import DeathlyHallows from './graphics/DeathlyHallowsImg/index'
 import HarryPotterTest from './graphics/StepFour/HarryPotterTest'
 import CoordSystem from './graphics/StepFive/CoordSystem'

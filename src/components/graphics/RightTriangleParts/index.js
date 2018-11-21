@@ -3,17 +3,17 @@ import { connect } from 'react-redux'
 import { easeCubicIn } from 'd3-ease'
 import { CSSTransition } from 'react-transition-group'
 
-import colors from './colors'
-import Triangle from './RightTriangle/index'
-import Svg from './Svg'
-import Scale from './Scale'
+import colors from '../colors'
+import Triangle from '../RightTriangle/index'
+import Svg from '../Svg'
+import Scale from '../Scale'
 import {
     RightTriangleDefinition, HypothenuseDefinition,
     CathetusDefinition, PythagorasFormula,
     SquareDefinintion
-} from './Definitions/'
+} from '../Definitions'
 import './RightTriangleParts.css'
-import { rightTrAngle, hypothenuseLen } from './Helpers'
+import { rightTrAngle, hypothenuseLen } from '../Helpers'
 
 
 function SquareOnHypothenuse({trWidth, trHeight, bCoords}) {

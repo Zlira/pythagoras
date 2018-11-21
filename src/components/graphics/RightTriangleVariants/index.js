@@ -2,14 +2,14 @@ import React from 'react'
 import Draggable from 'react-draggable'
 import { connect } from 'react-redux'
 
-import Svg from './Svg'
-import RightTriangle from './RightTriangle'
-import DraggingIcon from './DragginigIcon'
-import { Hypothenuse, Catheti } from './StepTwo/Lables'
-import { setTriangleWidth, setTriangleHeight } from '../../actions'
+import Svg from '../Svg'
+import RightTriangle from '../RightTriangle'
+import DraggingIcon from '../DragginigIcon'
+import { Hypothenuse, Catheti } from '../StepTwo/Lables'
+import { setTriangleWidth, setTriangleHeight } from '../../../actions'
 import './RightTriangleVariants.css'
-import TriangleGrids from './TriangleGrid'
-import { rightTrAngle } from './Helpers'
+import TriangleGrids from '../TriangleGrid'
+import { rightTrAngle } from '../Helpers'
 
 
 function mapStateToProps(state) {
