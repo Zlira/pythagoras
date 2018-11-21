@@ -7,7 +7,7 @@ export default () => {
     return (
       <div>
       <img src={dhLogo} style={{position: 'relative', left: '80px'}}
-        alt="Смертельні реліквії" width="400"/>
+        alt="Смертельні реліквії" width="405px"/>
       </div>
     )
 }
