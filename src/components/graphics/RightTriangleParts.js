@@ -13,13 +13,13 @@ import {
     SquareDefinintion
 } from './Definitions/'
 import './RightTriangleParts.css'
-import { rightTrAngle } from './Helpers'
+import { rightTrAngle, hypothenuseLen } from './Helpers'
 
 
 function SquareOnHypothenuse({trWidth, trHeight, bCoords}) {
   // todo move scale to the parent element
   const yScale = Scale([250, 0], [0, 250])
-  const len = Math.sqrt(trWidth ** 2 + trHeight ** 2),
+  const len = hypothenuseLen(trWidth, trHeight),
         rotateAngle = 90 - rightTrAngle(trHeight, trWidth),
         startX = bCoords.x + trWidth,
         startY = yScale(bCoords.y)
@@ -129,7 +129,7 @@ class RightTriangleParts extends React.Component {
               bCoords={bCoords} width={this.state.width}
               height={this.state.height}
               showRightAngle={this.props.highlightId && this.props.highlightId !== 'highlight-square'}
-              aLabelShift={this.state.aLabelShift}/>
+              aXLabelShift={this.state.aLabelShift}/>
             <CSSTransition timeout={{enter: 200, exit: 0}} in={this.state.width <= this.minTrWidth}
               classNames='square' unmountOnExit>
                 {

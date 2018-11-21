@@ -26,6 +26,24 @@ svg .triangle text {
   fill: #2F343F;
 }
 
+svg .triangle .side-len {
+  font-size: 1.1rem;
+}
+
+svg .triangle .side-len.cathetus-1 {
+  fill: #f29b00;
+  text-anchor: middle;
+}
+
+svg .triangle .side-len.cathetus-2 {
+  fill: #009137;
+  text-anchor: end;
+}
+
+svg .triangle .side-len.hypothenuse {
+  fill: #dc3723;
+}
+
 svg .right-angle polyline {
     stroke: grey;
     stroke-width: 2px;

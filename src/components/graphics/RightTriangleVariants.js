@@ -101,7 +101,10 @@ class RightTriangleVariants extends React.Component {
             <RightTriangle
               contHeight={this.height}
               bCoords={{x: this.paddingLeft, y: this.paddingBottom}}
-              width={this.props.trWidth} height={this.props.trHeight} />
+              width={this.props.trWidth} height={this.props.trHeight}
+              aXLabelShift={-20}
+              cXLabelShift={20}
+              showSideLengths />
             <DraggableHorizontal initialWidth={this.initTrWidth}
               x={this.initTrWidth + this.paddingLeft}
               y={this.height - this.paddingBottom}
@@ -113,10 +116,10 @@ class RightTriangleVariants extends React.Component {
               setHeight={this.props.setTrHeight}
               highlighted={this.props.highlightId === 'highlight-drag-tr-v'}/>
           </Svg>
-          <Label posSettings={{top: this.height, right: '120px'}}>
+          <Label posSettings={{top: this.height + 20, right: '120px'}}>
             <Catheti />
           </Label>
-          <Label posSettings={{top: this.height + 30, right: '120px'}}>
+          <Label posSettings={{top: this.height + 50, right: '120px'}}>
             <Hypothenuse />
           </Label>
         </div>

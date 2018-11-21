@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { hypothenuseLen, pxToUnitsFixed } from '../Helpers'
 import colors from '../colors'
 import HighlightElement from '../../../containers/HighlightElement'
 import '../animationKeyframes.css'
@@ -16,7 +17,8 @@ function RightAngleSign({x, y}) {
 
 function Triangle({bCoords, width, height,
                    contHeight, showRightAngle=false,
-                   step=0, aLabelShift=0}) {
+                   showSideLengths=false,
+                   step=0, aXLabelShift=0, cXLabelShift=0}) {
     const by = contHeight - bCoords.y
     // todo triangle side lengths should move to state
     const A = {
@@ -33,6 +35,21 @@ function Triangle({bCoords, width, height,
         : null
     // todo move strokeWidth to stylesheet
     const triangleHighlightId = ['highlight-right-triangle']
+    const sideLengths = showSideLengths
+      ? (
+          <g>
+              <text x={B.x - 7} y={B.y-height/2} className="side-len cathetus-2">
+                {pxToUnitsFixed(height)}
+              </text>
+              <text x={B.x+width/2} y={B.y + 20} className="side-len cathetus-1">
+                {pxToUnitsFixed(width)}
+              </text>
+              <text x={B.x+width/2 + 7} y={B.y-height/2} className="side-len hypothenuse">
+                {pxToUnitsFixed(hypothenuseLen(width, height))}
+              </text>
+          </g>
+      )
+      : null
     return (
         <g className='triangle'>
           {rightAngleSign}
@@ -55,10 +72,11 @@ function Triangle({bCoords, width, height,
                     className='cathetus-2'/>
           </HighlightElement>
           <g className='point-labels'>
-            <text x={A.x - 1.5 + aLabelShift} y={A.y - 5}>A</text>
+            <text x={A.x - 1.5 + aXLabelShift} y={A.y - 5}>A</text>
             <text x={B.x - 3} y={B.y + 21}>B</text>
-            <text x={C.x - 10} y={C.y + 21}>C</text>
+            <text x={C.x - 10 + cXLabelShift} y={C.y + 21}>C</text>
           </g>
+          {sideLengths}
         </g>
     )
 }
