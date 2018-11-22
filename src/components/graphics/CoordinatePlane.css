@@ -4,7 +4,7 @@ svg .coord-grid {
     stroke-dasharray: 1 2;
 }
 
-svg .coord-axes {
+svg .coord-axes line {
     stroke: gray;
     stroke-width: 2px;
 }
