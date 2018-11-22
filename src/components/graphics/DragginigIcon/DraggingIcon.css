@@ -1,5 +1,3 @@
 svg .dragging-icon.highlighted {
   animation: pulse-opacity 1s linear 0s 3 normal running;
-  outline: red;
-
 }

@@ -8,7 +8,7 @@ svg line.dashed {
 }
 
 svg .test-values circle {
-    stroke: #282c34;
+    stroke: white;
     stroke-width: 1;
 }
 
@@ -19,7 +19,9 @@ svg .test-values text {
     font-weight: bold;
 }
 
-svg line.lawfullness-value {
+/* todo select one way of doing this */
+svg line.lawfullness-value,
+svg .lawfullness-value line{
     stroke: #f29b00;
 }
 
@@ -28,8 +30,9 @@ svg .lawfullness-value text {
     fill: #f29b00;
 }
 
-svg line.goodness-value {
-    stroke: #2d719d;
+svg line.goodness-value,
+svg .goodness-value line {
+    stroke: #009137;
 }
 
 svg line.distance-value {
@@ -38,5 +41,10 @@ svg line.distance-value {
 
 svg .goodness-value circle,
 svg .goodness-value text {
-    fill: #2d719d;
+    fill: #009137;
+}
+
+svg .test-values .combined-value circle {
+    stroke: white;
+    fill-opacity: 0;
 }

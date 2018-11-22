@@ -2,13 +2,12 @@ import React from 'react'
 import Draggable from 'react-draggable'
 import { connect } from 'react-redux'
 
-import { LawfullnessInput, GoodnessInput } from './TestInput'
 import { setLawfullness, setGoodness } from '../../../actions'
 import Scale from '../Scale'
 import Svg from '../Svg'
 
 function SvgTestInputs({
-  lawfullness, goodness, setLawfullness, setGoodness,
+  lawfullness, goodness, setLawfullness, setGoodness, highlightId
 }) {
   const width = 500, height=250,
         inputLen = 400,
@@ -18,19 +17,24 @@ function SvgTestInputs({
   // todo make inputs highlightable elements
   return (
     <Svg width={width} height={height}>
-      <g transform={`translate(${80}, ${30})`} className="coord-axes">
+      <g transform={`translate(${80}, ${30})`}
+        className={"coord-axes " + (highlightId === "highlight-input-law"? "highlighted" : "")}
+        >
         <InputTrack
           minLabel="Хаос" maxLabel="Закон" x={80} y={30} width={400} />
         <InputThumb scale={xScale} reverseScale={reverseScale}
           value={lawfullness}
-          onChange={setLawfullness} />
+          onChange={setLawfullness} className="lawfullness-value" />
       </g>
-      <g transform={`translate(${80}, ${90})`} className="coord-axes">
+      <g transform={`translate(${80}, ${90})`}
+        className={"coord-axes " + (highlightId === "highlight-input-good"? "highlighted" : "")}
+        >
         <InputTrack
           minLabel="Зло" maxLabel="Добро" x={80} y={90} width={400} />
         <InputThumb scale={xScale} reverseScale={reverseScale}
           value={goodness}
           onChange={setGoodness}
+          className="goodness-value"
           />
       </g>
     </Svg>
@@ -38,15 +42,13 @@ function SvgTestInputs({
 }
 
 function InputTrack({minLabel, maxLabel, width}) {
-  const textLabelY = -8, numLabelY = 18
+  const textLabelY = -10
   return (
     // todo don't use this class, move style somewhere else
     <>
       <line x1={0} y1={0} x2={width} y2={0} />
       <text x={0} y={textLabelY}>{minLabel}</text>
-      <text x={0} y={numLabelY}>{-10}</text>
       <text x={width} y={textLabelY} textAnchor="end">{maxLabel}</text>
-      <text x={width} y={numLabelY} textAnchor="end">{10}</text>
     </>
   )
 }
@@ -59,12 +61,12 @@ class InputThumb extends React.Component {
   }
 
   render() {
-    const {onChange, scale, reverseScale} = this.props
+    const {onChange, value, scale, reverseScale, className} = this.props
     const step = Math.round(scale(1) - scale(0))
-    return <>
+    return <g className={className + " test-values"}>
+      <line x1={scale(0)} x2={scale(value)} y1={0} y2={0} />
+      <text x={scale(value)} y={20}>{value}</text>
       <Draggable axis='x' onDrag={(e, ui) => {
-          console.log(ui)
-          console.log(this.initialVal)
           onChange(reverseScale(Math.round((ui.x) / step) * step) + this.initialVal)
         }}
         bounds={{left: scale(-10) - scale(this.initialVal),
@@ -72,7 +74,7 @@ class InputThumb extends React.Component {
         grid={[step, step]}>
         <circle r={6} cx={scale(this.initialVal)} cy={0} fill="black"/>
       </Draggable>
-    </>
+    </g>
   }
 }
 
@@ -80,6 +82,7 @@ const ConnectedSvgInputs = connect(
   (state) => ({
     goodness: state.goodness,
     lawfullness: state.lawfullness,
+    highlightId: state.highlightId,
   }),
   (dispatch) => ({
     setGoodness: val => dispatch(setGoodness(val)),
@@ -87,18 +90,11 @@ const ConnectedSvgInputs = connect(
   })
 )(SvgTestInputs)
 
-// todo dispatch events for setting lawfullness and
-// goodness to 0 at the start
+
 export default () => {
     return (
       <div>
         <ConnectedSvgInputs />
-        <form style={{position: 'relative', left: '80px'}}>
-          <p>Слухняність</p>
-          <LawfullnessInput className='lawfullness' />
-          <p>Добрість</p>
-          <GoodnessInput className='goodness' />
-        </form>
       </div>
     )
 }

@@ -1,6 +1,5 @@
 import React from 'react'
 
-import './TestValues.css'
 import Values from './Values'
 import CoordPlane from '../CoordinatePlane'
 import Svg from '../Svg'

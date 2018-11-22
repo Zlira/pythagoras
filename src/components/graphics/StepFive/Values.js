@@ -20,7 +20,7 @@ function Values({width, height, lawfullness=0, goodness=0}) {
           <g className="lawfullness-value">
             <line x1={xScale(0)} x2={xVal} y1={yCenter} y2={yCenter}/>
             <line x1={xScale(0)} x2={xVal} y1={yVal} y2={yVal}
-              className="axis-to-val"/>
+              className="axis-to-val dashed"/>
             <circle r={6} cx={xVal} cy={yCenter}/>
             <text y={yCenter+ (goodness > 0? 20 : -20)}
               x={xVal}>{lawfullness}</text>
@@ -28,10 +28,10 @@ function Values({width, height, lawfullness=0, goodness=0}) {
           <g className="goodness-value">
             <line x1={xCenter} x2={xCenter} y1={yVal} y2={yCenter}/>
             <line x1={xVal} x2={xVal} y1={yVal} y2={yCenter}
-              className="axis-to-val"/>
+              className="axis-to-val dashed"/>
             <circle r={6} cx={xCenter} cy={yVal}/>
-            <text 
-              y={yVal} 
+            <text
+              y={yVal}
               x={xCenter + (lawfullness > 0? -20 : 20)}>
               {goodness}
             </text>

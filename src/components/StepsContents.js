@@ -51,23 +51,27 @@ const steps = [
         не рівний сумі квадратів катетів, щоби назавжди спростувати цю, можливо,
         найвідомішу в світі теорему. Це було би величезне відкриття — гріх не спробувати.
         <br/>
-        Міняй трикутник ABC, совгаючи точками A
+        Міняй трикутник ABC, совгаючи точками {''}
         <HighlightElement highlightId="highlight-drag-tr-v" step={2}>
-          <svg style={{
-            position: "relative", top: 8,
-            borderBottom: "thin dotted #2F343F",
-          }} height={30} width={20}>
-            <DraggingIcon x={10} y={15}/>
-          </svg>
+          <span>
+            A&nbsp;
+            <svg style={{
+              position: "relative", top: 8,
+            }} height={30} width={20}>
+              <DraggingIcon x={10} y={15}/>
+            </svg>
+          </span>
         </HighlightElement>
-        {" "}і C
+        {" "}і {''}
         <HighlightElement highlightId="highlight-drag-tr-h" step={2}>
-          <svg height={20} width={30} style={{
-            position: "relative", top: 2,
-            borderBottom: "thin dotted #2F343F",
-          }}>
-            <DraggingIcon x={15} y={10} isHorizontal={true}/>
-          </svg>
+          <span>
+            C&nbsp;
+            <svg height={20} width={30} style={{
+              position: "relative", top: 2,
+            }}>
+              <DraggingIcon x={15} y={10} isHorizontal={true}/>
+            </svg>
+          </span>
         </HighlightElement>, і спостерігай,
         як міняється співвідношення між квадратам сторін.
     </p>,
@@ -79,12 +83,22 @@ const steps = [
         Ми побачимо, до чого тут трикутник трохи пізніше, але почнемо із самого тесту.
         У ньому всього два питання.
     </p>,
-    <ol>
-        <li>Розмісти себе на шкалі Хаос (-10) — Закон (+10), де Хаос — це свобода і гнучкість,
-            а Закон — честь і відданість правилам.</li>
-        <li>Розмісти себе на шкалі Зло (-10) — Добро (+10), де Зло — це шкодити іншим,
-            а Добро — допомагати</li>
-    </ol>,
+    <>
+      <p>
+        Розмісти себе на {''}
+        <HighlightElement highlightId="highlight-input-law" step={4}>
+          <span>шкалі Хаос (-10)&nbsp;— Закон (+10)</span>
+        </HighlightElement>,<br/> де Хаос&nbsp;— це свобода і гнучкість,
+        а Закон&nbsp;— честь і відданість правилам.
+      </p>
+      <p>
+        Розмісти себе на {''}
+        <HighlightElement highlightId="highlight-input-good" step={4}>
+          <span>шкалі Зло (-10)&nbsp;— Добро (+10)</span>
+        </HighlightElement>,<br/> де Зло&nbsp;— це шкодити іншим,
+        а Добро&nbsp;— допомагати
+      </p>
+    </>,
     <p>
         Тепер ми маємо твої показники і можемо помістити тебе у спеціальну систему координат з осями
         Хаос — Закон, Добро — Зло. Тут добрі — згори, злі — внизу, чемні — зліва, бунтівники — справа.
