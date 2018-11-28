@@ -3,6 +3,10 @@ p.pythagoras-formula {
     font-size: 1.3rem;
 }
 
+.step.active p.pythagoras-formula span.highlight {
+  border-bottom: none;
+}
+
 p.pythagoras-formula span:not(.highlighted) {
   text-decoration: none;
 }

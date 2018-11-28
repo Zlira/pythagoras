@@ -1,0 +1,22 @@
+svg .coord-axes.test-input.lawfullness {
+  transform: translate(80px, 30px);
+}
+
+svg .coord-axes.test-input.lawfullness.transitioned {
+  transform: translate(80px, 240px);
+  transition: transform 1s ease-in;
+}
+
+svg .coord-axes.test-input.goodness {
+  transform: translate(80px, 90px);
+  transform-origin: 200px 0px;
+}
+
+svg .coord-axes.test-input.goodness.transitioned {
+  transform: rotate(-90deg) translate(-240px, 80px);
+  transition: transform 1s ease-in;
+}
+
+svg .coord-axes.test-input.goodness.transitioned text {
+  transition: transform 1s ease-in;
+}

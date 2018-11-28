@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { setHighlightId } from '../actions'
 
 
+// todo maybe rewrite this using render props
 function HighlightElement({
     // todo make possible to pass other props
     children, highlightId, isActive, activate, inactivate,

@@ -131,7 +131,7 @@ class RightTriangleParts extends React.Component {
               showRightAngle={this.props.highlightId && this.props.highlightId !== 'highlight-square'}
               aXLabelShift={this.state.aLabelShift}/>
             <CSSTransition timeout={{enter: 200, exit: 0}} in={this.state.width <= this.minTrWidth}
-              classNames='square' unmountOnExit>
+              classNames='square' unmountOnExit mountOnEnter appear>
                 {
                   state => {
                 return <SquareOnHypothenuse bCoords={bCoords}

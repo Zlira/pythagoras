@@ -5,50 +5,67 @@ import { connect } from 'react-redux'
 import { setLawfullness, setGoodness } from '../../../actions'
 import Scale from '../Scale'
 import Svg from '../Svg'
+import './HarryPotterTest.css'
 
-function SvgTestInputs({
-  lawfullness, goodness, setLawfullness, setGoodness, highlightId
+
+export function SvgTestInputs({
+  lawfullness, goodness, setLawfullness, setGoodness, highlightId,
+  disabled=false, transitioned=false
 }) {
-  const width = 500, height=250,
-        inputLen = 400,
+  console.log('rendering svg test inputs', transitioned)
+  const inputLen = 400,
         // todo maybe range and domain are mixed up in this function
         xScale = Scale([0, inputLen], [-10, 10]),
         reverseScale = Scale([-10, 10], [-inputLen/2, inputLen/2])
-  // todo make inputs highlightable elements
   return (
-    <Svg width={width} height={height}>
-      <g transform={`translate(${80}, ${30})`}
-        className={"coord-axes " + (highlightId === "highlight-input-law"? "highlighted" : "")}
+    <g>
+      <g
+        className={
+          "coord-axes test-input lawfullness"
+          + (highlightId === "highlight-input-law"? " highlighted" : "")
+          + (transitioned? " transitioned" : "")
+        }
         >
         <InputTrack
           minLabel="Хаос" maxLabel="Закон" x={80} y={30} width={400} />
         <InputThumb scale={xScale} reverseScale={reverseScale}
-          value={lawfullness}
+          value={lawfullness} disabled={disabled}
           onChange={setLawfullness} className="lawfullness-value" />
       </g>
-      <g transform={`translate(${80}, ${90})`}
-        className={"coord-axes " + (highlightId === "highlight-input-good"? "highlighted" : "")}
+      <g
+        className={
+          "coord-axes test-input goodness"
+          + (highlightId === "highlight-input-good"? " highlighted" : "")
+          + (transitioned? " transitioned" : "")
+        }
         >
         <InputTrack
-          minLabel="Зло" maxLabel="Добро" x={80} y={90} width={400} />
+          minLabel="Зло" maxLabel="Добро" x={80} y={90} width={400}
+          rotateLabels={transitioned}/>
         <InputThumb scale={xScale} reverseScale={reverseScale}
-          value={goodness}
+          value={goodness} disabled={disabled}
           onChange={setGoodness}
           className="goodness-value"
           />
       </g>
-    </Svg>
+    </g>
   )
 }
 
-function InputTrack({minLabel, maxLabel, width}) {
+function InputTrack({minLabel, maxLabel, width, rotateLabels=false}) {
   const textLabelY = -10
   return (
     // todo don't use this class, move style somewhere else
     <>
       <line x1={0} y1={0} x2={width} y2={0} />
-      <text x={0} y={textLabelY}>{minLabel}</text>
-      <text x={width} y={textLabelY} textAnchor="end">{maxLabel}</text>
+      <text x={0} y={textLabelY} transform={
+        rotateLabels? `rotate(90, ${0}, ${textLabelY})`: ''
+      }>{minLabel}</text>
+      <text x={width} y={textLabelY}
+        textAnchor={rotateLabels? "middle" : "end"}
+        transform={rotateLabels? `rotate(90, ${width}, ${textLabelY})` : ''}>
+          {maxLabel}
+      </text>
     </>
   )
 }
@@ -61,7 +78,7 @@ class InputThumb extends React.Component {
   }
 
   render() {
-    const {onChange, value, scale, reverseScale, className} = this.props
+    const {onChange, value, scale, reverseScale, className, disabled} = this.props
     const step = Math.round(scale(1) - scale(0))
     return <g className={className + " test-values"}>
       <line x1={scale(0)} x2={scale(value)} y1={0} y2={0} />
@@ -71,7 +88,8 @@ class InputThumb extends React.Component {
         }}
         bounds={{left: scale(-10) - scale(this.initialVal),
                 right: scale(10) - scale(this.initialVal)}}
-        grid={[step, step]}>
+        grid={[step, step]}
+        disabled={disabled}>
         <circle r={6} cx={scale(this.initialVal)} cy={0} fill="black"/>
       </Draggable>
     </g>
@@ -92,9 +110,12 @@ const ConnectedSvgInputs = connect(
 
 
 export default () => {
+    const width=500, height=150
     return (
       <div>
+      <Svg width={width} height={height}>
         <ConnectedSvgInputs />
+      </Svg>
       </div>
     )
 }
