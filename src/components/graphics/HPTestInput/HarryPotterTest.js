@@ -8,30 +8,33 @@ import Svg from '../Svg'
 import './HarryPotterTest.css'
 
 
-export function SvgTestInputs({
-  lawfullness, goodness, setLawfullness, setGoodness, highlightId,
-  disabled=false, transitioned=false
+export function LafullnessInput({
+  highlightId, transitioned, xScale, reverseScale,
+  lawfullness, disabled, updateLawfullness
 }) {
-  console.log('rendering svg test inputs', transitioned)
-  const inputLen = 400,
-        // todo maybe range and domain are mixed up in this function
-        xScale = Scale([0, inputLen], [-10, 10]),
-        reverseScale = Scale([-10, 10], [-inputLen/2, inputLen/2])
   return (
-    <g>
-      <g
-        className={
-          "coord-axes test-input lawfullness"
-          + (highlightId === "highlight-input-law"? " highlighted" : "")
-          + (transitioned? " transitioned" : "")
-        }
-        >
-        <InputTrack
-          minLabel="Хаос" maxLabel="Закон" x={80} y={30} width={400} />
-        <InputThumb scale={xScale} reverseScale={reverseScale}
-          value={lawfullness} disabled={disabled}
-          onChange={setLawfullness} className="lawfullness-value" />
-      </g>
+    <g
+      className={
+        "coord-axes test-input lawfullness"
+        + (highlightId === "highlight-input-law"? " highlighted" : "")
+        + (transitioned? " transitioned" : "")
+      }
+      >
+      <InputTrack
+        minLabel="Хаос" maxLabel="Закон" width={400} />
+      <InputThumb scale={xScale} reverseScale={reverseScale}
+        value={lawfullness} disabled={disabled}
+        onChange={updateLawfullness} className="lawfullness-value" />
+    </g>
+  )
+}
+
+
+export function GoodnessInput({
+  highlightId, transitioned, xScale, reverseScale,
+  goodness, disabled, updateGoodness
+}) {
+  return (
       <g
         className={
           "coord-axes test-input goodness"
@@ -40,14 +43,35 @@ export function SvgTestInputs({
         }
         >
         <InputTrack
-          minLabel="Зло" maxLabel="Добро" x={80} y={90} width={400}
+          minLabel="Зло" maxLabel="Добро" width={400}
           rotateLabels={transitioned}/>
         <InputThumb scale={xScale} reverseScale={reverseScale}
           value={goodness} disabled={disabled}
-          onChange={setGoodness}
+          onChange={updateGoodness}
           className="goodness-value"
           />
       </g>
+  )
+}
+
+export function SvgTestInputs({
+  lawfullness, goodness, setLawfullness, setGoodness, highlightId,
+  disabled=false, transitioned=false
+}) {
+  const inputLen = 400,
+        // todo maybe range and domain are mixed up in this function
+        xScale = Scale([0, inputLen], [-10, 10]),
+        reverseScale = Scale([-10, 10], [-inputLen/2, inputLen/2])
+  return (
+    <g>
+      <LafullnessInput lawfullness={lawfullness} xScale={xScale}
+        reverseScale={reverseScale} updateLawfullness={setLawfullness}
+        highlightId={highlightId} transitioned={transitioned}
+        disabled={disabled} />
+      <GoodnessInput goodness={goodness} xScale={xScale}
+        reverseScale={reverseScale} updateGoodness={setGoodness}
+        highlightId={highlightId} transitioned={transitioned}
+        disabled={disabled} />
     </g>
   )
 }

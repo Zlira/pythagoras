@@ -1,5 +1,6 @@
-export const setScrollerStep = activeStep => ({
+export const setScrollerStep = (activeStep, direction) => ({
     type: 'SET_SCROLLER_STEP',
+    stepDirection: direction,
     activeStep,
 })
 

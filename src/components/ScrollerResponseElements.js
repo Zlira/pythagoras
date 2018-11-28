@@ -14,14 +14,14 @@ import CharVsChar from './graphics/StepTen/CharacterVsCharacter'
 import Result from './graphics/StepTwelve/Result'
 
 
-function ScrollerResponseElements({ activeStep }) {
+function ScrollerResponseElements({ activeStep, stepDirection }) {
     const stepToElement = [
         <RightTriangleParts />,
         <RightTriangleParts />,
         <RightTriangleVariants />,
         <DeathlyHallows />,
         <HarryPotterTest />,
-        <CoordSystem />,
+        <CoordSystem stepDirection={stepDirection} />,
         <CharacterIntro />,
         <ValuesDifference />,
         <DistanceToCharacter />,
@@ -41,6 +41,7 @@ function ScrollerResponseElements({ activeStep }) {
 function mapStateToProps(state) {
     return {
         activeStep: state.activeStep,
+        stepDirection: state.stepDirection,
     }
 }
 

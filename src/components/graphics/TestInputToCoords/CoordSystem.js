@@ -10,17 +10,15 @@ import { SvgTestInputs } from '../HPTestInput/HarryPotterTest'
 
 class CoordSystem extends React.Component {
   constructor(props) {
-    console.log('constructed test inputs to coords')
     super(props)
     this.state ={
-      show: 'inputs',
+      show: props.stepDirection === 'down'? 'testInputs' : 'Coords',
       inputsTransitioning: false,
     }
 
   }
 
   componentDidMount() {
-    console.log('mounted test inputs to coord')
     /*
     this.changeTimer = setTimeout(
       () => this.setState({show: 'coords'}), 1000)
@@ -28,17 +26,15 @@ class CoordSystem extends React.Component {
   }
 
   render() {
-    console.log('rendering test inputs to coord')
     const width = 400, height = 400,
           paddingLeft = 80, paddingTop = 40,
           svgWidth = width + 2*paddingLeft,
           svgHeight = height + 2*paddingTop,
           {lawfullness, goodness} = this.props
-    const content = this.state.show === 'inputs'
+    const content = this.state.show === 'testInputs'
       // todo add a class for disabled inputs to change cursor
       ? <Transition in={true} timeout={20} appear>
           {state => {
-            console.log(state)
             return <SvgTestInputs lawfullness={lawfullness}
             goodness={goodness} transitioned={
               state === 'entered'

@@ -14,6 +14,7 @@ const store = createStore(
   RootReducer, {
     // todo calculate this based on postion
     activeStep: 0,
+    stepDirection: 'down',
     triangleWidth: null,
     triangleHeight: null,
     selectedCharacter: 'harry',
@@ -31,7 +32,9 @@ class App extends Component {
     this.scrollama_ = scrollama()
                         .setup({step: '.step', 'offset': .3})
                         .onStepEnter(stepAttrs => {
-                          store.dispatch(setScrollerStep(stepAttrs.index))
+                          store.dispatch(
+                            setScrollerStep(stepAttrs.index, stepAttrs.direction)
+                          )
                         })
   }
 

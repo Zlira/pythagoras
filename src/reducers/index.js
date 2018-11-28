@@ -4,6 +4,7 @@ function RootReducer(state={}, action) {
           return {
               ...state,
               activeStep: action.activeStep,
+              stepDirection: action.stepDirection,
           }
         // todo maybe move this to a step level
         case 'SET_HIGHLIGHT_ID':

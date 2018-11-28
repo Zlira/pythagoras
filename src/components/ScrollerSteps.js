@@ -9,8 +9,8 @@ function ScrollerSteps({ activeStep }) {
     return (
         <div className='scroller-steps'>
           {steps.map(
-            (el, index) => (<ScrollerStep 
-                             children={el} 
+            (el, index) => (<ScrollerStep
+                             children={el}
                              isActive={index === activeStep}/>)
           )}
         </div>
