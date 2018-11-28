@@ -54,7 +54,7 @@ class RightTriangleParts extends React.Component {
       width: this.initTrWidth,
       height: this.initTrHeight,
       aLabelShift: 0,
-      showRectangle: false,
+      showSquare: false,
     }
     this.scaleTriangle = this.scaleTriangle.bind(this)
   }
@@ -70,7 +70,6 @@ class RightTriangleParts extends React.Component {
   }
 
   scaleTriangle(direction) {
-    console.log(direction)
     const vars = {
       shrink: {
         thisTransitionName: 'animeRectShrink',
@@ -99,7 +98,17 @@ class RightTriangleParts extends React.Component {
       targets: copiedState,
       width: targetWidth,
       height: targetHeight,
-      update: anim => {
+      begin: anim => {
+        if (direction === 'expand') {
+          this.setState(prevState => ({showSquare: false}))
+        }
+      },
+      complete: anim => {
+        if (direction === 'shrink' && !anim.reversed) {
+          this.setState(prevState => ({showSquare: true}))
+        }
+      },
+      run: anim => {
         this.setState(prevState => ({
           width: copiedState.width,
           height: copiedState.height,
@@ -133,7 +142,7 @@ class RightTriangleParts extends React.Component {
               height={this.state.height}
               showRightAngle={this.props.highlightId && this.props.highlightId !== 'highlight-square'}
               aXLabelShift={this.state.aLabelShift}/>
-            <CSSTransition timeout={{enter: 200, exit: 0}} in={this.state.showRectangle}
+            <CSSTransition timeout={{enter: 200, exit: 0}} in={this.state.showSquare}
               classNames='square' unmountOnExit mountOnEnter appear>
                 {
                   state => {
