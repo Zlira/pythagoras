@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { easeCubicIn } from 'd3-ease'
 import { CSSTransition } from 'react-transition-group'
+import anime from 'animejs'
 
 import colors from '../colors'
 import Triangle from '../RightTriangle/index'
@@ -53,56 +53,59 @@ class RightTriangleParts extends React.Component {
     this.state = {
       width: this.initTrWidth,
       height: this.initTrHeight,
-      transitionProgress: 0,
       aLabelShift: 0,
+      showRectangle: false,
     }
-
-    this.animateSquare = this.animateSquare.bind(this)
+    this.scaleTriangle = this.scaleTriangle.bind(this)
   }
 
   componentDidUpdate(prevProps) {
     const sqareId = 'highlight-square'
     if (prevProps.highlightId !== sqareId && this.props.highlightId === sqareId) {
-      clearInterval(this.animateSquareTimer)
-      this.setState({transitionProgress: 0})
-      this.animateSquareTimer = setInterval(
-        () => this.animateSquare(false), this.trTransitionFreq
-      )
+      this.scaleTriangle('shrink')
     }
     if (prevProps.highlightId === sqareId && this.props.highlightId !== sqareId) {
-      clearInterval(this.animateSquareTimer)
-      this.animateSquareTimer = setInterval(
-        () => this.animateSquare(true), this.trTransitionFreq
-      )
+      this.scaleTriangle('expand')
     }
   }
 
-  animateSquare(enlarge) {
-    const shouldClear = enlarge
-      ? (progress) => progress <= 0
-      : (progress) => progress >= 1
-    this.setState(prevState => {
-      const progress = prevState.transitionProgress + (
-        this.trTransitionFreq / this.trTransitionDuration
-      ) * (enlarge? -1 : 1)
-      const width = this.minTrWidth + (this.initTrWidth - this.minTrWidth) * easeCubicIn(1 - progress),
-            height = this.minTrHeight + (this.initTrHeight - this.minTrHeight) * easeCubicIn(1 - progress),
-            aLabelShift = this.maxALabelShift * easeCubicIn(progress)
-      if (shouldClear(progress)) {
-        clearInterval(this.animateSquareTimer)
-        return {
-          width: enlarge? this.initTrWidth : this.minTrWidth,
-          height: enlarge? this.initTrHeight : this.minTrHeight,
-        }
+  scaleTriangle(direction) {
+    console.log(direction)
+    const vars = {
+      shrink: {
+        thisTransitionName: 'animeRectShrink',
+        oppositeTransition: this.animeRectExpand,
+        targetWidth: this.minTrWidth,
+        targetHeight: this.minTrHeight,
+      },
+      expand: {
+        thisTransitionName: 'animeRectExpand',
+        oppositeTransition: this.animeRectShrink,
+        targetWidth: this.initTrWidth,
+        targetHeight: this.initTrHeight,
       }
-      return {
-        width: width,
-        height: height,
-        transitionProgress: progress,
-        aLabelShift: aLabelShift,
-      }})
+    }
+    const {
+      thisTransitionName, oppositeTransition, targetWidth, targetHeight
+    } = vars[direction]
+    if (oppositeTransition && !oppositeTransition.completed) {
+      oppositeTransition.reverse()
+    }
+    if (this[thisTransitionName]) {
+      this[thisTransitionName].pause()
+    }
+    const copiedState = {...this.state}
+    this[thisTransitionName] = anime({
+      targets: copiedState,
+      width: targetWidth,
+      height: targetHeight,
+      update: anim => {
+        this.setState(prevState => ({
+          width: copiedState.width,
+          height: copiedState.height,
+        }))}
+    })
   }
-
   render() {
     const paddingLeft = 80,
           defsPosition = {
@@ -130,7 +133,7 @@ class RightTriangleParts extends React.Component {
               height={this.state.height}
               showRightAngle={this.props.highlightId && this.props.highlightId !== 'highlight-square'}
               aXLabelShift={this.state.aLabelShift}/>
-            <CSSTransition timeout={{enter: 200, exit: 0}} in={this.state.width <= this.minTrWidth}
+            <CSSTransition timeout={{enter: 200, exit: 0}} in={this.state.showRectangle}
               classNames='square' unmountOnExit mountOnEnter appear>
                 {
                   state => {
