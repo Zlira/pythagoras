@@ -1,23 +1,56 @@
 import React from 'react'
 import Draggable from 'react-draggable'
 import { connect } from 'react-redux'
+import anime from 'animejs'
 
 import { setLawfullness, setGoodness } from '../../../actions'
 import Scale from '../Scale'
 import Svg from '../Svg'
-import './HarryPotterTest.css'
 
 
-export function LafullnessInput({
-  highlightId, transitioned, xScale, reverseScale,
-  lawfullness, disabled, updateLawfullness
-}) {
+export class LafullnessInput extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      translateX: 80,
+      translateY: 30,
+    }
+    this.transition = this.transition.bind(this)
+  }
+
+  componentWillUnmount() {
+    anime.remove(this.copiedState)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!prevProps.transitioned && this.props.transitioned) {
+      this.transition()
+    }
+  }
+
+  transition() {
+    const copiedState = {...this.state}
+    this.animation = anime({
+      targets: copiedState,
+      translateY: 240,
+      run: anim => this.setState(prevState => ({
+        translateY: copiedState.translateY,
+      }))
+    })
+  }
+
+  render() {
+    const {
+      highlightId, xScale, reverseScale,
+      lawfullness, disabled, updateLawfullness
+    } = this.props
+    const {translateX, translateY} = this.state
   return (
     <g
+      transform={`translate(${translateX}, ${translateY})`}
       className={
         "coord-axes test-input lawfullness"
         + (highlightId === "highlight-input-law"? " highlighted" : "")
-        + (transitioned? " transitioned" : "")
       }
       >
       <InputTrack
@@ -28,30 +61,74 @@ export function LafullnessInput({
     </g>
   )
 }
+}
 
 
-export function GoodnessInput({
-  highlightId, transitioned, xScale, reverseScale,
-  goodness, disabled, updateGoodness
-}) {
-  return (
+export class GoodnessInput extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      translateX: 80,
+      translateY: 90,
+      rotate: 0,
+    }
+    this.transition = this.transition.bind(this)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!prevProps.transitioned && this.props.transitioned) {
+      this.transition()
+    }
+  }
+
+  componentWillUnmount() {
+    anime.remove(this.copiedState)
+  }
+
+  transition() {
+    this.copiedState = {...this.state}
+    this.animation = anime({
+      targets: this.copiedState,
+      rotate: -90,
+      translateY: 240,
+      duration: 3000,
+      run: anim => {
+        this.setState(prevState => ({
+          rotate: this.copiedState.rotate,
+          translateY: this.copiedState.translateY,
+        }))
+      }
+    })
+  }
+
+  render() {
+    const {
+      highlightId, xScale, reverseScale,
+      goodness, disabled, updateGoodness
+    } = this.props
+    const {translateX, translateY, rotate} = this.state
+    return (
       <g
+        transform={
+          `translate(${translateX}, ${translateY}) rotate(${rotate}, 200, 0)`
+        }
         className={
           "coord-axes test-input goodness"
           + (highlightId === "highlight-input-good"? " highlighted" : "")
-          + (transitioned? " transitioned" : "")
         }
         >
         <InputTrack
           minLabel="Зло" maxLabel="Добро" width={400}
-          rotateLabels={transitioned}/>
+          rotateLabels={rotate}/>
         <InputThumb scale={xScale} reverseScale={reverseScale}
           value={goodness} disabled={disabled}
           onChange={updateGoodness}
           className="goodness-value"
+          rotateLabel={rotate}
           />
       </g>
-  )
+    )
+  }
 }
 
 export function SvgTestInputs({
@@ -76,18 +153,20 @@ export function SvgTestInputs({
   )
 }
 
-function InputTrack({minLabel, maxLabel, width, rotateLabels=false}) {
-  const textLabelY = -10
+function InputTrack({minLabel, maxLabel, width, rotateLabels=0}) {
+  const textLabelY = 6
   return (
     // todo don't use this class, move style somewhere else
     <>
       <line x1={0} y1={0} x2={width} y2={0} />
-      <text x={0} y={textLabelY} transform={
-        rotateLabels? `rotate(90, ${0}, ${textLabelY})`: ''
-      }>{minLabel}</text>
-      <text x={width} y={textLabelY}
-        textAnchor={rotateLabels? "middle" : "end"}
-        transform={rotateLabels? `rotate(90, ${width}, ${textLabelY})` : ''}>
+      <text x={-5} y={textLabelY}
+        textAnchor="end"
+        transform={`rotate(${-rotateLabels}, ${-12}, ${textLabelY - 5})`}>
+        {minLabel}
+      </text>
+      <text x={width + 5} y={textLabelY}
+        textAnchor="start"
+        transform={rotateLabels? `rotate(90, ${width + 20}, ${textLabelY - 10})` : ''}>
           {maxLabel}
       </text>
     </>
@@ -102,11 +181,19 @@ class InputThumb extends React.Component {
   }
 
   render() {
-    const {onChange, value, scale, reverseScale, className, disabled} = this.props
+    const {
+      onChange, value, scale, reverseScale, className, disabled,
+    } = this.props
+    let rotateLabel = this.props.rotateLabel
     const step = Math.round(scale(1) - scale(0))
+    if (!rotateLabel) {rotateLabel = 0}
     return <g className={className + " test-values"}>
       <line x1={scale(0)} x2={scale(value)} y1={0} y2={0} />
-      <text x={scale(value)} y={20}>{value}</text>
+      <text x={scale(value)} y={20}
+        transform={`rotate(${-rotateLabel}, ${scale(value)}, 20)`}
+      >
+        {value}
+      </text>
       <Draggable axis='x' onDrag={(e, ui) => {
           onChange(reverseScale(Math.round((ui.x) / step) * step) + this.initialVal)
         }}
@@ -134,7 +221,7 @@ const ConnectedSvgInputs = connect(
 
 
 export default () => {
-    const width=500, height=150
+    const width=560, height=150
     return (
       <div>
       <Svg width={width} height={height}>
