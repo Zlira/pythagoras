@@ -22,26 +22,26 @@ svg .test-values text {
 /* todo select one way of doing this */
 svg line.lawfullness-value,
 svg .lawfullness-value line{
-    stroke: #f29b00;
+    stroke: #00CFFF;
 }
 
 svg .lawfullness-value circle,
 svg .lawfullness-value text {
-    fill: #f29b00;
+    fill: #00CFFF;
 }
 
 svg line.goodness-value,
 svg .goodness-value line {
-    stroke: #009137;
+    stroke: #BC2CFF;
 }
 
 svg line.distance-value {
-    stroke: #dc3723;
+    stroke: #32FF00;
 }
 
 svg .goodness-value circle,
 svg .goodness-value text {
-    fill: #009137;
+    fill: #BC2CFF;
 }
 
 svg .test-values .combined-value circle {

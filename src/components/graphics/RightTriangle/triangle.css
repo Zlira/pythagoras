@@ -8,16 +8,9 @@ svg .triangle line.highlighted {
   stroke-width: 4px;
 }
 
-svg .triangle line.highlighted.hypothenuse {
-  animation: pulse-red 1s linear 0s 3 normal running;
-}
-
-svg .triangle line.highlighted.cathetus-2 {
-  animation: pulse-green 1s linear 0s 3 normal running;
-}
-
-svg .triangle line.highlighted.cathetus-1 {
-  animation: pulse-yellow 1s linear 0s 3 normal running;
+/* todo make one style for ALL highlight animations*/
+svg .triangle line.highlighted {
+  animation: pulse-opacity 1.5s linear 0s 3 normal running;
 }
 
 svg .triangle text {
@@ -31,17 +24,17 @@ svg .triangle .side-len {
 }
 
 svg .triangle .side-len.cathetus-1 {
-  fill: #f29b00;
+  fill: #00CFFF;
   text-anchor: middle;
 }
 
 svg .triangle .side-len.cathetus-2 {
-  fill: #009137;
+  fill: #BC2CFF;
   text-anchor: end;
 }
 
 svg .triangle .side-len.hypothenuse {
-  fill: #dc3723;
+  fill: #32FF00;
 }
 
 svg .right-angle polyline {

@@ -20,7 +20,7 @@ function HypothenuseLabel({triangleWidth, triangleHeight}) {
     // todo check if the rounding agrees with the cathetus label
     return (
       <span>
-        <span style={{color: colors.red}} className="triangle-side">
+        <span style={{color: colors.green}} className="triangle-side">
           {hypothenuseLen.toFixed(signDigits)}
         </span><sup>2</sup> =
         {' ' + (hypothenuseLen ** 2).toFixed(signDigits)}
@@ -33,10 +33,10 @@ function CathetiLabel({triangleWidth, triangleHeight}) {
     const sumOSqrs = sumOfSquares(triangleHeight, triangleWidth).toFixed(signDigits)
     return (
       <span>
-        <span style={{color: colors.green}} className="triangle-side">
+        <span style={{color: colors.purple}} className="triangle-side">
           {triangleHeight}
         </span><sup>2</sup> +
-        <span style={{color: colors.yellow}} className="triangle-side">
+        <span style={{color: colors.blue}} className="triangle-side">
           {' ' + triangleWidth}
         </span><sup>2</sup> =
         {' ' + sumOSqrs}

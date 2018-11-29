@@ -30,7 +30,7 @@ function SquareOnHypothenuse({trWidth, trHeight, bCoords}) {
     [startX, yScale(bCoords.y + len)],
   ]
   return (
-    <polyline points={points.map(el => el.join(',')).join(' ')} stroke={colors.red}
+    <polyline points={points.map(el => el.join(',')).join(' ')} stroke={colors.green}
       fill="none" transform={`rotate(${-rotateAngle}, ${startX}, ${startY})`}
       strokeWidth="3px"/>
   )

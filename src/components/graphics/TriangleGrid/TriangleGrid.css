@@ -3,13 +3,14 @@
 }
 
 .tr-grid.vertical {
-    stroke: #f29b00;
+    stroke: #00CFFF;
 }
 
 .tr-grid.horizontal {
-    stroke: #009137;
+    stroke: #BC2CFF;
 }
 
+/* 'diagonal' may be a better name */
 .tr-grid-rotated .tr-grid {
-    stroke: #dc3723;
+    stroke: #32FF00;
 }

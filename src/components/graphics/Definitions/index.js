@@ -25,7 +25,7 @@ export function RightTriangleDefinition({top, left, width}) {
 export function HypothenuseDefinition({top, left, width}) {
     return (
         <Definition top={top} left={left} width={width}>
-          <p><dfn style={{color: colors.red}}>Гіпотенуза</dfn> — сторона напроти прямого кута</p>
+          <p><dfn style={{color: colors.green}}>Гіпотенуза</dfn> — сторона напроти прямого кута</p>
         </Definition>
     )
 }

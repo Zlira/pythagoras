@@ -20,10 +20,10 @@ function DraggingIcon({x, y, isHorizontal=false, highlighted=false}) {
     return (
         <g transform={`translate(${x}, ${y})`} className={className}>
           <polygon points={points.map(el => el.join(',')).join(' ')}
-              fill='#0883ff' stroke='rgb(241, 241, 241)' strokeWidth='2px'/>
+              fill='#2F343F' stroke='white' strokeWidth='2px'/>
           <line x1={middleLinePoints[0][0]} x2={middleLinePoints[1][0]}
               y1={middleLinePoints[0][1]} y2={middleLinePoints[1][1]}
-              stroke='rgb(241, 241, 241)' strokeWidth='2px'/>
+              stroke='white' strokeWidth='2px'/>
         </g>
     )
 }

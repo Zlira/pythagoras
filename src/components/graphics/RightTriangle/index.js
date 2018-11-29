@@ -56,19 +56,19 @@ function Triangle({bCoords, width, height,
           <HighlightElement highlightId="highlight-hypothenuse"
             otherMatchingIds={triangleHighlightId} step={step}>
             <line x2={A.x} x1={C.x} y2={A.y} y1={C.y}
-                    stroke={colors.red}
+                    stroke={colors.green}
                     className='hypothenuse'/>
           </HighlightElement>
           <HighlightElement highlightId="highlight-cathetus"
             otherMatchingIds={triangleHighlightId} step={step}>
             <line x1={B.x} x2={C.x} y1={B.y} y2={C.y}
-                    stroke={colors.yellow}
+                    stroke={colors.blue}
                     className='cathetus-1'/>
           </HighlightElement>
           <HighlightElement highlightId="highlight-cathetus"
             otherMatchingIds={triangleHighlightId} step={step}>
             <line x2={A.x} x1={B.x} y2={A.y} y1={B.y}
-                    stroke={colors.green}
+                    stroke={colors.purple}
                     className='cathetus-2'/>
           </HighlightElement>
           <g className='point-labels'>
