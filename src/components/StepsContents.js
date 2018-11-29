@@ -85,7 +85,7 @@ const steps = [
     </p>,
     <>
       <p>
-        Розмісти себе на {''}
+        Скористайся повзунком зліва, щоби розмістити себе на {''}
         <HighlightElement highlightId="highlight-input-law" step={4}>
           <span>шкалі Хаос (-10)&nbsp;— Закон (+10)</span>
         </HighlightElement>,<br/> де Хаос&nbsp;— це свобода і гнучкість,

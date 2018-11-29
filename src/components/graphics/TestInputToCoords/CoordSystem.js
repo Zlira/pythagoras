@@ -1,6 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { Transition } from 'react-transition-group'
 
 import Values from './Values'
 import CoordPlane from '../CoordinatePlane'
@@ -13,18 +12,31 @@ class CoordSystem extends React.Component {
     super(props)
     this.state ={
       show: props.stepDirection === 'down'? 'testInputs' : 'Coords',
-      inputsTransitioning: false,
     }
-
+    this.timeline = {
+      testInputs: 0,
+      coordGird: 1000,
+      values: 1500,
+    }
   }
 
   componentWillUnmount() {
-    clearTimeout(this.changeTimer)
+    clearTimeout(this.coordGirdTimer)
+    clearTimeout(this.showValuesTimer)
   }
 
+  // pass components durations and delays in transition prop
   componentDidMount() {
-    this.changeTimer = setTimeout(
-      () => this.setState({show: 'coords'}), 2000)
+    if (this.props.stepDirection === "down") {
+      this.coordGirdTimer = setTimeout(
+        () => this.setState({show: 'coordGrid'}),
+        this.timeline.coordGird
+      )
+      this.showValuesTimer = setTimeout(
+        () => this.setState({show: 'values'}),
+        this.timeline.values
+      )
+    }
   }
 
   render() {
@@ -33,20 +45,36 @@ class CoordSystem extends React.Component {
           svgWidth = width + 2*paddingLeft,
           svgHeight = height + 2*paddingTop,
           {lawfullness, goodness} = this.props
-    const content = this.state.show === 'testInputs'
-      // todo add a class for disabled inputs to change cursor
-      ? <Transition in={true} timeout={20} appear>
-          {state => {
-            return <SvgTestInputs lawfullness={lawfullness}
-            goodness={goodness} transitioned={
-              state === 'entered'
-            }
-            disabled />}}
-        </Transition>
-      : <g transform={`translate(${paddingLeft}, ${paddingTop})`}>
-          <CoordPlane width={width} height={height} transitioned/>
-          <Values width={width} height={height} />
-        </g>
+    const testInputs = (
+      <SvgTestInputs lawfullness={lawfullness}
+        goodness={goodness} transition disabled key='testInput' />
+    ),
+    coordPlane = (
+      <g transform={`translate(${paddingLeft}, ${paddingTop})`} key='coordPlane'>
+        <CoordPlane width={width} height={height}
+          transitioned />
+      </g>
+    ),
+    values = (
+      <g transform={`translate(${paddingLeft}, ${paddingTop})`} key='values'>
+        <Values width={width} height={height} lawfullness={lawfullness}
+          goodness={goodness} transition />
+      </g>
+    )
+    let content
+    switch (this.state.show) {
+      case 'testInputs':
+        content = testInputs
+        break
+      case 'coordGrid':
+        content = [coordPlane, testInputs]
+        break
+      case 'values':
+        content = [coordPlane, values]
+        break
+      default:
+        content = [coordPlane, values]
+    }
     return (
         <Svg width={svgWidth} height={svgHeight}>
          {content}

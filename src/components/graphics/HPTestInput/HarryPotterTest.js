@@ -16,20 +16,20 @@ export class LafullnessInput extends React.Component {
       translateX: 80,
       translateY: 30,
     }
-    this.transition = this.transition.bind(this)
+    this.animateAppear = this.animateAppear.bind(this)
   }
 
   componentWillUnmount() {
     anime.remove(this.copiedState)
   }
 
-  componentDidUpdate(prevProps) {
-    if (!prevProps.transitioned && this.props.transitioned) {
-      this.transition()
+  componentDidMount(prevProps) {
+    if (this.props.transition) {
+      this.animateAppear()
     }
   }
 
-  transition() {
+  animateAppear() {
     this.copiedState = {...this.state}
     this.animation = anime({
       targets: this.copiedState,
@@ -74,12 +74,12 @@ export class GoodnessInput extends React.Component {
       translateY: 90,
       rotate: 0,
     }
-    this.transition = this.transition.bind(this)
+    this.animateAppear = this.animateAppear.bind(this)
   }
 
-  componentDidUpdate(prevProps) {
-    if (!prevProps.transitioned && this.props.transitioned) {
-      this.transition()
+  componentDidMount() {
+    if (this.props.transition) {
+      this.animateAppear()
     }
   }
 
@@ -87,7 +87,7 @@ export class GoodnessInput extends React.Component {
     anime.remove(this.copiedState)
   }
 
-  transition() {
+  animateAppear() {
     this.copiedState = {...this.state}
     this.animation = anime({
       targets: this.copiedState,
@@ -135,7 +135,7 @@ export class GoodnessInput extends React.Component {
 
 export function SvgTestInputs({
   lawfullness, goodness, setLawfullness, setGoodness, highlightId,
-  disabled=false, transitioned=false
+  disabled=false, transition=false
 }) {
   const inputLen = 400,
         // todo maybe range and domain are mixed up in this function
@@ -145,11 +145,11 @@ export function SvgTestInputs({
     <g>
       <LafullnessInput lawfullness={lawfullness} xScale={xScale}
         reverseScale={reverseScale} updateLawfullness={setLawfullness}
-        highlightId={highlightId} transitioned={transitioned}
+        highlightId={highlightId} transition={transition}
         disabled={disabled} />
       <GoodnessInput goodness={goodness} xScale={xScale}
         reverseScale={reverseScale} updateGoodness={setGoodness}
-        highlightId={highlightId} transitioned={transitioned}
+        highlightId={highlightId} transition={transition}
         disabled={disabled} />
     </g>
   )

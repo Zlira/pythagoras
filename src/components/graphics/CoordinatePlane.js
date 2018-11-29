@@ -12,6 +12,7 @@ class CoordGrid extends React.Component {
         ? Array(4).fill(0)
         : Array(4).fill(props.width)
     }
+    this.animateAppear = this.animateAppear.bind(this)
   }
 
   componentWillUnmount() {
@@ -31,7 +32,7 @@ class CoordGrid extends React.Component {
       // todo this only works if width and height are the same
       len: this.props.width,
       delay: (el,i) => i*100,
-      duration: 300,
+      duration: 500,
       easing: 'easeInQuad',
       update: anim => this.setState({
         linesLengths: this.linesLengths.map(i => i.len)
