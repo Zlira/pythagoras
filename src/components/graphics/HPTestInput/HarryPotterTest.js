@@ -8,6 +8,7 @@ import Scale from '../Scale'
 import Svg from '../Svg'
 
 
+/* TODO move this kind of animated behavior to a HOC */
 export class LafullnessInput extends React.Component {
   constructor(props) {
     super(props)
@@ -29,12 +30,13 @@ export class LafullnessInput extends React.Component {
   }
 
   transition() {
-    const copiedState = {...this.state}
+    this.copiedState = {...this.state}
     this.animation = anime({
-      targets: copiedState,
+      targets: this.copiedState,
       translateY: 240,
+      elasticity: 0,
       run: anim => this.setState(prevState => ({
-        translateY: copiedState.translateY,
+        translateY: this.copiedState.translateY,
       }))
     })
   }
@@ -91,7 +93,7 @@ export class GoodnessInput extends React.Component {
       targets: this.copiedState,
       rotate: -90,
       translateY: 240,
-      duration: 3000,
+      elasticity: 0,
       run: anim => {
         this.setState(prevState => ({
           rotate: this.copiedState.rotate,

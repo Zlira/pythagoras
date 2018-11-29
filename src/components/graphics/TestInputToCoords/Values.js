@@ -37,7 +37,7 @@ function Values({width, height, lawfullness=0, goodness=0}) {
             </text>
           </g>
           <g className='combined-value'>
-            <circle r='10' cx={xVal} cy={yVal} />
+            <circle r='7' cx={xVal} cy={yVal} />
           </g>
         </g>
     )

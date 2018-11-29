@@ -18,11 +18,13 @@ class CoordSystem extends React.Component {
 
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.changeTimer)
+  }
+
   componentDidMount() {
-    /*
     this.changeTimer = setTimeout(
-      () => this.setState({show: 'coords'}), 1000)
-    */
+      () => this.setState({show: 'coords'}), 2000)
   }
 
   render() {
@@ -42,7 +44,7 @@ class CoordSystem extends React.Component {
             disabled />}}
         </Transition>
       : <g transform={`translate(${paddingLeft}, ${paddingTop})`}>
-          <CoordPlane width={width} height={height}/>
+          <CoordPlane width={width} height={height} transitioned/>
           <Values width={width} height={height} />
         </g>
     return (
