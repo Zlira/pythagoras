@@ -7,6 +7,7 @@ import PythagorasFormula from './PythagorasFormula'
 import StepP from '../containers/StepParagraph'
 import HighlightElement from '../containers/HighlightElement'
 import DraggingIcon from './graphics/DragginigIcon'
+import Alignment from './Alignment'
 
 
 const steps = [
@@ -99,11 +100,11 @@ const steps = [
         а Добро&nbsp;— допомагати
       </p>
     </>,
-    <p>
+    <StepP>
         Тепер ми маємо твої показники і можемо помістити тебе у спеціальну систему координат з осями
         Хаос — Закон, Добро — Зло. Тут добрі — згори, злі — внизу, чемні — зліва, бунтівники — справа.
-        Ти попадаєш до ( світогляд ).
-    </p>,
+        Ти попадаєш до <Alignment />.
+    </StepP>,
     <p>
         Додамо інших персонажів на координатну площину. Далі потрібно буде виміряти відстань
         кожного з них до тебе, вибрати найближчого/у — це і буде твоїм результатом.
