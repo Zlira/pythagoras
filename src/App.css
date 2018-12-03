@@ -91,3 +91,9 @@ svg text {
 g.highlighted {
   animation: pulse-opacity 1s linear 0s 3 normal running;
 }
+
+svg text.axis-label {
+  font-weight: bold;
+  font-size: 1.1rem;
+  fill: #999;
+}

@@ -1,7 +1,7 @@
 import React from 'react'
 import Draggable from 'react-draggable'
 import { connect } from 'react-redux'
-import anime from 'animejs'
+import { scaleLinear } from 'd3-scale'
 
 import { setLawfullness, setGoodness } from '../../../actions'
 import Scale from '../Scale'
@@ -9,44 +9,15 @@ import Svg from '../Svg'
 
 
 /* TODO move this kind of animated behavior to a HOC */
-export class LafullnessInput extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      translateX: 80,
-      translateY: 30,
-    }
-    this.animateAppear = this.animateAppear.bind(this)
-  }
-
-  componentWillUnmount() {
-    anime.remove(this.copiedState)
-  }
-
-  componentDidMount(prevProps) {
-    if (this.props.transition) {
-      this.animateAppear()
-    }
-  }
-
-  animateAppear() {
-    this.copiedState = {...this.state}
-    this.animation = anime({
-      targets: this.copiedState,
-      translateY: 240,
-      elasticity: 0,
-      run: anim => this.setState(prevState => ({
-        translateY: this.copiedState.translateY,
-      }))
-    })
-  }
-
-  render() {
-    const {
-      highlightId, xScale, reverseScale,
-      lawfullness, disabled, updateLawfullness
-    } = this.props
-    const {translateX, translateY} = this.state
+export function LafullnessInput({
+    highlightId, xScale, reverseScale,
+    lawfullness, disabled, updateLawfullness,
+    transition=0
+  }) {
+  const translateY = scaleLinear()
+    .domain([0, 1])
+    .range([30, 240])(transition)
+  const translateX = 80
   return (
     <g
       transform={`translate(${translateX}, ${translateY})`}
@@ -61,81 +32,43 @@ export class LafullnessInput extends React.Component {
         value={lawfullness} disabled={disabled}
         onChange={updateLawfullness} className="lawfullness-value" />
     </g>
-  )
+)
 }
-}
 
 
-export class GoodnessInput extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      translateX: 80,
-      translateY: 90,
-      rotate: 0,
-    }
-    this.animateAppear = this.animateAppear.bind(this)
-  }
-
-  componentDidMount() {
-    if (this.props.transition) {
-      this.animateAppear()
-    }
-  }
-
-  componentWillUnmount() {
-    anime.remove(this.copiedState)
-  }
-
-  animateAppear() {
-    this.copiedState = {...this.state}
-    this.animation = anime({
-      targets: this.copiedState,
-      rotate: -90,
-      translateY: 240,
-      elasticity: 0,
-      run: anim => {
-        this.setState(prevState => ({
-          rotate: this.copiedState.rotate,
-          translateY: this.copiedState.translateY,
-        }))
+export function GoodnessInput({
+  highlightId, xScale, reverseScale,
+  goodness, disabled, updateGoodness, transition=0
+}) {
+  const translateX = 80,
+    translateY = scaleLinear().domain([0, 1]).range([90, 240])(transition),
+    rotate = scaleLinear().domain([0, 1]).range([0, -90])(transition)
+  return (
+    <g
+      transform={
+        `translate(${translateX}, ${translateY}) rotate(${rotate}, 200, 0)`
       }
-    })
-  }
-
-  render() {
-    const {
-      highlightId, xScale, reverseScale,
-      goodness, disabled, updateGoodness
-    } = this.props
-    const {translateX, translateY, rotate} = this.state
-    return (
-      <g
-        transform={
-          `translate(${translateX}, ${translateY}) rotate(${rotate}, 200, 0)`
-        }
-        className={
-          "coord-axes test-input goodness"
-          + (highlightId === "highlight-input-good"? " highlighted" : "")
-        }
-        >
-        <InputTrack
-          minLabel="Зло" maxLabel="Добро" width={400}
-          rotateLabels={rotate}/>
-        <InputThumb scale={xScale} reverseScale={reverseScale}
-          value={goodness} disabled={disabled}
-          onChange={updateGoodness}
-          className="goodness-value"
-          rotateLabel={rotate}
-          />
-      </g>
-    )
-  }
+      className={
+        "coord-axes test-input goodness"
+        + (highlightId === "highlight-input-good"? " highlighted" : "")
+      }
+      >
+      <InputTrack
+        minLabel="Зло" maxLabel="Добро" width={400}
+        rotateLabels={rotate}/>
+      <InputThumb scale={xScale} reverseScale={reverseScale}
+        value={goodness} disabled={disabled}
+        onChange={updateGoodness}
+        className="goodness-value"
+        rotateLabel={rotate}
+        />
+    </g>
+  )
 }
 
 export function SvgTestInputs({
   lawfullness, goodness, setLawfullness, setGoodness, highlightId,
-  disabled=false, transition=false
+  disabled=false, transition=0
 }) {
   const inputLen = 400,
         // todo maybe range and domain are mixed up in this function
@@ -156,19 +89,28 @@ export function SvgTestInputs({
 }
 
 function InputTrack({minLabel, maxLabel, width, rotateLabels=0}) {
-  const textLabelY = 6
+  const textLabelY = 6, padding = 20
   return (
     // todo don't use this class, move style somewhere else
     <>
       <line x1={0} y1={0} x2={width} y2={0} />
-      <text x={-5} y={textLabelY}
+      <text x={-padding} y={textLabelY}
+        className="axis-label"
         textAnchor="end"
-        transform={`rotate(${-rotateLabels}, ${-12}, ${textLabelY - 5})`}>
+        transform={ rotateLabels?
+          `rotate(${-rotateLabels}, ${-padding}, ${textLabelY}) ` +
+          'translate(4, 14)'
+          : ''
+        }>
         {minLabel}
       </text>
-      <text x={width + 5} y={textLabelY}
+      <text x={width + padding} y={textLabelY}
+        className="axis-label"
         textAnchor="start"
-        transform={rotateLabels? `rotate(90, ${width + 20}, ${textLabelY - 10})` : ''}>
+        transform={rotateLabels?
+          `rotate(90, ${width + 10}, ${textLabelY - 10}) ` +
+          'translate(-24, -20)'
+          : ''}>
           {maxLabel}
       </text>
     </>

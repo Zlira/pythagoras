@@ -27,10 +27,11 @@ export default () => {
     return (
         <Svg width={svgWidth} height={svgHeight}>
           <g transform={`translate(${paddingLeft}, ${paddingTop})`}>
-            <CoordPlane width={width} height={height}/>
-            <g className='character-pictures'>
-              {imgs}
-            </g>
+            <CoordPlane width={width} height={height}>
+              <g className='character-pictures'>
+                {imgs}
+              </g>
+            </CoordPlane>
             <UserValuePoint xScale={xScale} yScale={yScale} />
           </g>
         </Svg>

@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import anime from 'animejs'
 
 import Values from './Values'
 import CoordPlane from '../CoordinatePlane'
@@ -13,6 +14,34 @@ class CoordSystem extends React.Component {
     this.state ={
       show: props.stepDirection === 'down'? 'testInputs' : 'Coords',
     }
+    let obj = {first: 0, second: 0}
+    let running = true
+    let tl = anime.timeline({
+      complete: () => {running = false},
+      update: e => console.log(obj.first, obj.second)
+    });
+    tl.add({
+      targets: obj,
+      first: 100,
+      duration: 1000,
+      easing: 'linear',
+    }).add({
+      targets: obj,
+      easing: 'linear',
+      second: 100,
+      duration: 500,
+    })
+    setTimeout(
+      () => {
+        console.log('reversing', obj, running);
+        if (running) {
+          tl.reverse()
+        } else {
+          tl.direction = 'reverse'; tl.restart()
+        }
+      },
+      800
+    )
     this.timeline = {
       testInputs: 0,
       coordGird: 1000,

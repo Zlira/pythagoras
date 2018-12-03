@@ -1,56 +1,21 @@
 import React from 'react'
-import anime from 'animejs'
+import { scaleLinear } from 'd3-scale'
 
 import './CoordinatePlane.css'
 
 
-class CoordGrid extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      linesLengths: props.transition
-        ? Array(4).fill(0)
-        : Array(4).fill(props.width)
-    }
-    this.animateAppear = this.animateAppear.bind(this)
-  }
-
-  componentWillUnmount() {
-    anime.remove(this.linesLengths)
-  }
-
-  componentDidMount() {
-    if (this.props.transition) {
-      this.animateAppear()
-    }
-  }
-
-  animateAppear() {
-    this.linesLengths = this.state.linesLengths.map(i => ({len: i}))
-    anime({
-      targets: this.linesLengths,
-      // todo this only works if width and height are the same
-      len: this.props.width,
-      delay: (el,i) => i*100,
-      duration: 500,
-      easing: 'easeInQuad',
-      update: anim => this.setState({
-        linesLengths: this.linesLengths.map(i => i.len)
-      })
-    })
-  }
-
-  render () {
-    const {width, height} = this.props
+export function CoordGrid({width, height, transVert=1, transHoriz=1}) {
     const xGridSpacing = Math.round(width / 3),
-          yGridSpacing = Math.round(height / 3)
+          yGridSpacing = Math.round(height / 3),
+          xScale = scaleLinear().domain([0, 1]).range([0, width]),
+          yScale = scaleLinear().domain([0, 1]).range([0, height])
     const verticalLines = [...Array(4).keys()].map(
       i => <line key={'v'+ i}
             x1={xGridSpacing*i} x2={xGridSpacing*i} y1={0}
-            y2={this.state.linesLengths[i]}/>
+            y2={yScale(transVert)}/>
     )
     const horizontalLines = [...Array(4).keys()].map(
-      i => <line key={'v' + i} x1={0} x2={this.state.linesLengths[i]}
+      i => <line key={'v' + i} x1={0} x2={xScale(transHoriz)}
             y1={yGridSpacing*i} y2={yGridSpacing*i}/>
     )
     return (
@@ -59,7 +24,6 @@ class CoordGrid extends React.Component {
           {horizontalLines}
         </g>
     )
-  }
 }
 
 
@@ -76,22 +40,36 @@ function CoordAxes({width, height}) {
 
 
 function CoordLabels({width, height}) {
+  const padding = 20
   return (
     <g>
-      <text x={width/2 - 18} y={-10}>Добро</text>
-      <text x={width/2 - 18} y={height + 16}>Зло</text>
-      <text x={0 - 5} y={height/2 + 6} textAnchor="end">Хаос</text>
-      <text x={width + 5} y={height/2 + 6}>Закон</text>
+      <text className="axis-label" x={width/2 - 18} y={-padding}>
+        Добро
+      </text>
+      <text className="axis-label" x={width/2 - 18} y={height + padding + 14}>
+        Зло
+      </text>
+      <text className="axis-label" x={0 - padding} y={height/2 + 6} textAnchor="end">
+        Хаос
+      </text>
+      <text className="axis-label" x={width + padding} y={height/2 + 6}>
+        Закон
+      </text>
     </g>
   )
 }
 
 
-export default ({width, height, transitioned}) => {
+export default ({
+  width, height, transitioned, children, gridTransVert, gridTransHoriz
+}) => {
   return (
     <g className='coord-system'>
-      <CoordGrid width={width} height={height} transition={transitioned} />
+      <CoordGrid width={width} height={height}
+        transHoriz={gridTransHoriz}
+        transVert={gridTransVert} />
       <CoordAxes width={width} height={height} />
+      {children}
       <CoordLabels width={width} height={height} />
     </g>
   )

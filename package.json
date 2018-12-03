@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "animejs": "^2.2.0",
+    "d3-scale": "^2.1.2",
     "prop-types": "^15.6.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
