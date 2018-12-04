@@ -1,11 +1,11 @@
 import React from 'react'
-import anime from 'animejs'
 import {connect} from 'react-redux'
 
 import Values from '../TestInputToCoords/Values'
 import CoordPlane from '../CoordinatePlane'
 import Svg from '../Svg'
 import { SvgTestInputs } from '../HPTestInput/HarryPotterTest'
+import AnimeWrapper from '../../AnimeWrapper'
 
 
 class TestInputsToCoords extends React.Component {
@@ -15,67 +15,110 @@ class TestInputsToCoords extends React.Component {
       showTestInputs: false,
       showCoordsGrid: false,
       showValues: false,
+      // todo add transition values
     }
     this.tranistionState = {
         testInputsTr: 0,
         coordGridTrVertical: 0,
         coordGridTrHorizontal: 0,
         valuesTr: 0,
-        running: false,
     }
+    this.animeTransitions = new AnimeWrapper(
+      this.getTransitionConf(), this.tranistionState
+    )
+
+    this.getTransitionConf = this.getTransitionConf.bind(this)
   }
+
   componentWillUnmount() {
-    anime.remove(this.tranistionState)
+    this.animeTransitions.clear()
+  }
+
+  getTransitionConf() {
+    return [
+      {
+        common: {
+          targets: this.tranistionState,
+          elasticity: 0,
+          duration: 1000,
+          update: () => this.setState({
+            testInputsTr: this.tranistionState.testInputsTr
+          })
+        },
+        forward: {
+          testInputsTr: 1,
+          begin: () => this.setState({showTestInputs: true})
+        },
+        backward: {
+          testInputsTr: 0,
+        }
+      }, {
+        common: {
+          targets: this.tranistionState,
+          duration: 500,
+          easing: 'easeInQuad',
+          update: () => this.setState({
+            coordGridTrVertical: this.tranistionState.coordGridTrVertical
+          })
+        },
+        forward: {
+          coordGridTrVertical: 1,
+          begin: () => this.setState({showCoordsGrid: true}),
+        },
+        backward: {
+          coordGridTrVertical: 0,
+          complete: () => this.setState({showCoordsGrid: false})
+        },
+      }, {
+        common: {
+          targets: this.tranistionState,
+          duration: 500,
+          easing: 'easeInQuad',
+          update: () => this.setState({
+            coordGridTrHorizontal: this.tranistionState.coordGridTrHorizontal
+          })
+        },
+        forward: {
+          coordGridTrHorizontal: 1,
+        },
+        backward: {
+          coordGridTrHorizontal: 0,
+        }
+      }, {
+        common: {
+          targets: this.tranistionState,
+          duration: 800,
+          offset: '+=200',
+          easing: 'linear',
+          update: () => this.setState({
+              valuesTr: this.tranistionState.valuesTr
+          })
+        },
+        forward: {
+          valuesTr: 1,
+          begin: () => this.setState({
+            showValues: true,
+            showTestInputs: false,
+          })
+        },
+        backward: {
+          valuesTr: 0,
+          complete: () => this.setState({
+            showValues: false,
+            showTestInputs: true,
+          }),
+          begin: () => this.setState({
+            showValues: true,
+            showCoordsGrid: true,
+            showTestInputs: false,
+          })
+        }
+      }
+    ]
   }
 
   componentDidMount() {
-    this.tl = anime.timeline({
-      begin: () => {
-          this.tranistionState.running = true
-          this.setState({showTestInputs: true})
-        },
-      complete: () => {this.tranistionState.running = false},
-    })
-    this.tl.add({
-      testInputsTr: 1,
-      targets: this.tranistionState,
-      elasticity: 0,
-      duration: 1000,
-      update: () => this.setState({
-        testInputsTr: this.tranistionState.testInputsTr
-      })
-    }).add({
-      coordGridTrVertical: 1,
-      targets: this.tranistionState,
-      begin: () => this.setState({showCoordsGrid: true}),
-      duration: 500,
-      easing: 'easeInQuad',
-      update: () => this.setState({
-        coordGridTrVertical: this.tranistionState.coordGridTrVertical
-      })
-    }).add({
-      coordGridTrHorizontal: 1,
-      targets: this.tranistionState,
-      duration: 500,
-      easing: 'easeInQuad',
-      update: () => this.setState({
-        coordGridTrHorizontal: this.tranistionState.coordGridTrHorizontal
-      })
-    }).add({
-      coordGridTrHorizontal: 1,
-      begin: () => this.setState({
-        showValues: true,
-        showTestInputs: false,
-      }),
-      targets: this.tranistionState,
-      valuesTr: 1,
-      duration: 800,
-      offset: '+=200',
-      easing: 'linear',
-      update: () => this.setState({
-          valuesTr: this.tranistionState.valuesTr
-      })
-    })
+    this.animeTransitions.runForward()
   }
 
   render() {
