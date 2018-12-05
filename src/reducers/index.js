@@ -40,6 +40,24 @@ function RootReducer(state={}, action) {
             ...state,
             selectedCharacter: action.selectedCharacter,
           }
+        case 'START_TRANSITION':
+          if (state.activeTransitions.includes(action.name)) {
+            return state
+          }
+          return {
+            ...state,
+            activeTransitions: [
+              ...state.activeTransitions,
+              action.name
+            ]
+          }
+        case 'END_TRANSITION':
+          return {
+            ...state,
+            activeTransitions: state.activeTransitions.filter(
+              tr => tr !== action.name
+            )
+          }
         default:
           return state
     }

@@ -14,7 +14,7 @@ import CharVsChar from './graphics/StepTen/CharacterVsCharacter'
 import Result from './graphics/StepTwelve/Result'
 
 
-function ScrollerResponseElements({ activeStep, stepDirection }) {
+function ScrollerResponseElements({ activeStep, stepDirection, activeTransitions }) {
     const stepToElement = [
         <RightTriangleParts />,
         <RightTriangleParts />,
@@ -30,9 +30,16 @@ function ScrollerResponseElements({ activeStep, stepDirection }) {
         <CharVsChar char1="snape" char2="harry"/>,
         <Result />,
     ]
+    let comp = stepToElement[activeStep]
+    if (
+        activeStep === 4 &&
+        stepDirection === 'up'
+    ) {
+      comp = stepToElement[activeStep + 1]
+    }
     return (
           <div className="scroller-response-els">
-            {stepToElement[activeStep]}
+            {comp}
           </div>
     )
 }
@@ -42,6 +49,7 @@ function mapStateToProps(state) {
     return {
         activeStep: state.activeStep,
         stepDirection: state.stepDirection,
+        activeTransitions: state.activeTransitions,
     }
 }
 

@@ -6,28 +6,43 @@ import CoordPlane from '../CoordinatePlane'
 import Svg from '../Svg'
 import { SvgTestInputs } from '../HPTestInput/HarryPotterTest'
 import AnimeWrapper from '../../AnimeWrapper'
+import {startTransition, endTransition} from '../../../actions'
 
 
 class TestInputsToCoords extends React.Component {
   constructor(props) {
     super(props)
-    this.state ={
-      showTestInputs: false,
-      showCoordsGrid: false,
-      showValues: false,
-      // todo add transition values
-    }
     this.tranistionState = {
         testInputsTr: 0,
         coordGridTrVertical: 0,
         coordGridTrHorizontal: 0,
         valuesTr: 0,
     }
+    this.state ={
+      ...this.tranistionState,
+      currAnimation: undefined,
+    }
     this.animeTransitions = new AnimeWrapper(
-      this.getTransitionConf(), this.tranistionState
+      'TestInputsToCoords', this.getTransitionConf(),
+      this.tranistionState, this.props.startTranistion,
+      this.props.endTransition,
+      (currAnimation) => this.setState({
+        currAnimation: currAnimation
+      })
     )
 
     this.getTransitionConf = this.getTransitionConf.bind(this)
+    this.getVisibilityFromCurrAnimation = this.getVisibilityFromCurrAnimation.bind(this)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.stepDirection !== this.props.stepDirection) {
+      if (this.props.stepDirection === 'up') {
+        this.animeTransitions.runBackward()
+      } else if (this.props.stepDirection === 'down') {
+        this.animeTransitions.runForward()
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -41,13 +56,14 @@ class TestInputsToCoords extends React.Component {
           targets: this.tranistionState,
           elasticity: 0,
           duration: 1000,
-          update: () => this.setState({
-            testInputsTr: this.tranistionState.testInputsTr
-          })
+          update: () => {
+            this.setState({
+              testInputsTr: this.tranistionState.testInputsTr
+            })
+          }
         },
         forward: {
           testInputsTr: 1,
-          begin: () => this.setState({showTestInputs: true})
         },
         backward: {
           testInputsTr: 0,
@@ -63,11 +79,10 @@ class TestInputsToCoords extends React.Component {
         },
         forward: {
           coordGridTrVertical: 1,
-          begin: () => this.setState({showCoordsGrid: true}),
         },
         backward: {
           coordGridTrVertical: 0,
-          complete: () => this.setState({showCoordsGrid: false})
+          duration: 200,
         },
       }, {
         common: {
@@ -83,12 +98,12 @@ class TestInputsToCoords extends React.Component {
         },
         backward: {
           coordGridTrHorizontal: 0,
+          duration: 200,
         }
       }, {
         common: {
           targets: this.tranistionState,
           duration: 800,
-          offset: '+=200',
           easing: 'linear',
           update: () => this.setState({
               valuesTr: this.tranistionState.valuesTr
@@ -96,32 +111,74 @@ class TestInputsToCoords extends React.Component {
         },
         forward: {
           valuesTr: 1,
-          begin: () => this.setState({
-            showValues: true,
-            showTestInputs: false,
-          })
+          offset: '+=200',
         },
         backward: {
           valuesTr: 0,
-          complete: () => this.setState({
-            showValues: false,
-            showTestInputs: true,
-          }),
-          begin: () => this.setState({
-            showValues: true,
-            showCoordsGrid: true,
-            showTestInputs: false,
-          })
+          duration: 200,
         }
       }
     ]
   }
 
   componentDidMount() {
-    this.animeTransitions.runForward()
+    if (this.props.stepDirection === 'up') {
+      this.animeTransitions.runBackward()
+    } else {
+      this.animeTransitions.runForward()
+    }
   }
 
+  getVisibilityFromCurrAnimation() {
+    // todo maybe this can be a little more concise
+    switch (this.state.currAnimation) {
+      case 'testInputsTr':
+        return {
+          showCoordsGrid: false,
+          showTestInputs: true,
+          showValues: false,
+        }
+      case 'coordGridTrVertical':
+        return {
+          showCoordsGrid: true,
+          showTestInputs: true,
+          showValues: false,
+        }
+      case 'coordGridTrHorizontal':
+        return {
+          showCoordsGrid: true,
+          showTestInputs: true,
+          showValues: false,
+        }
+      case 'valuesTr':
+        return {
+          showCoordsGrid: true,
+          showTestInputs: false,
+          showValues: true
+        }
+      default:
+        if (this.props.stepDirection === 'up') {
+          return {
+            showValues: true,
+            showCoordsGrid: true,
+            showTestInputs: false,
+        }} else {
+            return {
+            showCoordsGrid: false,
+            showTestInputs: true,
+            showValues: false
+            }
+          }
+        }
+    }
+
+
   render() {
+    const {
+      showValues, showCoordsGrid, showTestInputs
+    } = this.getVisibilityFromCurrAnimation(
+      this.state.currAnimation
+    )
     const width = 400, height = 400,
           paddingLeft = 80, paddingTop = 40,
           svgWidth = width + 2*paddingLeft,
@@ -148,10 +205,10 @@ class TestInputsToCoords extends React.Component {
     return (
       <Svg width={svgWidth} height={svgHeight}>
         <g transform={`translate(${paddingLeft}, ${paddingTop})`} key='coordPlane'>
-          {this.state.showCoordsGrid? coordGrid : null}
-          {this.state.showValues? values : null}
+          {showCoordsGrid? coordGrid : null}
+          {showValues? values : null}
         </g>
-        {this.state.showTestInputs? testInputs : null}
+        {showTestInputs? testInputs : null}
       </Svg>
     )
   }
@@ -161,5 +218,9 @@ export default connect(
   state => ({
     lawfullness: state.lawfullness,
     goodness: state.goodness
+  }),
+  dispatch => ({
+    startTranistion: name => dispatch(startTransition(name)),
+    endTransition: name => dispatch(endTransition(name)),
   })
 )(TestInputsToCoords)

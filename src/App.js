@@ -20,6 +20,7 @@ const store = createStore(
     selectedCharacter: 'harry',
     lawfullness: 0,
     goodness: 0,
+    activeTransitions: [],
   },
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )

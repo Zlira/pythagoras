@@ -40,3 +40,15 @@ export const selectCharacter = character => ({
     type: 'SELECT_CHARACTER',
     selectedCharacter: character,
 })
+
+
+export const startTransition = name => ({
+    type: 'START_TRANSITION',
+    name: name,
+})
+
+
+export const endTransition = name => ({
+    type: 'END_TRANSITION',
+    name: name,
+})
