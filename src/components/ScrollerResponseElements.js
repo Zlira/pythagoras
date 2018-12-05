@@ -14,7 +14,19 @@ import CharVsChar from './graphics/StepTen/CharacterVsCharacter'
 import Result from './graphics/StepTwelve/Result'
 
 
-function ScrollerResponseElements({ activeStep, stepDirection, activeTransitions }) {
+class ScrollerResponseElements extends React.Component {
+  constructor(props) {
+    super(props)
+    this.justFinishedTransitions = []
+  }
+  componentWillUpdate(newProps) {
+    const finishedTransitions = this.props.activeTransitions.filter(
+      tr => !newProps.activeTransitions.includes(tr)
+    )
+    this.justFinishedTransitions = finishedTransitions
+  }
+  render() {
+    const { activeStep, stepDirection } = this.props
     const stepToElement = [
         <RightTriangleParts />,
         <RightTriangleParts />,
@@ -33,7 +45,8 @@ function ScrollerResponseElements({ activeStep, stepDirection, activeTransitions
     let comp = stepToElement[activeStep]
     if (
         activeStep === 4 &&
-        stepDirection === 'up'
+        stepDirection === 'up' &&
+        !this.justFinishedTransitions.includes('TestInputsToCoords')
     ) {
       comp = stepToElement[activeStep + 1]
     }
@@ -42,6 +55,7 @@ function ScrollerResponseElements({ activeStep, stepDirection, activeTransitions
             {comp}
           </div>
     )
+  }
 }
 
 
