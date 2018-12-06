@@ -3,7 +3,6 @@ import React from 'react'
 import { hypothenuseLen, pxToUnitsFixed } from '../Helpers'
 import colors from '../colors'
 import HighlightElement from '../../../containers/HighlightElement'
-import '../animationKeyframes.css'
 import './triangle.css'
 
 

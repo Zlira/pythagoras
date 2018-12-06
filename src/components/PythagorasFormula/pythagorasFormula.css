@@ -1,6 +1,7 @@
 p.pythagoras-formula {
     font-weight: bold;
-    font-size: 1.3rem;
+    font-size: 1.13rem;
+    letter-spacing: .1em;
 }
 
 .step.active p.pythagoras-formula span.highlight {

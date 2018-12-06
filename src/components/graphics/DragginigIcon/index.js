@@ -1,6 +1,5 @@
 import React from 'react'
 
-import '../animationKeyframes.css'
 import './DraggingIcon.css'
 
 

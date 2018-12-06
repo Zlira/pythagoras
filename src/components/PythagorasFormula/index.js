@@ -1,6 +1,5 @@
 import React from 'react'
 
-import '../graphics/animationKeyframes.css'
 import './pythagorasFormula.css'
 import colors from '../graphics/colors'
 import HighligthElement from '../../containers/HighlightElement'

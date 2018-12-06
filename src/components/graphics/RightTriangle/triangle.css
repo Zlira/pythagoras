@@ -1,11 +1,10 @@
 svg .triangle line {
-    stroke-width: 3px;
+    stroke-width: 4.8px;
     stroke-linecap: square;
 }
 
 svg .triangle line.highlighted {
-  /* filter: drop-shadow(0px 0px 5px grey) */
-  stroke-width: 4px;
+  stroke-width: 5px;
 }
 
 /* todo make one style for ALL highlight animations*/
@@ -15,12 +14,12 @@ svg .triangle line.highlighted {
 
 svg .triangle text {
   font-weight: bold;
-  font-size: 1.3rem;
   fill: #2F343F;
 }
 
-svg .triangle .side-len {
-  font-size: 1.1rem;
+svg .triangle .side-len,
+svg .triangle text{
+  font-size: 1.13rem;
 }
 
 svg .triangle .side-len.cathetus-1 {

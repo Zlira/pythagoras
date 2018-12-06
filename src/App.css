@@ -1,13 +1,29 @@
 html, body {
   background-color: white;
-  font-size: 16px;
+  font-size: 19.2px;
+  color: #2F343F;
+}
+
+.step {
+  font-size: 1em;
+  line-height: 1.4;
+  margin: 20px 10px 60px 20px;
+  padding: 10px;
+  min-height: 240px;
+  color: rgb(177, 177, 177);
+}
+
+.step.active {
   color: #2F343F;
 }
 
 .step blockquote {
   padding: 16px;
-  font-style: italic;
-  font-size: 1.1em;
+  padding-bottom: 28px;
+  padding-left: 24px;
+  font-size: 1.2em;
+  line-height: 1.5em;
+  letter-spacing: .05em;
   color: white;
   background-color:#0055fe;
   margin-left: 0px;
@@ -35,31 +51,28 @@ html, body {
   margin-top: 20px;
 }
 
-.step {
-  font-size: 1.2em;
-  line-height: 1.5;
-  margin: 20px 10px 60px 20px;
-  padding: 10px;
-  min-height: 240px;
-  color: rgb(177, 177, 177);
-}
-
-.step.active {
-  color: #2F343F;
-}
-
-/*
-.step.active em {
-  color: #ffcc5e;
-} */
-
-
 .step.active .highlight {
-  border-bottom: thick solid #0055fe;
+  border-bottom: 4.8px solid #0055fe;
+  padding-right: 2px;
+  padding-left: 2px;
 }
 
 .step.active blockquote .highlight {
-  border-bottom: thick solid white;
+  border-bottom: 4.8px solid white;
+}
+
+.step blockquote span.highlight:hover {
+  color: #0055fe;
+  border-bottom: 4.8px solid white;
+  background: linear-gradient(0deg, white 70%, #0055fe00 30%);
+  background-repeat: no-repeat;
+}
+
+.step span.highlight:hover {
+  color: white;
+  border-bottom: 4.8px solid #0055fe;
+  background: linear-gradient(0deg, #0055fe 85%, #0055fe00 15%);
+  background-repeat: no-repeat;
 }
 
 .step span.highlight.active {
@@ -75,13 +88,10 @@ svg text {
   fill: #2F343F;
 }
 
-
-/* todo split the stylesheet */
-
 .label {
   position: absolute;
   margin: 0;
-  font-size: 1.2em;
+  font-size: 1.13rem;
 }
 
 .label .triangle-side {
@@ -94,6 +104,18 @@ g.highlighted {
 
 svg text.axis-label {
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 1rem;
   fill: #999;
+}
+
+@keyframes pulse-opacity {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .1;
+  }
+  100% {
+    opacity: 1;
+  }
 }
