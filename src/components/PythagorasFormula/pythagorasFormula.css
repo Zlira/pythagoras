@@ -6,6 +6,7 @@ p.pythagoras-formula {
 
 .step.active p.pythagoras-formula span.highlight {
   border-bottom: none;
+  background: none;
 }
 
 p.pythagoras-formula span:not(.highlighted) {

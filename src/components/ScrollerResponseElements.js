@@ -5,7 +5,8 @@ import RightTriangleParts from './graphics/RightTriangleParts/index'
 import RightTriangleVariants from './graphics/RightTriangleVariants/index'
 import DeathlyHallows from './graphics/DeathlyHallowsImg/index'
 import HarryPotterTest from './graphics/HPTestInput/HarryPotterTest'
-import CoordSystem from './graphics/TransitionSteps/TestInputsToCoords'
+import TestInputsToCoords from './graphics/TransitionSteps/TestInputsToCoords'
+import CoordSystem from './graphics/CoordSystem/CoordSystem'
 import CharacterIntro from './graphics/StepSix/CharectersIntro'
 import ValuesDifference from './graphics/StepSeven/ValuesDifference'
 import DistanceToCharacter from './graphics/StepEight/DistanceToCharacter'
@@ -33,7 +34,7 @@ class ScrollerResponseElements extends React.Component {
         <RightTriangleVariants />,
         <DeathlyHallows />,
         <HarryPotterTest />,
-        <CoordSystem stepDirection={stepDirection} />,
+        <TestInputsToCoords stepDirection={stepDirection} />,
         <CharacterIntro />,
         <ValuesDifference />,
         <DistanceToCharacter />,
@@ -43,12 +44,20 @@ class ScrollerResponseElements extends React.Component {
         <Result />,
     ]
     let comp = stepToElement[activeStep]
+    // todo clean up the mess
     if (
         activeStep === 4 &&
         stepDirection === 'up' &&
         !this.justFinishedTransitions.includes('TestInputsToCoords')
     ) {
       comp = stepToElement[activeStep + 1]
+    }
+    if (
+      activeStep === 5 &&
+      (stepDirection === 'up' ||
+       this.justFinishedTransitions.includes('TestInputsToCoords'))
+    ) {
+      comp = <CoordSystem />
     }
     return (
           <div className="scroller-response-els">

@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 function Alignment ({lawfullness, goodness}) {
   const maxGood = 10, minGood = -10, maxLaw = 10, minLaw = -10,
@@ -19,4 +20,10 @@ function Alignment ({lawfullness, goodness}) {
   return <span>{res}</span>
 }
 
-export default Alignment
+
+export default connect(
+  state => ({
+    lawfullness: state.lawfullness,
+    goodness: state.goodness,
+  })
+)(Alignment)
