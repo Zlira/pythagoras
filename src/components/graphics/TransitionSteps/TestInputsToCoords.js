@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-import Values from '../TestInputToCoords/Values'
+import Values from '../CoordSystem/Values'
 import CoordPlane from '../CoordinatePlane'
 import Svg from '../Svg'
 import { SvgTestInputs } from '../HPTestInput/HarryPotterTest'

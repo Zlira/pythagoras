@@ -108,6 +108,15 @@ svg text.axis-label {
   fill: #999;
 }
 
+.fade-out-appear {
+  opacity: 1;
+}
+
+.fade-out-progress {
+  opacity: 0;
+  transition: opacity 400ms ease-out;
+}
+
 @keyframes pulse-opacity {
   0% {
     opacity: 1;

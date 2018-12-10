@@ -8,6 +8,7 @@ import HarryPotterTest from './graphics/HPTestInput/HarryPotterTest'
 import TestInputsToCoords from './graphics/TransitionSteps/TestInputsToCoords'
 import CoordSystem from './graphics/CoordSystem/CoordSystem'
 import CharacterIntro from './graphics/StepSix/CharectersIntro'
+import CoordSysToCharIntro from './graphics/TransitionSteps/CoordsToCharacterInro'
 import ValuesDifference from './graphics/StepSeven/ValuesDifference'
 import DistanceToCharacter from './graphics/StepEight/DistanceToCharacter'
 import DistanceToCharacters from './graphics/StepNine/DistanceToCharacters'
@@ -35,7 +36,8 @@ class ScrollerResponseElements extends React.Component {
         <DeathlyHallows />,
         <HarryPotterTest />,
         <TestInputsToCoords stepDirection={stepDirection} />,
-        <CharacterIntro />,
+        // <CharacterIntro />,
+        <CoordSysToCharIntro />,
         <ValuesDifference />,
         <DistanceToCharacter />,
         <DistanceToCharacters/>,

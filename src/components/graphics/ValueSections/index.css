@@ -44,8 +44,8 @@ svg .goodness-value text {
     fill: #BC2CFF;
 }
 
-svg .test-values .combined-value circle {
+svg .combined-value circle {
     stroke: white;
-    storke-width: 1px;
+    stroke-width: 2px;
     fill: #2F343F;
 }
