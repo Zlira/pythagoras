@@ -9,6 +9,9 @@ import { coordSystemParams, CoordSystemSVG} from '../CoordSystem/CoordSystem'
 import CoordPlane from '../CoordinatePlane'
 import AlignmentSector from '../CoordSystem/AlignmentSector'
 import colors from '../colors'
+import characterAlignment from '../Characters/index'
+import CharacterPic from '../Characters/CharacterPic'
+import Characters from '../Characters/index';
 
 // forward transition:
 // alignment sector, values lines and points on coordinates disappear,
@@ -24,6 +27,7 @@ class CoordSystem extends React.Component {
       lawLabelColor: colors.blue,
       goodLableColor: colors.purple,
       labelMoveProgress: 0,
+      showCharacters: 0,
     }
     this.state = {
       ...this.transitionVals,
@@ -46,8 +50,10 @@ class CoordSystem extends React.Component {
       lawLabelColor: colors.blue,
       goodLableColor: colors.purple,
       labelMoveProgress: 0,
+      showCharacters: 0,
     }
-    anime({
+    const timeline = anime.timeline()
+    timeline.add({
       targets: this.transitionVals,
       lawLabelColor: colors.darkGrey,
       goodLableColor: colors.darkGrey,
@@ -58,6 +64,14 @@ class CoordSystem extends React.Component {
         lawLabelColor: this.transitionVals.lawLabelColor,
         goodLableColor: this.transitionVals.goodLableColor,
         labelMoveProgress: this.transitionVals.labelMoveProgress,
+      })
+    }).add({
+      targets: this.transitionVals,
+      showCharacters: 9,
+      easing: 'linear',
+      duration: 4000,
+      update: () => this.setState({
+        showCharacters: Math.floor(this.transitionVals.showCharacters),
       })
     })
   }
@@ -73,6 +87,8 @@ class CoordSystem extends React.Component {
               lawfullness={lawfullness} goodness={goodness}/>
         </g>
         <CoordPlane width={width} height={height} />
+        <CharacterPics xScale={xScale} yScale={yScale}
+          showTill={this.state.showCharacters} />
         <g className={fadeOutClass}>
           <Values width={width} height={height} lawfullness={lawfullness}
               goodness={goodness} />
@@ -84,12 +100,68 @@ class CoordSystem extends React.Component {
           goodColor={this.state.goodLableColor}
           lawColor={this.state.lawLabelColor}
           progress={this.state.labelMoveProgress} />
-        </CoordSystemSVG>
+      </CoordSystemSVG>
     )
   }
 }
 
-class MigratingLabels extends React.Component  {
+
+// todo move it somewhere or just use react transition group
+// for this
+class AppearingComponent extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      className: 'fade-in-appear'
+    }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.classUpdateTimer)
+  }
+
+  componentDidMount() {
+    this.classUpdateTimer = setTimeout(
+      () => this.setState({className: 'fade-in-progress'}), 10
+    )
+  }
+
+  render() {
+    return this.props.children(this.state.className)
+  }
+}
+
+
+function CharacterPics({xScale, yScale, showTill=9}) {
+    const imgs = []
+    const chars =[...Object.entries(characterAlignment)]
+    chars.sort(
+       (char1, char2) => {
+         const char1Vals = char1[1].vals, char2Vals = char2[1].vals
+         if (char1Vals[1] !== char2Vals[1]) {
+           return char2Vals[1] - char1Vals[1]
+         } else {
+           return char1Vals[0] - char2Vals[0]
+         }
+       }
+    )
+    for (const [name, vals] of chars.slice(0, showTill)) {
+        imgs.push(
+          <AppearingComponent key={name}>
+            {className =>
+              <CharacterPic picSrc={vals.src} alignementVals={vals.vals}
+                xScale={xScale} yScale={yScale} className={className} />}
+          </AppearingComponent>
+        )
+    }
+    return (
+      <g className="character-pictures">
+        { imgs }
+      </g>
+    )
+}
+
+class MigratingLabels extends React.Component {
   constructor(props) {
     super(props)
     this.lawLabelRef = React.createRef()

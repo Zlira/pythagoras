@@ -2,7 +2,7 @@ import React from 'react'
 
 
 function CharacterPic({picSrc, alignementVals, name, xScale, yScale, state='normal',
-                       handleClick=null}) {
+                       handleClick=null, className}) {
     const picWidth = 80
     return (
         <image href={picSrc}
@@ -13,6 +13,7 @@ function CharacterPic({picSrc, alignementVals, name, xScale, yScale, state='norm
           opacity={state === 'deselected'? .35 : 1}
           filter={state === 'selected'? 'url(#glow-filter)' : null}
           onClick={handleClick}
+          className={className}
           />
     )
 }
