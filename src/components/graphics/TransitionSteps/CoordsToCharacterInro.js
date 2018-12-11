@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import anime from 'animejs'
 import { scaleLinear } from 'd3-scale'
+import { interpolateRgb } from 'd3-interpolate'
 
 import Values from '../CoordSystem/Values'
 import { UlabeledPoint, PointLabel } from '../TestValuesPoint'
@@ -11,7 +12,6 @@ import AlignmentSector from '../CoordSystem/AlignmentSector'
 import colors from '../colors'
 import characterAlignment from '../Characters/index'
 import CharacterPic from '../Characters/CharacterPic'
-import Characters from '../Characters/index';
 
 // forward transition:
 // alignment sector, values lines and points on coordinates disappear,
@@ -24,8 +24,6 @@ class CoordSystem extends React.Component {
     super(props)
 
     this.transitionVals = {
-      lawLabelColor: colors.blue,
-      goodLableColor: colors.purple,
       labelMoveProgress: 0,
       showCharacters: 0,
     }
@@ -47,22 +45,16 @@ class CoordSystem extends React.Component {
       10
     )
     this.transitionVals = {
-      lawLabelColor: colors.blue,
-      goodLableColor: colors.purple,
       labelMoveProgress: 0,
       showCharacters: 0,
     }
     const timeline = anime.timeline()
     timeline.add({
       targets: this.transitionVals,
-      lawLabelColor: colors.darkGrey,
-      goodLableColor: colors.darkGrey,
       labelMoveProgress: 1,
       easing: 'linear',
       duration: 500,
       update: () => this.setState({
-        lawLabelColor: this.transitionVals.lawLabelColor,
-        goodLableColor: this.transitionVals.goodLableColor,
         labelMoveProgress: this.transitionVals.labelMoveProgress,
       })
     }).add({
@@ -97,8 +89,6 @@ class CoordSystem extends React.Component {
           xScale={xScale} yScale={yScale}/>
         <MigratingLabels goodness={goodness} lawfullness={lawfullness}
           xScale={xScale} yScale={yScale}
-          goodColor={this.state.goodLableColor}
-          lawColor={this.state.lawLabelColor}
           progress={this.state.labelMoveProgress} />
       </CoordSystemSVG>
     )
@@ -171,6 +161,9 @@ class MigratingLabels extends React.Component {
       lawLabelEndX: 0,
       goodLabelEndX: 0,
     }
+    this.goodColorInterpol = interpolateRgb(colors.purple, colors.darkGrey)
+    this.lawColorInterpol = interpolateRgb(colors.blue, colors.darkGrey)
+
     this.getMigratingLabels = this.getMigratingLabels.bind(this)
   }
 
@@ -187,8 +180,7 @@ class MigratingLabels extends React.Component {
   getMigratingLabels() {
     const {
       goodness, lawfullness, xScale, yScale, progress,
-      goodColor, lawColor
-      } = this.props
+    } = this.props
     const xVal = xScale(lawfullness),
       yVal = yScale(goodness),
       xCenter = (xScale.range()[0] + xScale.range()[1]) / 2,
@@ -211,13 +203,15 @@ class MigratingLabels extends React.Component {
       <g className="test-values">
         <text
           y={lawYValRange(progress)}
-          x={lawXValScale(progress)} style={{fill: lawColor}}
+          x={lawXValScale(progress)}
+          style={{fill: this.lawColorInterpol(progress)}}
         >
           {lawfullness}
         </text>
         <text
           x={goodXValScale(progress)}
-          y={goodYValRange(progress)} style={{ fill: goodColor }}
+          y={goodYValRange(progress)}
+          style={{ fill: this.goodColorInterpol(progress) }}
         >
           {goodness}
         </text>
