@@ -35,6 +35,14 @@ class TestInputsToCoords extends React.Component {
     this.getVisibilityFromCurrAnimation = this.getVisibilityFromCurrAnimation.bind(this)
   }
 
+  componentDidMount() {
+    if (this.props.stepDirection === 'up') {
+      this.animeTransitions.runBackward()
+    } else {
+      this.animeTransitions.runForward()
+    }
+  }
+
   componentDidUpdate(prevProps) {
     if (prevProps.stepDirection !== this.props.stepDirection) {
       if (this.props.stepDirection === 'up') {
@@ -119,14 +127,6 @@ class TestInputsToCoords extends React.Component {
         }
       }
     ]
-  }
-
-  componentDidMount() {
-    if (this.props.stepDirection === 'up') {
-      this.animeTransitions.runBackward()
-    } else {
-      this.animeTransitions.runForward()
-    }
   }
 
   getVisibilityFromCurrAnimation() {

@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import anime from 'animejs'
-import { scaleLinear } from 'd3-scale'
+import { scaleLinear, scaleQuantize } from 'd3-scale'
 import { interpolateRgb } from 'd3-interpolate'
 
 import Values from '../CoordSystem/Values'
@@ -12,6 +11,8 @@ import AlignmentSector from '../CoordSystem/AlignmentSector'
 import colors from '../colors'
 import characterAlignment from '../Characters/index'
 import CharacterPic from '../Characters/CharacterPic'
+import AnimeWrapper from '../../AnimeWrapper'
+import {startTransition, endTransition} from '../../../actions'
 
 // forward transition:
 // alignment sector, values lines and points on coordinates disappear,
@@ -19,57 +20,115 @@ import CharacterPic from '../Characters/CharacterPic'
 // character appear one by one fading in
 
 
-class CoordSystem extends React.Component {
+class CoordsToCharacterIntro extends React.Component {
   constructor(props) {
     super(props)
 
-    this.transitionVals = {
+    this.showCharScale = scaleQuantize()
+      .domain([0, 1])
+      .range([...Array(
+        Object.keys(characterAlignment).length + 1
+      ).keys()])
+    this.transitionState = {
       labelMoveProgress: 0,
       showCharacters: 0,
+      fadeCoords: 0,
     }
     this.state = {
-      ...this.transitionVals,
-      fadeCoords: false,
+      ...this.transitionState,
+      currAnimation: undefined,
+    }
+    this.animeTransitions = new AnimeWrapper(
+      'CoordsToCharacterIntor', this.getTransitionConf(),
+      this.transitionState,
+      this.props.startTransition, this.props.endTransition,
+      (currAnimation) => this.setState({
+        currAnimation: currAnimation
+      })
+    )
+
+    this.getTransitionConf = this.getTransitionConf.bind(this)
+  }
+
+  getTransitionConf() {
+    return [
+      {
+        common: {
+          targets: this.transitionState,
+          duration: 400,
+          update: () => this.setState({
+            fadeCoords: Math.ceil(this.transitionState.fadeCoords)
+          })
+        },
+        forward: {
+          fadeCoords: 1,
+        },
+        backward: {
+          fadeCoords: 0,
+        }
+      },
+      {
+        common: {
+          targets: this.transitionState,
+          easing: 'linear',
+          duration: 500,
+          update: () => this.setState({
+            labelMoveProgress: this.transitionState.labelMoveProgress,
+          })
+        },
+        forward: {
+          labelMoveProgress: 1,
+        },
+        backward: {
+          labelMoveProgress: 0
+        }
+      }, {
+        common: {
+          targets: this.transitionState,
+          showCharacters: 1,
+          easing: 'linear',
+          duration: 4000,
+          update: () => this.setState({
+            showCharacters: this.showCharScale(
+              this.transitionState.showCharacters
+            ),
+          })
+        },
+        forward: {
+          showCharacters: 1,
+        },
+        backward: {
+          showCharacters: 0,
+          duration: 800,
+        }
+      }
+    ]
+  }
+
+  componentDidMount() {
+    if (this.props.stepDirection === 'up') {
+      this.animeTransitions.runBackward()
+    } else {
+      this.animeTransitions.runForward()
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.stepDirection !== this.props.stepDirection) {
+      if (this.props.stepDirection === 'up') {
+        this.animeTransitions.runBackward()
+      } else if (this.props.stepDirection === 'down') {
+        this.animeTransitions.runForward()
+      }
     }
   }
 
   componentWillUnmount() {
-    clearTimeout(this.fadeCoordsTimer)
-    anime.remove(this.transitionVals)
-  }
-
-  componentDidMount() {
-    this.setState({fadeCoords: false})
-    this.fadeCoordsTimer = setTimeout(
-      () => this.setState({fadeCoords: true}),
-      10
-    )
-    this.transitionVals = {
-      labelMoveProgress: 0,
-      showCharacters: 0,
-    }
-    const timeline = anime.timeline()
-    timeline.add({
-      targets: this.transitionVals,
-      labelMoveProgress: 1,
-      easing: 'linear',
-      duration: 500,
-      update: () => this.setState({
-        labelMoveProgress: this.transitionVals.labelMoveProgress,
-      })
-    }).add({
-      targets: this.transitionVals,
-      showCharacters: 9,
-      easing: 'linear',
-      duration: 4000,
-      update: () => this.setState({
-        showCharacters: Math.floor(this.transitionVals.showCharacters),
-      })
-    })
+    this.animeTransitions.clear()
   }
 
   render() {
-   const {lawfullness, goodness, highlightId} = this.props
+   const {lawfullness, goodness } = this.props
     const { width, height, xScale, yScale } = coordSystemParams()
     const fadeOutClass = this.state.fadeCoords? 'fade-out-progress': 'fade-out-appear'
     return (
@@ -246,6 +305,10 @@ export default connect(
   state => ({
     lawfullness: state.lawfullness,
     goodness: state.goodness,
-    highlightId: state.highlightId,
+  }),
+  // todo these dispatch function can be simplified
+  dispatch => ({
+    startTransition: name => dispatch(startTransition(name)),
+    endTransition: name => dispatch(endTransition(name)),
   })
-)(CoordSystem)
+)(CoordsToCharacterIntro)

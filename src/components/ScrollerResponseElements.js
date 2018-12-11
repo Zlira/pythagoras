@@ -37,7 +37,7 @@ class ScrollerResponseElements extends React.Component {
         <HarryPotterTest />,
         <TestInputsToCoords stepDirection={stepDirection} />,
         // <CharacterIntro />,
-        <CoordSysToCharIntro />,
+        <CoordSysToCharIntro stepDirection={stepDirection} />,
         <ValuesDifference />,
         <DistanceToCharacter />,
         <DistanceToCharacters/>,
