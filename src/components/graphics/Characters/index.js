@@ -9,6 +9,7 @@ import umbridge from '../../../imgs/characters/umbridge.png'
 import voldemort from '../../../imgs/characters/voldemort.png'
 
 
+// todo maybe Map should be used instead to preserve order
 export default {
     'fred_and_george': {
         src: fred_and_george,

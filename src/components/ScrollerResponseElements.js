@@ -20,47 +20,68 @@ class ScrollerResponseElements extends React.Component {
   constructor(props) {
     super(props)
     this.justFinishedTransitions = []
+
+    this.shouldShowTransition = this.shouldShowTransition.bind(this)
   }
+
   componentWillUpdate(newProps) {
     const finishedTransitions = this.props.activeTransitions.filter(
       tr => !newProps.activeTransitions.includes(tr)
     )
     this.justFinishedTransitions = finishedTransitions
   }
+
+  shouldShowTransition() {
+    // todo make it more robust using this.transitionSteps
+    const { activeStep, stepDirection } = this.props
+    if (this.justFinishedTransitions.length) {
+      return
+    }
+    if (
+      (activeStep === 4 && stepDirection === 'up') ||
+      (activeStep === 5 && stepDirection === 'down')
+    ) {
+      return '4, 5'
+    } else if (
+      (activeStep === 5 && stepDirection === 'up') ||
+      (activeStep === 6 && stepDirection === 'down')
+    ) {
+      return '5, 6'
+    }
+
+  }
   render() {
     const { activeStep, stepDirection } = this.props
-    const stepToElement = [
-        <RightTriangleParts />,
-        <RightTriangleParts />,
-        <RightTriangleVariants />,
-        <DeathlyHallows />,
-        <HarryPotterTest />,
-        <TestInputsToCoords stepDirection={stepDirection} />,
-        // <CharacterIntro />,
-        <CoordSysToCharIntro stepDirection={stepDirection} />,
-        <ValuesDifference />,
-        <DistanceToCharacter />,
-        <DistanceToCharacters/>,
-        <CharVsChar char1="snape" char2="hermione"/>,
-        <CharVsChar char1="snape" char2="harry"/>,
-        <Result />,
+    const staticSteps = [
+      <RightTriangleParts />,
+      <RightTriangleParts />,
+      <RightTriangleVariants />,
+      <DeathlyHallows />,
+      <HarryPotterTest />,
+      <CoordSystem />,
+      <CharacterIntro />,
+      <ValuesDifference />,
+      <DistanceToCharacter />,
+      <DistanceToCharacters/>,
+      <CharVsChar char1="snape" char2="hermione"/>,
+      <CharVsChar char1="snape" char2="harry"/>,
+      <Result />,
     ]
-    let comp = stepToElement[activeStep]
-    // todo clean up the mess
-    if (
-        activeStep === 4 &&
-        stepDirection === 'up' &&
-        !this.justFinishedTransitions.includes('TestInputsToCoords')
-    ) {
-      comp = stepToElement[activeStep + 1]
+    this.transitionSteps = {
+      '4, 5': {
+        component: <TestInputsToCoords stepDirection={stepDirection} />,
+        name: 'TestInputsToCoords',
+      },
+      '5, 6': {
+        component: <CoordSysToCharIntro stepDirection={stepDirection} />,
+        name: 'CoordsToCharacterIntor',
+      }
     }
-    if (
-      activeStep === 5 &&
-      (stepDirection === 'up' ||
-       this.justFinishedTransitions.includes('TestInputsToCoords'))
-    ) {
-      comp = <CoordSystem />
-    }
+    const transitionStep = this.shouldShowTransition()
+    let comp = transitionStep
+      ? this.transitionSteps[transitionStep].component
+      : staticSteps[activeStep]
+
     return (
           <div className="scroller-response-els">
             {comp}
