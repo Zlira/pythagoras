@@ -29,19 +29,44 @@ export function PointLabel({
   )
 }
 
-export function ValuePoint({goodness=0, lawfullness=0, xScale, yScale}) {
+export class ValuePoint extends React.Component {
+  constructor(props) {
+    super(props)
+    this.textRef = React.createRef()
+    this.state = {
+      textBBox: undefined,
+    }
+  }
+
+  componentDidMount() {
+    this.setState({
+      textBBox: this.textRef.current.getBBox()
+    })
+  }
+
+  render() {
+    const {goodness=0, lawfullness=0, xScale, yScale} = this.props
+    let background = null
+    if (this.state.textBBox) {
+      const {width, height} = this.state.textBBox,
+        boxPadding = 5,
+        x = xScale(lawfullness) - boxPadding - width / 2,
+        y = yScale(goodness) + height / 4
+      background = <rect x={x} y={y} width={width + boxPadding * 2}
+                     height={height} fill="white" opacity={.5}/>
+    }
     return (
-      // todo maybe add a white semitrnasparent background to the
-      // text
       <g className="test-values">
+        {background}
         <UlabeledPoint goodness={goodness} lawfullness={lawfullness}
           yScale={yScale} xScale={xScale}
         />
         <PointLabel goodness={goodness} lawfullness={lawfullness}
-          yScale={yScale} xScale={xScale}
+          yScale={yScale} xScale={xScale} textRef={this.textRef}
         />
       </g>
     )
+  }
 }
 
 
