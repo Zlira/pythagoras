@@ -128,7 +128,7 @@ class CoordsToCharacterIntro extends React.Component {
   }
 
   render() {
-   const {lawfullness, goodness } = this.props
+    const {lawfullness, goodness } = this.props
     const { width, height, xScale, yScale } = coordSystemParams()
     const fadeOutClass = this.state.fadeCoords? 'fade-out-progress': 'fade-out-appear'
     return (

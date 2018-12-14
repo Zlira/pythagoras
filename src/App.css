@@ -138,3 +138,50 @@ svg text.axis-label {
     opacity: 1;
   }
 }
+
+
+span.radical > span {
+  border-top: thin solid #2F343F;
+}
+
+span.radical::before {
+  content: '√';
+  font-size: 1.2em;
+  border-top: none;
+}
+
+.formula-editor {
+  position: relative;
+}
+
+.formula-editor .formula-style-elements {
+  position: absolute;
+  z-index: 1;
+  color: rgba(0,0,0,0);
+}
+
+.formula-editor .formula-style-elements span {
+  border-top: thin solid grey;
+}
+
+.formula-editor .formula-style-elements,
+.formula-editor input {
+  width: 100%;
+  min-height: 30px;
+  padding: 5px;
+}
+
+.formula-editor input {
+  position: relative;
+  z-index: 2;
+  font-family: "PT Mono", monospace;
+  font-size: 1rem;
+  background-color: rgba(0,0,0,0);
+  color: #2F343F;
+  border: thin solid #0055fe;
+  outline: none;
+}
+
+.formula-editor input:focus {
+  box-shadow: 0px 0px 3px #0055fe;
+}
