@@ -1,5 +1,6 @@
 import React from 'react'
 import {bisectLeft, bisect} from 'd3-array'
+import math from 'mathjs'
 
 
 // todo realy need tests for this one
@@ -53,9 +54,20 @@ class FormulaHandler {
     const newToken = {symbol: token}
     const selectedTokens = this._getSelectedTokens(cursorPosition)
     const tokenIndeces = this._getTokenIdeces()
-    const insertIndex = selectedTokens.start
+    let insertIndex = selectedTokens.start
     const insertLength = selectedTokens.end - selectedTokens.start
-    this.tokens.splice(insertIndex, insertLength, newToken)
+    if (token === '√') {
+      const sqrtStart = {symbol: 'sqrt('}
+      const sqrtEnd = {symbol: ')', matchingToken: sqrtStart}
+      sqrtStart.matchingToken = sqrtEnd
+      this.tokens.splice(insertIndex, 0, sqrtStart)
+      insertIndex ++
+      this.tokens.splice(insertIndex + insertLength, 0, sqrtEnd)
+    } else {
+      this.tokens.splice(insertIndex, insertLength, newToken)
+    }
+    // todo doesn't work for sqrt and is confusing anyway, just create one smart
+    // function to deal with cursor position
     return (
       (tokenIndeces[insertIndex - 1]? tokenIndeces[insertIndex - 1].end : 0) +
       token.length +
@@ -73,7 +85,12 @@ class FormulaHandler {
         startDelIndex = startDelIndex - 1
       }
     }
+    const tokensToDelete = this.tokens.slice(startDelIndex, startDelIndex + delCount)
+    const mathcingTokensToDelete = (
+      tokensToDelete.filter(el => el.matchingToken).map(el => el.matchingToken)
+    )
     this.tokens.splice(startDelIndex, delCount)
+    this.tokens = this.tokens.filter(el => !mathcingTokensToDelete.includes(el))
     return tokenIndeces[startDelIndex]?
       tokenIndeces[startDelIndex].start :
       this.repr().length
@@ -196,7 +213,7 @@ export default class FormulaEditor extends React.Component {
       formula: event.target.value
     })
   }
-
+  // todo doesn't behave well when input element is too narrow
   render() {
     return (
       <div className="formula-editor">
