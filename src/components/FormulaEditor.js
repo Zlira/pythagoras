@@ -1,15 +1,22 @@
 import React from 'react'
-import {bisectLeft} from 'd3-array'
+import {bisectLeft, bisect} from 'd3-array'
 
 
-class formulaHandler {
+// todo realy need tests for this one
+class FormulaHandler {
   // convert tokens to representation (without sqr and sqrt for now)
   // move cursor so it treats var name as one element
-  // add new tokens given cursor position (add spaces, return new cursor position)
+  //+ add new tokens given cursor position (add spaces, return new cursor position)
   // remove tokens given selection bounds, direction (return new cursor position)
-  // replace tokens givent selection bounds, new token (retrun new cursor position)
+  //+ replace tokens givent selection bounds, new token (retrun new cursor position)
   constructor() {
     this.tokens = []
+
+    this.addToken = this.addToken.bind(this)
+    this.removeToken = this.removeToken.bind(this)
+    this.repr = this.repr.bind(this)
+    this._getSelectedTokens = this._getSelectedTokens.bind(this)
+    this._getTokenIdeces = this._getTokenIdeces.bind(this)
   }
 
   _getTokenIdeces() {
@@ -27,25 +34,50 @@ class formulaHandler {
     return indeces
   }
 
-  addToken(token, cursorPosition) {
-    let insertIndex
-    const newToken = {symbol: token}
+  _getSelectedTokens(cursorPosition) {
     const tokenIndeces = this._getTokenIdeces()
-    if (cursorPosition.start === cursorPosition.end) {
-      insertIndex = bisectLeft(
-        tokenIndeces.map(e => e.start),
-        cursorPosition.start
-      )
-    } else {
-      insertIndex = this.tokens.length
+    const insertStartIndex = bisectLeft(
+      tokenIndeces.map(e => e.start),
+      cursorPosition.start
+    )
+    const insertEndIndex = bisect(
+      tokenIndeces.map(e => e.end), cursorPosition.end
+    )
+    return {
+      start: insertStartIndex,
+      end: insertEndIndex,
     }
-    // debugger
-    this.tokens.splice(insertIndex, 0, newToken)
+  }
+
+  addToken(token, cursorPosition) {
+    const newToken = {symbol: token}
+    const selectedTokens = this._getSelectedTokens(cursorPosition)
+    const tokenIndeces = this._getTokenIdeces()
+    const insertIndex = selectedTokens.start
+    const insertLength = selectedTokens.end - selectedTokens.start
+    this.tokens.splice(insertIndex, insertLength, newToken)
     return (
       (tokenIndeces[insertIndex - 1]? tokenIndeces[insertIndex - 1].end : 0) +
       token.length +
       (insertIndex? 1 : 0))
     }
+
+  removeToken(cursorPosition, direction) {
+    const selectedTokens = this._getSelectedTokens(cursorPosition)
+    const tokenIndeces = this._getTokenIdeces()
+    let startDelIndex = selectedTokens.start
+    let delCount = selectedTokens.end - selectedTokens.start
+    if (selectedTokens.start === selectedTokens.end) {
+      delCount += 1
+      if (direction === 'backward') {
+        startDelIndex = startDelIndex - 1
+      }
+    }
+    this.tokens.splice(startDelIndex, delCount)
+    return tokenIndeces[startDelIndex]?
+      tokenIndeces[startDelIndex].start :
+      this.repr().length
+  }
 
   repr() {
     return this.tokens.map(el => el.symbol).join(' ')
@@ -84,15 +116,18 @@ export default class FormulaEditor extends React.Component {
     this.state = {
       formula: ''
     }
-    this.formulaHandler = new formulaHandler()
+    this.formulaHandler = new FormulaHandler()
     this.inputRef = React.createRef()
 
     this.addToken = this.addToken.bind(this)
+    this.removeToken = this.removeToken.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.getCursorPos = this.getCursorPos.bind(this)
+    this.handleKeydown = this.handleKeydown.bind(this)
   }
 
   componentDidUpdate() {
-    if (this.nextCursorPos) {
+    if (this.nextCursorPos !== undefined) {
       this.inputRef.current.setSelectionRange(
         this.nextCursorPos, this.nextCursorPos
       )
@@ -102,21 +137,25 @@ export default class FormulaEditor extends React.Component {
 
   componentDidMount() {
     this.inputRef.current.addEventListener(
-      'keypress', this.handleKeydown, false
+      'keydown', this.handleKeydown, false
     )
   }
 
   componentWillUnmount() {
     this.inputRef.current.removeEventListener(
-      'keypress', this.handleKeydown
+      'keydown', this.handleKeydown
     )
   }
 
-  addToken(token) {
-    const selection = {
+  getCursorPos() {
+    return {
       start: this.inputRef.current.selectionStart,
       end: this.inputRef.current.selectionEnd,
     }
+  }
+
+  addToken(token) {
+    const selection = this.getCursorPos()
     this.nextCursorPos = this.formulaHandler.addToken(token, selection)
     this.setState({
       formula: this.formulaHandler.repr(),
@@ -124,13 +163,31 @@ export default class FormulaEditor extends React.Component {
     this.inputRef.current.focus()
   }
 
+  removeToken(direction) {
+    const selection = this.getCursorPos()
+    this.nextCursorPos = this.formulaHandler.removeToken(
+      selection, direction
+    )
+    console.log(this.nextCursorPos)
+    this.setState({
+      formula: this.formulaHandler.repr(),
+    })
+    this.inputRef.current.focus()
+  }
+
   handleKeydown(keyDownEvent) {
+    const keyCode = keyDownEvent.keyCode
     const whitelistedKeys = [
-      16, 35, 36, 37, 38, 39, 40, 9, 13, 8, 46
+      16, 35, 36, 37, 38, 39, 40, 9, 13,
     ]
-    if (!whitelistedKeys.includes(keyDownEvent.keyCode)) {
+    if (!whitelistedKeys.includes(keyCode)) {
       keyDownEvent.preventDefault()
       keyDownEvent.stopPropagation()
+    }
+    if (keyCode === 8) {
+      this.removeToken('backward')
+    } else if (keyCode === 46) {
+      this.removeToken('forward')
     }
   }
 
