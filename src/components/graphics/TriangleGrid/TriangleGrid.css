@@ -11,6 +11,6 @@
 }
 
 /* 'diagonal' may be a better name */
-.tr-grid-rotated .tr-grid {
+.tr-grid.rotated {
     stroke: #32FF00;
 }

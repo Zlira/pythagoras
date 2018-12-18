@@ -1,9 +1,13 @@
 const pxPerUnit = 40
 const signDigits = 2
+const degreesInRad = 57.3
+
+export function degreesToRad(deg) {
+  return deg/degreesInRad
+}
 
 
 export function rightTrAngle(oppSide, adjSide) {
-  const degreesInRad = 57.3
   return Math.atan(oppSide / adjSide) * degreesInRad
 }
 

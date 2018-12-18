@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import RightTriangleParts from './graphics/RightTriangleParts/index'
+import SingleTriangleCheck from './graphics/SingleTriangleCheck'
 import RightTriangleVariants from './graphics/RightTriangleVariants/index'
 import DeathlyHallows from './graphics/DeathlyHallowsImg/index'
 import HarryPotterTest from './graphics/HPTestInput/HarryPotterTest'
@@ -54,7 +55,7 @@ class ScrollerResponseElements extends React.Component {
     const { activeStep, stepDirection } = this.props
     const staticSteps = [
       <RightTriangleParts />,
-      <RightTriangleParts />,
+      <SingleTriangleCheck />,
       <RightTriangleVariants />,
       <DeathlyHallows />,
       <HarryPotterTest />,

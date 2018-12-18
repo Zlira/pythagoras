@@ -1,6 +1,8 @@
 import React from 'react'
+import { scaleLinear } from 'd3-scale'
 
 import './TriangleGrid.css'
+import { degreesToRad } from '../Helpers'
 
 const pxPerUnit = 40
 
@@ -37,15 +39,32 @@ export function Grid({orientation='vertical', containerHeight, containerWidth, s
     )
 }
 
-export function RotatedGrid({angle, containerHeight, containerWidth, snapToX, snapToY}) {
-    return (
-        <g className="tr-grid-rotated" transform={
-            `rotate(${angle}, ${snapToX}, ${snapToY}) translate(-200, -200)`
-        }>
-          <Grid containerHeight={containerHeight * 4} containerWidth={containerWidth * 4}
-            snapToValue={snapToX}/>
-        </g>
-    )
+
+export function RotatedGrid({angle=0, containerHeight, containerWidth, snapToX, snapToY}) {
+    const angleRad = degreesToRad(angle),
+      rightAngle = degreesToRad(90)
+    const x1 = snapToX + snapToY / Math.tan(rightAngle - angleRad),
+          x2 = x1 - containerHeight / Math.tan(rightAngle - angleRad),
+          horDistBetweenLines = pxPerUnit/Math.cos(angleRad),
+          numLinesToRight = Math.floor((containerWidth - x2) / pxPerUnit),
+          numLinesToLeft = Math.floor(x1/pxPerUnit),
+          lines = [],
+          scale = (scaleLinear().domain([0, containerWidth])
+                                .range([0, containerWidth])
+                                .clamp(true))
+    for (let i=-numLinesToLeft; i < numLinesToRight; i++) {
+      let lx1 = x1 + i*horDistBetweenLines,
+        lx2 = x2 + i*horDistBetweenLines,
+        ly2 = containerHeight / (1 + (scale(lx2) - lx2) / (lx1 - scale(lx2)) ),
+        ly1 = containerHeight / (1 + (scale(lx1) - lx2) / (lx1 - scale(lx1)) )
+      lines.push(
+        <line x1={scale(lx1)}
+          x2={scale(lx2)} y1={ly1} y2={ly2}
+          key={i}
+        />
+      )
+    }
+    return <g className="tr-grid rotated">{lines}</g>
 }
 
 

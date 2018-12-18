@@ -5,11 +5,10 @@ import math from 'mathjs'
 
 // todo realy need tests for this one
 class FormulaHandler {
-  // convert tokens to representation (without sqr and sqrt for now)
+  // convert tokens to representation for mathjs
+  // convert tokens to representation for display
   // move cursor so it treats var name as one element
-  //+ add new tokens given cursor position (add spaces, return new cursor position)
-  // remove tokens given selection bounds, direction (return new cursor position)
-  //+ replace tokens givent selection bounds, new token (retrun new cursor position)
+  // return correct cursor position
   constructor() {
     this.tokens = []
 
@@ -150,6 +149,11 @@ export default class FormulaEditor extends React.Component {
       )
     }
     this.nextCursorPos = undefined
+    try {
+      console.log(math.eval(this.state.formula, {AB: 4, BC: 3}))
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   componentDidMount() {
@@ -185,7 +189,6 @@ export default class FormulaEditor extends React.Component {
     this.nextCursorPos = this.formulaHandler.removeToken(
       selection, direction
     )
-    console.log(this.nextCursorPos)
     this.setState({
       formula: this.formulaHandler.repr(),
     })
