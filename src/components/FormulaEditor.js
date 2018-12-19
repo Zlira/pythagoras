@@ -2,6 +2,9 @@ import React from 'react'
 import {bisectLeft, bisect} from 'd3-array'
 import math from 'mathjs'
 
+import { defaultTriangleSize } from './graphics/RightTriangle'
+import { pxToUnits, toFixed } from './graphics/Helpers'
+
 const OPERATORS = {
   plus: {math: '+', display: '+'},
   minus: {math: '-', display: '-'},
@@ -91,8 +94,9 @@ class FormulaHandler {
       const start = newToken.start
       const end = newToken.end
       this.tokens.splice(insertIndex, 0, start)
-      insertIndex = insertIndex + 1 + insertLength
-      this.tokens.splice(insertIndex, 0, end)
+      this.tokens.splice(insertIndex + 1 + insertLength, 0, end)
+      // for moving cursor to the end of seleciton
+      if (insertLength) { insertIndex = insertIndex + 1 + insertLength }
     } else {
       this.tokens.splice(insertIndex, insertLength, newToken)
     }
@@ -132,8 +136,8 @@ class FormulaHandler {
     return this.tokens.map(el => el.display).join(' ')
   }
 
-  toMath() {
-    return this.tokens.map(el => el.math).join(' ')
+  eval(context) {
+    return math.eval(this.tokens.map(el => el.math).join(' '), context)
   }
 }
 
@@ -173,7 +177,12 @@ export default class FormulaEditor extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      formula: ''
+      formula: '',
+      result: 'NaN',
+    }
+    this.triangleSize = {
+      height: pxToUnits(defaultTriangleSize.height),
+      width: pxToUnits(defaultTriangleSize.width),
     }
     this.formulaHandler = new FormulaHandler()
     this.inputRef = React.createRef()
@@ -192,10 +201,18 @@ export default class FormulaEditor extends React.Component {
       )
     }
     this.nextCursorPos = undefined
+    let result
     try {
-      console.log(math.eval(this.formulaHandler.toMath(), {AB: 4, BC: 3}))
+      result = this.formulaHandler.eval({
+        AB: this.triangleSize.height,
+        BC: this.triangleSize.width,
+      })
+      result = toFixed(result)
     } catch (e) {
-      console.log(e)
+      result = 'NaN'
+    }
+    if (this.state.result !== result) {
+      this.setState({result: result})
     }
   }
 
@@ -273,6 +290,7 @@ export default class FormulaEditor extends React.Component {
           ref={this.inputRef}
           onChange={this.handleChange}
         ></input>
+        <p>{this.state.result}</p>
       </div>
     )
   }

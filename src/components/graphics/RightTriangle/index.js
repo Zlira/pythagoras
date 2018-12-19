@@ -5,6 +5,11 @@ import colors from '../colors'
 import HighlightElement from '../../../containers/HighlightElement'
 import './triangle.css'
 
+// todo actually use this in other places
+export const defaultTriangleSize = {
+  width: 500 * .7,
+  height: 250 * .8,
+}
 
 function RightAngleSign({x, y}) {
     return (
