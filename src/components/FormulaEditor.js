@@ -35,6 +35,7 @@ class FormulaHandler {
     let count = 0
     const indeces = []
     for (const token of this.tokens) {
+      // add one for each separator
       if (indeces.length) {
         count++
       }
@@ -84,25 +85,26 @@ class FormulaHandler {
   addToken(token, cursorPosition) {
     const newToken = this._getFullToken(token)
     const selectedTokens = this._getSelectedTokens(cursorPosition)
-    const tokenIndeces = this._getTokenIdeces()
     let insertIndex = selectedTokens.start
     const insertLength = selectedTokens.end - selectedTokens.start
     if (newToken.start) {
       const start = newToken.start
       const end = newToken.end
       this.tokens.splice(insertIndex, 0, start)
-      insertIndex ++
-      this.tokens.splice(insertIndex + insertLength, 0, end)
+      insertIndex = insertIndex + 1 + insertLength
+      this.tokens.splice(insertIndex, 0, end)
     } else {
       this.tokens.splice(insertIndex, insertLength, newToken)
     }
     // todo doesn't work for sqrt and is confusing anyway, just create one smart
     // function to deal with cursor position
     return (
-      (tokenIndeces[insertIndex - 1]? tokenIndeces[insertIndex - 1].end : 0) +
-      token.length +
-      (insertIndex? 1 : 0))
-    }
+      this.tokens
+          .slice(0, insertIndex + 1)
+          .map(t => t.display.length)
+          .reduce((acc, val)=> acc + val) + insertIndex
+    )
+  }
 
   removeToken(cursorPosition, direction) {
     const selectedTokens = this._getSelectedTokens(cursorPosition)
