@@ -2,6 +2,17 @@ import React from 'react'
 import {bisectLeft, bisect} from 'd3-array'
 import math from 'mathjs'
 
+const OPERATORS = {
+  plus: {math: '+', display: '+'},
+  minus: {math: '-', display: '-'},
+  multiply: {math: '*', display: '×'},
+  divide: {math: '/', display: '÷'},
+  square: {math: '^2', display: '^2'},
+  sqrt: {
+    start: {math: 'sqrt(', display: 'sqrt('},
+    end: {math: ')', display: ')'}
+  }
+}
 
 // todo realy need tests for this one
 class FormulaHandler {
@@ -17,6 +28,7 @@ class FormulaHandler {
     this.repr = this.repr.bind(this)
     this._getSelectedTokens = this._getSelectedTokens.bind(this)
     this._getTokenIdeces = this._getTokenIdeces.bind(this)
+    this._getFullToken = this._getFullToken.bind(this)
   }
 
   _getTokenIdeces() {
@@ -28,7 +40,7 @@ class FormulaHandler {
       }
       indeces.push({
         start: count,
-        end: count += token.symbol.length
+        end: count += token.display.length
       })
     }
     return indeces
@@ -49,19 +61,38 @@ class FormulaHandler {
     }
   }
 
+  _getFullToken(token) {
+    if (token.type === 'variable') {
+      return {
+        ...token,
+        math: token.name,
+        display: token.name,
+      }
+    } else if (token.type === 'operator') {
+      const operator = OPERATORS[token.name]
+      if (operator.start) {
+        const start = {...token, ...operator.start}
+        const end = {...token, ...operator.end, matchingToken: start}
+        start.matchingToken = end
+        return {start: start, end: end}
+      } else {
+        return {...token, ...operator}
+      }
+    }
+  }
+
   addToken(token, cursorPosition) {
-    const newToken = {symbol: token}
+    const newToken = this._getFullToken(token)
     const selectedTokens = this._getSelectedTokens(cursorPosition)
     const tokenIndeces = this._getTokenIdeces()
     let insertIndex = selectedTokens.start
     const insertLength = selectedTokens.end - selectedTokens.start
-    if (token === '√') {
-      const sqrtStart = {symbol: 'sqrt('}
-      const sqrtEnd = {symbol: ')', matchingToken: sqrtStart}
-      sqrtStart.matchingToken = sqrtEnd
-      this.tokens.splice(insertIndex, 0, sqrtStart)
+    if (newToken.start) {
+      const start = newToken.start
+      const end = newToken.end
+      this.tokens.splice(insertIndex, 0, start)
       insertIndex ++
-      this.tokens.splice(insertIndex + insertLength, 0, sqrtEnd)
+      this.tokens.splice(insertIndex + insertLength, 0, end)
     } else {
       this.tokens.splice(insertIndex, insertLength, newToken)
     }
@@ -96,26 +127,36 @@ class FormulaHandler {
   }
 
   repr() {
-    return this.tokens.map(el => el.symbol).join(' ')
+    return this.tokens.map(el => el.display).join(' ')
+  }
+
+  toMath() {
+    return this.tokens.map(el => el.math).join(' ')
   }
 }
 
 function InsertTokenButton({token, handleClick}) {
-  return <button onClick={handleClick}>{token}</button>
+  let symbol = token.name
+  if (token.type === 'operator') {
+    symbol = OPERATORS[token.name].display
+      ? OPERATORS[token.name].display
+      : OPERATORS[token.name].start.display
+  }
+  return <button onClick={() => handleClick(token)}>{symbol}</button>
 }
 
 function EditorControls({addToken}) {
   const vars = ['AB', 'BC']
-  const operators = ['+', '-', '×', '÷', '^2', '√']
+  const operators = ['plus', 'minus', 'multiply', 'divide', 'square', 'sqrt']
   const opButtons = operators.map(
     el => <InsertTokenButton
-             key={el} token={el}
-             handleClick={() => addToken(el)}/>
+             key={el} token={{type: 'operator', name: el}}
+             handleClick={addToken}/>
   )
   const varButtons = vars.map(
     el => <InsertTokenButton
-             key={el} token={el}
-             handleClick={() => addToken(el)}/>
+             key={el} token={{type: 'variable', name: el}}
+             handleClick={addToken}/>
   )
   return (
     <div className="editorControls">
@@ -150,7 +191,7 @@ export default class FormulaEditor extends React.Component {
     }
     this.nextCursorPos = undefined
     try {
-      console.log(math.eval(this.state.formula, {AB: 4, BC: 3}))
+      console.log(math.eval(this.formulaHandler.toMath(), {AB: 4, BC: 3}))
     } catch (e) {
       console.log(e)
     }
