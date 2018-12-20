@@ -3,13 +3,15 @@ import {bisectLeft, bisect} from 'd3-array'
 import math from 'mathjs'
 
 import { defaultTriangleSize } from './graphics/RightTriangle'
-import { pxToUnits, toFixed } from './graphics/Helpers'
+import { pxToUnits, toFixed, hypothenuseLen } from './graphics/Helpers'
 
 const OPERATORS = {
   plus: {math: '+', display: '+'},
   minus: {math: '-', display: '-'},
   multiply: {math: '*', display: '×'},
   divide: {math: '/', display: '÷'},
+  // todo add start and end so this also works with
+  // square of a square
   square: {math: '^2', display: '^2'},
   sqrt: {
     start: {math: 'sqrt(', display: 'sqrt('},
@@ -88,6 +90,7 @@ class FormulaHandler {
   addToken(token, cursorPosition) {
     const newToken = this._getFullToken(token)
     const selectedTokens = this._getSelectedTokens(cursorPosition)
+    // TODO if token being replaced has matching token remove it also
     let insertIndex = selectedTokens.start
     const insertLength = selectedTokens.end - selectedTokens.start
     if (newToken.start) {
@@ -100,8 +103,6 @@ class FormulaHandler {
     } else {
       this.tokens.splice(insertIndex, insertLength, newToken)
     }
-    // todo doesn't work for sqrt and is confusing anyway, just create one smart
-    // function to deal with cursor position
     return (
       this.tokens
           .slice(0, insertIndex + 1)
@@ -137,7 +138,26 @@ class FormulaHandler {
   }
 
   eval(context) {
-    return math.eval(this.tokens.map(el => el.math).join(' '), context)
+    const strippedContext = {}
+    for (let [key, val] of Object.entries(context)) {
+      strippedContext[key] = val.val
+    }
+    return math.eval(
+      this.tokens.map(el => el.math).join(' '), strippedContext
+    )
+  }
+
+  renderContex(context) {
+    const elements = this.tokens.map(
+      (token, i) => (
+        token.name in context
+        ? <span key={i} className={context[token.name].className}>
+            {context[token.name].val + ' '}
+          </span>
+        : <React.Fragment key={i}>{token.display + ' '}</React.Fragment>
+      )
+    )
+    return (<>{elements}</>)
   }
 }
 
@@ -173,6 +193,20 @@ function EditorControls({addToken}) {
 }
 
 
+function ResultValue({value, correctValue, correctClass}) {
+  if (value === 'NaN') {
+    return (
+      <span title="Не можливо обичлслити значення" className='with-tooltip'>
+        {value}
+      </span>
+    )
+  } else if (value === correctValue) {
+    return <span className={correctClass}>{value}</span>
+  }
+  return <span>{value}</span>
+}
+
+
 export default class FormulaEditor extends React.Component {
   constructor(props) {
     super(props)
@@ -180,9 +214,13 @@ export default class FormulaEditor extends React.Component {
       formula: '',
       result: 'NaN',
     }
+    const AB = pxToUnits(defaultTriangleSize.height),
+      BC = pxToUnits(defaultTriangleSize.width)
+    this.hypothenuse = toFixed(hypothenuseLen(AB, BC))
+    console.log(this.hypothenuse)
     this.triangleSize = {
-      height: pxToUnits(defaultTriangleSize.height),
-      width: pxToUnits(defaultTriangleSize.width),
+      AB: {val: AB, className: 'cathetus-2'},
+      BC: {val: BC, className: 'cathetus-1'},
     }
     this.formulaHandler = new FormulaHandler()
     this.inputRef = React.createRef()
@@ -203,10 +241,9 @@ export default class FormulaEditor extends React.Component {
     this.nextCursorPos = undefined
     let result
     try {
-      result = this.formulaHandler.eval({
-        AB: this.triangleSize.height,
-        BC: this.triangleSize.width,
-      })
+      // TODO mathjs takes 'AB AB' as a valid expression evaluating
+      // it as multiplication. Is it OK?
+      result = this.formulaHandler.eval(this.triangleSize)
       result = toFixed(result)
     } catch (e) {
       result = 'NaN'
@@ -290,7 +327,13 @@ export default class FormulaEditor extends React.Component {
           ref={this.inputRef}
           onChange={this.handleChange}
         ></input>
-        <p>{this.state.result}</p>
+        <p>
+          = {this.formulaHandler.renderContex(this.triangleSize)} {''}
+          = <ResultValue
+               value={this.state.result}
+               correctValue={this.hypothenuse}
+               correctClass='hypothenuse'/>
+        </p>
       </div>
     )
   }

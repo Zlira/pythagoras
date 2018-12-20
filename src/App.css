@@ -150,6 +150,11 @@ span.radical::before {
   border-top: none;
 }
 
+/*
+span.radical span.radical > span {
+  font-size: 0.9rem;
+} */
+
 .formula-editor {
   position: relative;
 }
@@ -184,4 +189,20 @@ span.radical::before {
 
 .formula-editor input:focus {
   box-shadow: 0px 0px 3px #0055fe;
+}
+
+span.cathetus-1 {
+  color: #00CFFF;
+}
+
+span.cathetus-2 {
+  color: #BC2CFF;
+}
+
+span.hypothenuse {
+  color: #32FF00;
+}
+
+span.with-tooltip {
+  text-decoration: underline dotted;
 }
