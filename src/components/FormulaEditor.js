@@ -12,7 +12,7 @@ const OPERATORS = {
   divide: {math: '/', display: '÷'},
   // todo add start and end so this also works with
   // square of a square
-  square: {math: '^2', display: '^2'},
+  square: {math: '^2', display: '^2', component: <sup>2</sup>},
   sqrt: {
     start: {math: 'sqrt(', display: 'sqrt('},
     end: {math: ')', display: ')'}
@@ -149,13 +149,19 @@ class FormulaHandler {
 
   renderContex(context) {
     const elements = this.tokens.map(
-      (token, i) => (
-        token.name in context
-        ? <span key={i} className={context[token.name].className}>
-            {context[token.name].val + ' '}
-          </span>
-        : <React.Fragment key={i}>{token.display + ' '}</React.Fragment>
-      )
+      (token, i) => {
+        if (token.name in context) {
+          return (
+            <span key={i} className={context[token.name].className}>
+              {context[token.name].val + ' '}
+            </span>)
+        } else {
+          const content = token.component? token.component : token.display
+          return (
+            <React.Fragment key={i}>{content}{' '}</React.Fragment>
+          )
+        }
+      }
     )
     return (<>{elements}</>)
   }
