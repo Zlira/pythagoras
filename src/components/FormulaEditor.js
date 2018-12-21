@@ -12,11 +12,65 @@ const OPERATORS = {
   divide: {math: '/', display: '÷'},
   // todo add start and end so this also works with
   // square of a square
-  square: {math: '^2', display: '^2', component: <sup>2</sup>},
+  square: {math: '^2', display: '^2', component: Square},
   sqrt: {
-    start: {math: 'sqrt(', display: 'sqrt('},
+    start: {math: 'sqrt(', display: 'sqrt(', component: SquareRoot},
     end: {math: ')', display: ')'}
   }
+}
+
+function buildComponent(index, token, children, context) {
+  if (token.name in context) {
+    return (
+      <span key={index} className={context[token.name].className}>
+        {context[token.name].val + ' '}
+      </span>
+    )
+  } else if (token.component) {
+    return React.createElement(token.component, {key: index, children: children})
+  } else {
+    return <React.Fragment key={index}>{token.display + ' '}</React.Fragment>
+  }
+}
+
+
+function getNestedComponent(currIndex, currVal, tokenIter, context) {
+  if (!currVal.matchingToken) {
+    return buildComponent(currIndex, currVal, undefined, context)
+  } else {
+    const children = []
+    let done, nextIndex, nextVal
+    while (!done) {
+      ({value: [nextIndex, nextVal], done} = tokenIter.next())
+      if (nextVal === currVal.matchingToken) {
+        return buildComponent(currIndex, currVal, children, context)
+      } else {
+        children.push(
+          getNestedComponent(nextIndex, nextVal, tokenIter, context)
+        )
+      }
+    }
+  }
+}
+
+
+function componentsFromTokens(tokens, context) {
+  const tokensIter = tokens.entries()
+  const components = []
+  for (const [index, val] of tokensIter) {
+    components.push(getNestedComponent(index, val, tokensIter, context))
+  }
+  return components
+}
+
+
+function Square() {
+  return <sup>2</sup>
+}
+
+
+function SquareRoot({children}) {
+  return <span className='radical'><span>{children}</span></span>
 }
 
 // todo realy need tests for this one
@@ -148,22 +202,7 @@ class FormulaHandler {
   }
 
   renderContex(context) {
-    const elements = this.tokens.map(
-      (token, i) => {
-        if (token.name in context) {
-          return (
-            <span key={i} className={context[token.name].className}>
-              {context[token.name].val + ' '}
-            </span>)
-        } else {
-          const content = token.component? token.component : token.display
-          return (
-            <React.Fragment key={i}>{content}{' '}</React.Fragment>
-          )
-        }
-      }
-    )
-    return (<>{elements}</>)
+    return componentsFromTokens(this.tokens, context)
   }
 }
 
@@ -191,9 +230,13 @@ function EditorControls({addToken}) {
              handleClick={addToken}/>
   )
   return (
-    <div className="editorControls">
-      <div className="variables">{varButtons}</div>
-      <div className="operators">{opButtons}</div>
+    <div className="editor-controls">
+      <div className="variables">
+        <div class='button-block'>{varButtons}</div>
+      </div>
+      <div className="operators">
+        <div class="button-block">{opButtons}</div>
+      </div>
     </div>
   )
 }
@@ -223,7 +266,6 @@ export default class FormulaEditor extends React.Component {
     const AB = pxToUnits(defaultTriangleSize.height),
       BC = pxToUnits(defaultTriangleSize.width)
     this.hypothenuse = toFixed(hypothenuseLen(AB, BC))
-    console.log(this.hypothenuse)
     this.triangleSize = {
       AB: {val: AB, className: 'cathetus-2'},
       BC: {val: BC, className: 'cathetus-1'},

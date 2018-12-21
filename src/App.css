@@ -150,10 +150,9 @@ span.radical::before {
   border-top: none;
 }
 
-/*
 span.radical span.radical > span {
-  font-size: 0.9rem;
-} */
+  font-size: 0.9em;
+}
 
 .formula-editor {
   position: relative;
