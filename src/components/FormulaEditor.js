@@ -64,13 +64,17 @@ function componentsFromTokens(tokens, context) {
 }
 
 
-function Square() {
-  return <sup>2</sup>
+function Square(props) {
+  return <>{props.children}<sup>2</sup></>
 }
 
 
 function SquareRoot({children}) {
   return <span className='radical'><span>{children}</span></span>
+}
+
+function PlaceHolder() {
+  return <span className="math-placeholder">&nbsp;</span>
 }
 
 // todo realy need tests for this one
@@ -206,36 +210,51 @@ class FormulaHandler {
   }
 }
 
-function InsertTokenButton({token, handleClick}) {
+function TokenButton({token, handleClick}) {
   let symbol = token.name
   if (token.type === 'operator') {
-    symbol = OPERATORS[token.name].display
-      ? OPERATORS[token.name].display
-      : OPERATORS[token.name].start.display
+    let operator = OPERATORS[symbol].start? OPERATORS[symbol].start : OPERATORS[symbol]
+    if (operator.component) {
+      symbol = React.createElement(operator.component,)
+    } else {
+      symbol = operator.display
+    }
   }
   return <button onClick={() => handleClick(token)}>{symbol}</button>
 }
 
 function EditorControls({addToken}) {
   const vars = ['AB', 'BC']
-  const operators = ['plus', 'minus', 'multiply', 'divide', 'square', 'sqrt']
-  const opButtons = operators.map(
-    el => <InsertTokenButton
-             key={el} token={{type: 'operator', name: el}}
-             handleClick={addToken}/>
+  const operators = [
+    ['plus', 'minus'], ['multiply', 'divide'], ['square', 'sqrt']
+  ]
+  const createButton = el => (
+    <TokenButton
+      key={el} token={{type: 'operator', name: el}}
+      handleClick={addToken}/>)
+  const opBtnGroups = operators.map(
+    grp => {
+      const [op, revOp] = grp
+      return (
+      <div key={op+ ' ' +revOp}>
+        {createButton(op)}{createButton(revOp)}
+      </div>)
+    }
   )
   const varButtons = vars.map(
-    el => <InsertTokenButton
+    el => <TokenButton
              key={el} token={{type: 'variable', name: el}}
              handleClick={addToken}/>
   )
   return (
     <div className="editor-controls">
       <div className="variables">
-        <div class='button-block'>{varButtons}</div>
+        <div className="block-label">змінні</div>
+        <div className='button-block'>{varButtons}</div>
       </div>
       <div className="operators">
-        <div class="button-block">{opButtons}</div>
+        <div className="block-label">дії</div>
+        <div className="button-block">{opBtnGroups}</div>
       </div>
     </div>
   )
@@ -366,15 +385,17 @@ export default class FormulaEditor extends React.Component {
     return (
       <div className="formula-editor">
         <EditorControls addToken={this.addToken} />
-        <div className="formula-style-elements">
-          <span>some invisible text</span>
+        <div>
+          <div className="formula-style-elements">
+          </div>
+          <input
+            type="text"
+            value={this.state.formula}
+            ref={this.inputRef}
+            onChange={this.handleChange}
+          ></input>
         </div>
-        <input
-          type="text"
-          value={this.state.formula}
-          ref={this.inputRef}
-          onChange={this.handleChange}
-        ></input>
+        {/* move this to separate component */}
         <p>
           = {this.formulaHandler.renderContex(this.triangleSize)} {''}
           = <ResultValue

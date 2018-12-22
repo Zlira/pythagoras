@@ -1,4 +1,4 @@
-html, body {
+html, body, button {
   background-color: white;
   font-size: 19.2px;
   color: #2F343F;
@@ -154,6 +154,13 @@ span.radical span.radical > span {
   font-size: 0.9em;
 }
 
+span.math-placeholder {
+  display: inline-block;
+  width: .618rem;
+  height: .7rem;
+  border: thin solid #2F343F;
+}
+
 .formula-editor {
   position: relative;
 }
@@ -171,7 +178,8 @@ span.radical span.radical > span {
 .formula-editor .formula-style-elements,
 .formula-editor input {
   width: 100%;
-  min-height: 30px;
+  box-sizing: border-box;
+  min-height: 40px;
   padding: 5px;
 }
 
@@ -190,7 +198,81 @@ span.radical span.radical > span {
   box-shadow: 0px 0px 3px #0055fe;
 }
 
-span.cathetus-1 {
+.formula-editor .editor-controls {
+  width: 100%;
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-columns: 50% 50%;
+  align-items: start;
+
+  background-color: #f9f9f9;
+  border: thin solid gray;
+  border-bottom: none;
+  border-top-right-radius: 2px;
+  border-top-left-radius: 2px;
+}
+
+.formula-editor .editor-controls .variables {
+  grid-column: 1;
+}
+
+.formula-editor .editor-controls .operators {
+  grid-column: 2;
+  border-left: thin solid gray;
+}
+
+.formula-editor .editor-controls .operators div {
+  display: inline-block;
+}
+
+.formula-editor .editor-controls .operators div button {
+  display: block;
+}
+
+.formula-editor .editor-controls .button-block {
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.formula-editor .variables, .formula-editor .operators {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.formula-editor .block-label {
+  display: inline-block;
+  vertical-align:top;
+  margin-right: 15px;
+  margin-left: 10px;
+  color: gray;
+}
+
+.formula-editor button {
+  border: thin solid rgba(0, 0, 0, 0);
+  border-radius: 2px;
+  height: 36px;
+  font-weight: bold;
+  min-width: 36px;
+  box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0);
+  padding: 1px 4px;
+}
+
+.formula-editor button sup {
+  line-height: 0;
+}
+.formula-editor button:hover {
+  border: thin solid #ccc;
+}
+
+button span.radical::before {
+  content: '√';
+  font-size: 1em;
+  font-weight: bold;
+}
+
+  span.cathetus-1 {
   color: #00CFFF;
 }
 
