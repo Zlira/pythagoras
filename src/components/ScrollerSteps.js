@@ -11,6 +11,7 @@ function ScrollerSteps({ activeStep }) {
           {steps.map(
             (el, index) => (<ScrollerStep
                              children={el}
+                             stepIndex={index}
                              isActive={index === activeStep}/>)
           )}
         </div>

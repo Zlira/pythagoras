@@ -1,11 +1,15 @@
 import React from 'react'
 
 
-function scrollamaStep ({children, isActive=false}) {
+function scrollamaStep ({children, stepIndex, isActive=false}) {
     // todo make isActive work
-    return (<section className={"step" + (isActive? " active" : "")}>
-      { children } 
-    </section>)
+    return (
+      <section className={"step" + (isActive? " active" : "")}
+        id={'step-' + stepIndex}
+      >
+        { children }
+       </section>
+    )
 }
 
 

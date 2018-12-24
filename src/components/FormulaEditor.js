@@ -4,6 +4,7 @@ import math from 'mathjs'
 
 import { defaultTriangleSize } from './graphics/RightTriangle'
 import { pxToUnits, toFixed, hypothenuseLen } from './graphics/Helpers'
+import ScrollController from './ScrollHandler';
 
 const OPERATORS = {
   plus: {math: '+', display: '+'},
@@ -290,6 +291,7 @@ export default class FormulaEditor extends React.Component {
       BC: {val: BC, className: 'cathetus-1'},
     }
     this.formulaHandler = new FormulaHandler()
+    this.scrollController = new ScrollController()
     this.inputRef = React.createRef()
 
     this.addToken = this.addToken.bind(this)
@@ -297,6 +299,7 @@ export default class FormulaEditor extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.getCursorPos = this.getCursorPos.bind(this)
     this.handleKeydown = this.handleKeydown.bind(this)
+    this.controllScroll = this.controllScroll.bind(this)
   }
 
   componentDidUpdate() {
@@ -318,9 +321,19 @@ export default class FormulaEditor extends React.Component {
     if (this.state.result !== result) {
       this.setState({result: result})
     }
+    this.controllScroll()
+  }
+
+  controllScroll() {
+    if (this.state.result === this.hypothenuse) {
+      this.scrollController.allow()
+    } else {
+      this.scrollController.prevent('step-2')
+    }
   }
 
   componentDidMount() {
+    this.controllScroll()
     this.inputRef.current.addEventListener(
       'keydown', this.handleKeydown, false
     )
