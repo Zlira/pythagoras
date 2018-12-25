@@ -52,3 +52,8 @@ export const endTransition = name => ({
     type: 'END_TRANSITION',
     name: name,
 })
+
+export const forbidToScrollPast = elementId => ({
+  type: 'FORBID_TO_SCROLL_PAST',
+  elementId: elementId,
+})

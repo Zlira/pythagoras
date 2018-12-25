@@ -21,6 +21,7 @@ const store = createStore(
     lawfullness: 0,
     goodness: 0,
     activeTransitions: [],
+    forbiddenToScrollPast: null,
   },
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )

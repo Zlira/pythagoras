@@ -1,9 +1,11 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import {bisectLeft, bisect} from 'd3-array'
 import math from 'mathjs'
 
 import { defaultTriangleSize } from './graphics/RightTriangle'
 import { pxToUnits, toFixed, hypothenuseLen } from './graphics/Helpers'
+import { forbidToScrollPast } from '../actions'
 import ScrollController from './ScrollHandler';
 
 const OPERATORS = {
@@ -78,7 +80,7 @@ function PlaceHolder() {
   return <span className="math-placeholder">&nbsp;</span>
 }
 
-// todo realy need tests for this one
+// todo really need tests for this one
 class FormulaHandler {
   // convert tokens to representation for mathjs
   // convert tokens to representation for display
@@ -276,7 +278,7 @@ function ResultValue({value, correctValue, correctClass}) {
 }
 
 
-export default class FormulaEditor extends React.Component {
+class FormulaEditor extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -292,6 +294,8 @@ export default class FormulaEditor extends React.Component {
     }
     this.formulaHandler = new FormulaHandler()
     this.scrollController = new ScrollController()
+    this.nextStepId = 'step-' + (parseInt(this.props.stepIndex) + 1)
+
     this.inputRef = React.createRef()
 
     this.addToken = this.addToken.bind(this)
@@ -325,15 +329,19 @@ export default class FormulaEditor extends React.Component {
   }
 
   controllScroll() {
-    if (this.state.result === this.hypothenuse) {
+    if (
+      (this.state.result === this.hypothenuse) ||
+      (this.props.activeStep < this.props.stepIndex)
+    ) {
       this.scrollController.allow()
+      this.props.forbidScroll(null)
     } else {
       this.scrollController.prevent('step-2')
+      this.props.forbidScroll(this.nextStepId)
     }
   }
 
   componentDidMount() {
-    this.controllScroll()
     this.inputRef.current.addEventListener(
       'keydown', this.handleKeydown, false
     )
@@ -420,3 +428,12 @@ export default class FormulaEditor extends React.Component {
     )
   }
 }
+
+export default connect(
+  (state) => ({
+    activeStep: state.activeStep,
+  }),
+  (dispatch) => ({
+    forbidScroll: elementId => dispatch(forbidToScrollPast(elementId))
+  })
+)(FormulaEditor)

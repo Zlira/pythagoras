@@ -1,3 +1,4 @@
+// todo is there a shorcut for this boilerplate?
 function RootReducer(state={}, action) {
     switch (action.type) {
         case 'SET_SCROLLER_STEP':
@@ -57,6 +58,11 @@ function RootReducer(state={}, action) {
             activeTransitions: state.activeTransitions.filter(
               tr => tr !== action.name
             )
+          }
+        case 'FORBID_TO_SCROLL_PAST':
+          return {
+            ...state,
+            forbiddenToScrollPast: action.elementId,
           }
         default:
           return state
