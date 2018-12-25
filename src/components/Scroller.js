@@ -2,6 +2,7 @@ import React from 'react'
 
 import ScrollerSteps from './ScrollerSteps'
 import ScrollerResponseElements from './ScrollerResponseElements'
+import ScrollDown from './ScrollDown'
 
 
 function Scroller() {
@@ -9,6 +10,7 @@ function Scroller() {
         <div className="scroller-container">
           <ScrollerResponseElements />
           <ScrollerSteps />
+          <ScrollDown/>
         </div>
     )
 }
