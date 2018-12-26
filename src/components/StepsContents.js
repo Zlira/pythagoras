@@ -8,7 +8,7 @@ import StepP from '../containers/StepParagraph'
 import HighlightElement from '../containers/HighlightElement'
 import DraggingIcon from './graphics/DragginigIcon'
 import Alignment from './Alignment'
-import FormulaEditor from '../components/FormulaEditor'
+import FormulaEditor from '../components/FormulaEditor/index'
 
 const steps = [
     <>
