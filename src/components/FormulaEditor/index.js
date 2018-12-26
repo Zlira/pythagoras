@@ -18,7 +18,9 @@ function ResultValue({value, correctValue, correctClass}) {
       </span>
     )
   } else if (value === correctValue) {
-    return <span className={correctClass}>{value}</span>
+    return (<span className={correctClass} style={{fontWeight: 'bold'}}>
+      {value}
+    </span>)
   }
   return <span>{value}</span>
 }
@@ -26,6 +28,7 @@ function ResultValue({value, correctValue, correctClass}) {
 function FormulaInput({ formula, inputRef, handleChange }) {
   return (
     <div className="formula-input">
+      <div className="input-label">AC =</div>
       <div className="formula-style-elements">
       </div>
       <input
@@ -41,7 +44,7 @@ function FormulaInput({ formula, inputRef, handleChange }) {
 
 function ResultBlock({ calculation, result, correctResult }) {
   return (
-    <div>
+    <div className='result-block'>
       = {calculation} {''}
       = <ResultValue
            value={result} correctValue={correctResult}

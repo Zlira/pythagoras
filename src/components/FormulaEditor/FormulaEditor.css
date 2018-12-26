@@ -1,20 +1,35 @@
 .formula-editor {
   position: relative;
+  background-color: #ececec;
+  font-family: "PT Mono", monospace;
 }
 
 .formula-editor .formula-style-elements {
   position: absolute;
   z-index: 1;
   color: rgba(0,0,0,0);
+  background-color: white;
 }
 
 .formula-editor .formula-style-elements span {
   border-top: thin solid grey;
 }
 
+.formula-input .input-label {
+  padding: 5px 10px;
+  width: 70px;
+  box-sizing: border-box;
+}
+
+.formula-input .formula-style-elements,
+.formula-input input,
+.formula-input .input-label {
+  display: inline-block;
+}
+
 .formula-editor .formula-style-elements,
 .formula-editor input {
-  width: 100%;
+  width: calc(100% - 85px);
   box-sizing: border-box;
   min-height: 40px;
   padding: 5px;
@@ -38,51 +53,40 @@
 .formula-editor .editor-controls {
   width: 100%;
   box-sizing: border-box;
-
-  display: grid;
-  grid-template-columns: 50% 50%;
-  align-items: start;
-
-  background-color: #f9f9f9;
-  border: thin solid gray;
-  border-bottom: none;
-  border-top-right-radius: 2px;
-  border-top-left-radius: 2px;
+  margin-left: 70px;
+  margin-bottom: 10px;
 }
 
-.formula-editor .editor-controls .variables {
-  grid-column: 1;
-}
-
+.formula-editor .editor-controls .variables,
 .formula-editor .editor-controls .operators {
-  grid-column: 2;
-  border-left: thin solid gray;
-}
-
-.formula-editor .editor-controls .operators div {
   display: inline-block;
+  margin-right: 22px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+
+  white-space:pre-wrap;
 }
 
-.formula-editor .editor-controls .operators div button {
-  display: block;
-}
-
-.formula-editor .editor-controls .button-block {
+.formula-editor .editor-controls .operators button {
   display: inline-block;
-  margin-left: 5px;
-}
-
-.formula-editor .variables, .formula-editor .operators {
-  padding-top: 4px;
-  padding-bottom: 4px;
 }
 
 .formula-editor .block-label {
-  display: inline-block;
-  vertical-align:top;
-  margin-right: 15px;
-  margin-left: 10px;
   color: gray;
+}
+
+.formula-editor .variables .block-label {
+  position: relative;
+  left: 4px;
+}
+
+.formula-editor .operators .block-label {
+  position: relative;
+  left: 10px;
+}
+
+.formula-editor .button-block {
+  width:100%;
 }
 
 .formula-editor button {
@@ -94,17 +98,26 @@
   box-sizing: border-box;
   background-color: rgba(0, 0, 0, 0);
   padding: 1px 4px;
+  margin-right: 1px;
 }
 
 .formula-editor button sup {
   line-height: 0;
 }
+
 .formula-editor button:hover {
   border: thin solid #ccc;
+  background-color: white;
 }
 
 button span.radical::before {
   content: '√';
   font-size: 1em;
   font-weight: bold;
+}
+
+.formula-editor .result-block {
+  padding: 10px 15px 20px 0px;
+  margin-left: 70px;
+  margin-top: 10px;
 }

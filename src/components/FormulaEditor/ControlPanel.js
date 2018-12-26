@@ -20,21 +20,13 @@ function TokenButton({token, handleClick}) {
 export default function ControlPanel({addToken}) {
   const vars = ['AB', 'BC']
   const operators = [
-    ['plus', 'minus'], ['multiply', 'divide'], ['square', 'sqrt']
+    'plus', 'minus', 'multiply', 'divide', 'square', 'sqrt'
   ]
   const createButton = el => (
     <TokenButton
       key={el} token={{type: 'operator', name: el}}
       handleClick={addToken}/>)
-  const opBtnGroups = operators.map(
-    grp => {
-      const [op, revOp] = grp
-      return (
-      <div key={op+ ' ' +revOp}>
-        {createButton(op)}{createButton(revOp)}
-      </div>)
-    }
-  )
+  const opBtns = operators.map(op => createButton(op))
   const varButtons = vars.map(
     el => <TokenButton
              key={el} token={{type: 'variable', name: el}}
@@ -48,7 +40,7 @@ export default function ControlPanel({addToken}) {
       </div>
       <div className="operators">
         <div className="block-label">дії</div>
-        <div className="button-block">{opBtnGroups}</div>
+        <div className="button-block">{opBtns}</div>
       </div>
     </div>
   )
