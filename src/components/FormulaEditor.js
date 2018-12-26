@@ -6,7 +6,7 @@ import math from 'mathjs'
 import { defaultTriangleSize } from './graphics/RightTriangle'
 import { pxToUnits, toFixed, hypothenuseLen } from './graphics/Helpers'
 import { forbidToScrollPast } from '../actions'
-import ScrollController from './ScrollHandler';
+
 
 const OPERATORS = {
   plus: {math: '+', display: '+'},
@@ -293,7 +293,6 @@ class FormulaEditor extends React.Component {
       BC: {val: BC, className: 'cathetus-1'},
     }
     this.formulaHandler = new FormulaHandler()
-    this.scrollController = new ScrollController()
     this.nextStepId = 'step-' + (parseInt(this.props.stepIndex) + 1)
 
     this.inputRef = React.createRef()
@@ -333,10 +332,8 @@ class FormulaEditor extends React.Component {
       (this.state.result === this.hypothenuse) ||
       (this.props.activeStep < this.props.stepIndex)
     ) {
-      this.scrollController.allow()
       this.props.forbidScroll(null)
     } else {
-      this.scrollController.prevent('step-2')
       this.props.forbidScroll(this.nextStepId)
     }
   }

@@ -1,14 +1,13 @@
 import React from 'react'
-import { connect } from 'react-redux'
 
 
-function ScrollDown({forbiddenToScrollPast}) {
-  const text = forbiddenToScrollPast
-    ? "розв'яжи завдання, щоб перейти до наступного кроку"
-    : "скорль донизу"
+export default function ScrollDown({allowed}) {
+  const text = allowed
+    ? "скорль донизу"
+    : "розв'яжи завдання, щоб перейти до наступного кроку"
   return (
     <div className="scroller-indicator">
-      <ScrollIcon allowed={!forbiddenToScrollPast} />
+      <ScrollIcon allowed={allowed} />
       <span>{text}</span>
     </div>
   )
@@ -48,7 +47,3 @@ function ScrollIcon({allowed}) {
       </g>
    </svg>)
 }
-
-export default connect(
-  state => ({forbiddenToScrollPast: state.forbiddenToScrollPast})
-)(ScrollDown)
