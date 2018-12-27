@@ -60,6 +60,7 @@ export default class FormulaHandler {
 
     this.addToken = this.addToken.bind(this)
     this.removeToken = this.removeToken.bind(this)
+    this.clear = this.clear.bind(this)
     this.repr = this.repr.bind(this)
     this._getSelectedTokens = this._getSelectedTokens.bind(this)
     this._getTokenIdeces = this._getTokenIdeces.bind(this)
@@ -115,6 +116,10 @@ export default class FormulaHandler {
         return {...token, ...operator}
       }
     }
+  }
+
+  clear() {
+    this.tokens = []
   }
 
   addToken(token, cursorPosition) {

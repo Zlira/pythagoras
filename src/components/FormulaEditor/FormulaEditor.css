@@ -99,6 +99,7 @@
   background-color: #ddd;
   padding: 1px 4px;
   margin-right: 1px;
+  margin-bottom: 1px;
 }
 
 .formula-editor button sup {
@@ -117,7 +118,18 @@ button span.radical::before {
 }
 
 .formula-editor .result-block {
-  padding: 10px 15px 20px 0px;
+  padding: 10px 15px 15px 0px;
   margin-left: 70px;
   margin-top: 10px;
+}
+
+.give-up-block, .congrats-block {
+  font-size: .6em;
+  margin-left: 70px;
+  padding-bottom: 20px;
+}
+
+.give-up-block button {
+  font-size: 1em;
+  height: 26px;
 }

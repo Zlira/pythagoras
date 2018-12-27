@@ -10,14 +10,14 @@ import ControlPanel from './ControlPanel'
 import './FormulaEditor.css'
 
 
-function ResultValue({value, correctValue, correctClass}) {
+function ResultValue({value, isCorrect, correctClass}) {
   if (value === 'NaN') {
     return (
       <span title="Неможливо обичлслити значення" className='with-tooltip'>
         ?
       </span>
     )
-  } else if (value === correctValue) {
+  } else if (isCorrect) {
     return (<span className={correctClass} style={{fontWeight: 'bold'}}>
       {value}
     </span>)
@@ -42,7 +42,7 @@ function FormulaInput({ formula, inputRef, handleChange }) {
 }
 
 
-function ResultBlock({ calculation, result, correctResult }) {
+function ResultBlock({ calculation, result, isCorrect }) {
   const calc = calculation.length
     ? <>= {calculation} {''}</>
     : null
@@ -50,8 +50,28 @@ function ResultBlock({ calculation, result, correctResult }) {
     <div className='result-block'>
       {calc}
       = <ResultValue
-           value={result} correctValue={correctResult}
+           value={result} isCorrect={isCorrect}
            correctClass='hypothenuse'/>
+    </div>
+  )
+}
+
+
+function ShowCorrectAnswer({ giveUp }) {
+  return (
+    <div className="give-up-block">
+      Клацни <button onClick={giveUp}>
+        Здатися
+      </button>, щоби побачити правильну відповідь.
+    </div>
+  )
+}
+
+
+function Congrats() {
+  return (
+    <div className='congrats-block'>
+      <span aria-label="та-да">｡◕‿‿◕｡</span> Правильно!
     </div>
   )
 }
@@ -83,6 +103,7 @@ class FormulaEditor extends React.Component {
     this.handleKeydown = this.handleKeydown.bind(this)
     this.controllScroll = this.controllScroll.bind(this)
     this.resultIsCorrect = this.resultIsCorrect.bind(this)
+    this.giveUp = this.giveUp.bind(this)
   }
 
   componentDidUpdate() {
@@ -135,10 +156,15 @@ class FormulaEditor extends React.Component {
     if (this.state.result !== this.hypothenuse) {
       return false
     }
-    const sqrtOfTwo = this.formulaHandler.eval({
-      AB: {val: 1},
-      BC: {val: 1},
-    })
+    let sqrtOfTwo
+    try {
+      sqrtOfTwo = this.formulaHandler.eval({
+        AB: {val: 1},
+        BC: {val: 1},
+      })
+    } catch {
+      return false
+    }
     return toFixed(sqrtOfTwo) === toFixed(Math.sqrt(2))
   }
 
@@ -147,6 +173,29 @@ class FormulaEditor extends React.Component {
       start: this.inputRef.current.selectionStart,
       end: this.inputRef.current.selectionEnd,
     }
+  }
+
+  giveUp() {
+    this.formulaHandler.clear()
+    const tokens = [
+      {type: 'operator', name: 'sqrt'},
+      {type: 'variable', name: 'AB'},
+      {type: 'operator', name: 'square'},
+      {type: 'operator', name: 'plus'},
+      {type: 'variable', name: 'BC'},
+      {type: 'operator', name: 'square'}
+    ]
+    let count = 0
+    this.giveUpInterval = setInterval(
+      () => {
+        if (count >= tokens.length) {
+          clearInterval(this.giveUpInterval)
+          return
+        }
+        this.addToken(tokens[count])
+        count++
+      },
+      200)
   }
 
   addToken(token) {
@@ -193,6 +242,7 @@ class FormulaEditor extends React.Component {
 
   // todo doesn't behave well when input element is too narrow
   render() {
+    const resultCorrect = this.resultIsCorrect()
     return (
       <div className="formula-editor">
         <ControlPanel addToken={this.addToken} />
@@ -203,8 +253,13 @@ class FormulaEditor extends React.Component {
         />
         <ResultBlock
           calculation={this.formulaHandler.renderContex(this.triangleSize)}
-          result={this.state.result} correctResult={this.hypothenuse}
+          result={this.state.result} isCorrect={resultCorrect}
         />
+        {
+          resultCorrect
+          ? <Congrats/>
+          : <ShowCorrectAnswer giveUp={this.giveUp} />
+        }
       </div>
     )
   }
