@@ -67,10 +67,6 @@
   white-space:pre-wrap;
 }
 
-.formula-editor .editor-controls .operators button {
-  display: inline-block;
-}
-
 .formula-editor .block-label {
   color: gray;
 }
@@ -89,6 +85,10 @@
   width:100%;
 }
 
+.formula-editor .editor-controls .operators button {
+  display: inline-block;
+}
+
 .formula-editor button {
   border: thin solid rgba(0, 0, 0, 0);
   border-radius: 2px;
@@ -96,7 +96,7 @@
   font-weight: bold;
   min-width: 36px;
   box-sizing: border-box;
-  background-color: rgba(0, 0, 0, 0);
+  background-color: #ddd;
   padding: 1px 4px;
   margin-right: 1px;
 }

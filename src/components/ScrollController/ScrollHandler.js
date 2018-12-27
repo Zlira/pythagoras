@@ -6,7 +6,7 @@ class ScrollController {
     this.allow = this.allow.bind(this)
   }
 
-  prevent (threshodlElId, leeway=60) {
+  prevent (threshodlElId, leeway=100) {
     // todo handle window resize
     if (!this.allowed) {return}
     this.allowed = false

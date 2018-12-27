@@ -12,5 +12,5 @@ export function SquareRoot({children}) {
 
 
 export function PlaceHolder() {
-  return <span className="math-placeholder">&nbsp;</span>
+  return <span className="math-placeholder">x</span>
 }

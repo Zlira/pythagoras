@@ -28,7 +28,6 @@ function DownArrown({height, translate, rotate=0}) {
 
 
 function ScrollIcon({allowed}) {
-  console.log(allowed)
   const width = 20,
     arrowHeight = 7,
     arrowPadLeft = width/2 - arrowHeight,

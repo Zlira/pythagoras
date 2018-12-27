@@ -154,13 +154,6 @@ span.radical span.radical > span {
   font-size: 0.9em;
 }
 
-span.math-placeholder {
-  display: inline-block;
-  width: .618rem;
-  height: .7rem;
-  border: thin solid #2F343F;
-}
-
   span.cathetus-1 {
   color: #00CFFF;
 }
@@ -174,6 +167,5 @@ span.hypothenuse {
 }
 
 span.with-tooltip {
-  text-decoration: underline dotted;
-  text-decoration-skip-ink: none;
+  border-bottom: thin dotted #2F343F;
 }

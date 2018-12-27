@@ -1,6 +1,7 @@
 import React from 'react'
 
 import OPERATORS from './Operators'
+import { PlaceHolder } from '../MathComponents'
 
 
 function TokenButton({token, handleClick}) {
@@ -8,7 +9,7 @@ function TokenButton({token, handleClick}) {
   if (token.type === 'operator') {
     let operator = OPERATORS[symbol].start? OPERATORS[symbol].start : OPERATORS[symbol]
     if (operator.component) {
-      symbol = React.createElement(operator.component,)
+      symbol = React.createElement(operator.component, {children: <PlaceHolder />})
     } else {
       symbol = operator.display
     }

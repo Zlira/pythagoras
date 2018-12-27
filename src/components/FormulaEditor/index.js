@@ -13,8 +13,8 @@ import './FormulaEditor.css'
 function ResultValue({value, correctValue, correctClass}) {
   if (value === 'NaN') {
     return (
-      <span title="Не можливо обичлслити значення" className='with-tooltip'>
-        {value}
+      <span title="Неможливо обичлслити значення" className='with-tooltip'>
+        ?
       </span>
     )
   } else if (value === correctValue) {
@@ -43,9 +43,12 @@ function FormulaInput({ formula, inputRef, handleChange }) {
 
 
 function ResultBlock({ calculation, result, correctResult }) {
+  const calc = calculation.length
+    ? <>= {calculation} {''}</>
+    : null
   return (
     <div className='result-block'>
-      = {calculation} {''}
+      {calc}
       = <ResultValue
            value={result} correctValue={correctResult}
            correctClass='hypothenuse'/>
@@ -79,6 +82,7 @@ class FormulaEditor extends React.Component {
     this.getCursorPos = this.getCursorPos.bind(this)
     this.handleKeydown = this.handleKeydown.bind(this)
     this.controllScroll = this.controllScroll.bind(this)
+    this.resultIsCorrect = this.resultIsCorrect.bind(this)
   }
 
   componentDidUpdate() {
@@ -105,7 +109,7 @@ class FormulaEditor extends React.Component {
 
   controllScroll() {
     if (
-      (this.state.result === this.hypothenuse) ||
+      this.resultIsCorrect() ||
       (this.props.activeStep < this.props.stepIndex)
     ) {
       this.props.forbidScroll(null)
@@ -124,6 +128,18 @@ class FormulaEditor extends React.Component {
     this.inputRef.current.removeEventListener(
       'keydown', this.handleKeydown
     )
+  }
+
+  resultIsCorrect() {
+    /* check with one other value to make sure */
+    if (this.state.result !== this.hypothenuse) {
+      return false
+    }
+    const sqrtOfTwo = this.formulaHandler.eval({
+      AB: {val: 1},
+      BC: {val: 1},
+    })
+    return toFixed(sqrtOfTwo) === toFixed(Math.sqrt(2))
   }
 
   getCursorPos() {
