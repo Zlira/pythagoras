@@ -1,4 +1,4 @@
-import { Square, SquareRoot } from '../MathComponents'
+import { Square, SquareRootSvg } from '../MathComponents'
 
 export default {
   plus: {math: '+', display: '+'},
@@ -9,7 +9,7 @@ export default {
   // square of a square
   square: {math: '^2', display: '^2', component: Square},
   sqrt: {
-    start: {math: 'sqrt(', display: 'sqrt(', component: SquareRoot},
+    start: {math: 'sqrt(', display: 'sqrt(', component: SquareRootSvg},
     end: {math: ')', display: ')'}
   }
 }

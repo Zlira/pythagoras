@@ -7,12 +7,7 @@
 .formula-editor .formula-style-elements {
   position: absolute;
   z-index: 1;
-  color: rgba(0,0,0,0);
   background-color: white;
-}
-
-.formula-editor .formula-style-elements span {
-  border-top: thin solid grey;
 }
 
 .formula-input .input-label {
@@ -33,17 +28,17 @@
   box-sizing: border-box;
   min-height: 40px;
   padding: 5px;
+  font-family: "PT Mono", monospace;
+  font-size: 1rem;
+  border: thin solid #0055fe;
+  outline: none;
 }
 
 .formula-editor input {
   position: relative;
   z-index: 2;
-  font-family: "PT Mono", monospace;
-  font-size: 1rem;
   background-color: rgba(0,0,0,0);
   color: #2F343F;
-  border: thin solid #0055fe;
-  outline: none;
 }
 
 .formula-editor input:focus {
@@ -71,16 +66,6 @@
   color: gray;
 }
 
-.formula-editor .variables .block-label {
-  position: relative;
-  left: 4px;
-}
-
-.formula-editor .operators .block-label {
-  position: relative;
-  left: 10px;
-}
-
 .formula-editor .button-block {
   width:100%;
 }
@@ -102,7 +87,7 @@
   margin-bottom: 1px;
 }
 
-.formula-editor button sup {
+.formula-editor sup {
   line-height: 0;
 }
 

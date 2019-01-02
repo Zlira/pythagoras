@@ -25,11 +25,12 @@ function ResultValue({value, isCorrect, correctClass}) {
   return <span>{value}</span>
 }
 
-function FormulaInput({ formula, inputRef, handleChange }) {
+function FormulaInput({ formula, inputRef, handleChange, mathElements }) {
   return (
     <div className="formula-input">
       <div className="input-label">AC =</div>
       <div className="formula-style-elements">
+        {mathElements}
       </div>
       <input
         type="text"
@@ -242,17 +243,22 @@ class FormulaEditor extends React.Component {
 
   // todo doesn't behave well when input element is too narrow
   render() {
-    const resultCorrect = this.resultIsCorrect()
+    const resultCorrect = this.resultIsCorrect(),
+      renderedContex = this.formulaHandler.renderContex(this.triangleSize),
+      renderedCalc = this.formulaHandler.renderContex({
+        AB: {val: 'AB'}, BC: {val: 'BC'}
+      })
     return (
       <div className="formula-editor">
-        <ControlPanel addToken={this.addToken} />
-        <FormulaInput
+         <ControlPanel addToken={this.addToken} />
+         <FormulaInput
           formula={this.state.formula}
+          mathElements={renderedCalc}
           inputRef={this.inputRef}
           handleChange={this.handleChange}
         />
         <ResultBlock
-          calculation={this.formulaHandler.renderContex(this.triangleSize)}
+          calculation={renderedContex}
           result={this.state.result} isCorrect={resultCorrect}
         />
         {
