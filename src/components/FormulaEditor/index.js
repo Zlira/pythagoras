@@ -6,6 +6,7 @@ import { pxToUnits, toFixed, hypothenuseLen } from '../graphics/Helpers'
 import { forbidToScrollPast } from '../../actions'
 import FormulaHandler from './Handler'
 import ControlPanel from './ControlPanel'
+import FormulaInput from './Input'
 
 import './FormulaEditor.css'
 
@@ -24,24 +25,6 @@ function ResultValue({value, isCorrect, correctClass}) {
   }
   return <span>{value}</span>
 }
-
-function FormulaInput({ formula, inputRef, handleChange, mathElements }) {
-  return (
-    <div className="formula-input">
-      <div className="input-label">AC =</div>
-      <div className="formula-style-elements">
-        {mathElements}
-      </div>
-      <input
-        type="text"
-        value={formula}
-        ref={inputRef}
-        onChange={handleChange}
-      ></input>
-    </div>
-  )
-}
-
 
 function ResultBlock({ calculation, result, isCorrect }) {
   const calc = calculation.length
