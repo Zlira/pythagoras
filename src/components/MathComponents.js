@@ -2,7 +2,9 @@ import React from 'react'
 
 
 export function Square(props) {
-  return <>{props.children}<sup>2</sup></>
+  return <>
+    {props.children}<sup style={{display: 'inline-block', width: '11.5px'}}>2</sup>
+  </>
 }
 
 
@@ -19,9 +21,11 @@ export class SquareRootSvg extends React.Component {
       height: 0,
     }
     this.childRef = React.createRef()
+
+    this.updateSize = this.updateSize.bind(this)
   }
 
-  componentDidUpdate() {
+  updateSize() {
     const bbox = this.childRef.current.getBoundingClientRect()
     if (this.state.width !== bbox.width || this.state.height !== bbox.height) {
       this.setState({
@@ -31,11 +35,19 @@ export class SquareRootSvg extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.updateSize()
+  }
+
+  componentDidUpdate() {
+    this.updateSize()
+  }
+
   render() {
     let { width, height } = this.state
     const paddingTop = 6
     const scale = height/10,
-      paddingLeft = 6 * scale
+      paddingLeft = 4.4 * scale
     const line1Points = [
       [0, 6],
       [1, 6],
@@ -43,6 +55,9 @@ export class SquareRootSvg extends React.Component {
       [5.5, 1],
       [width, 1]
     ]
+    const child = React.Children.count(this.props.children)
+      ? this.props.children
+      : <span className="sqrt-placeholder">&nbsp;</span>
     return (
       <span style={{position: "relative", whiteSpace: "nowrap"}}>
         <svg
@@ -59,7 +74,7 @@ export class SquareRootSvg extends React.Component {
           </g>
         </svg>
         <span style={{paddingLeft: `${paddingLeft}px`, display: "inline-block"}} ref={this.childRef}>
-          {this.props.children || <span>placehold<sup>er</sup> placehold<sub>er</sub></span>}
+          {child}
         </span>
       </span>
     )

@@ -4,17 +4,17 @@ import math from 'mathjs'
 import OPERATORS from './Operators'
 
 
-function buildComponent(index, token, children, context) {
+function buildComponent(key, token, children, context) {
   if (token.name in context) {
     return (
-      <span key={index} className={context[token.name].className}>
-        {context[token.name].val + ' '}
+      <span key={key} className={context[token.name].className}>
+        {context[token.name].val}
       </span>
     )
   } else if (token.component) {
-    return React.createElement(token.component, {key: index, children: children})
+    return React.createElement(token.component, {key: key, children: children})
   } else {
-    return <React.Fragment key={index}>{token.display + ' '}</React.Fragment>
+    return <React.Fragment key={key}>{token.display}</React.Fragment>
   }
 }
 
@@ -28,22 +28,56 @@ function getNestedComponent(currIndex, currVal, tokenIter, context) {
     while (!done) {
       ({value: [nextIndex, nextVal], done} = tokenIter.next())
       if (nextVal === currVal.matchingToken) {
+        if (nextVal.clearLeft && isSeparator(children[children.length - 1])) {
+          children.pop()
+        }
         return buildComponent(currIndex, currVal, children, context)
       } else {
-        children.push(
-          getNestedComponent(nextIndex, nextVal, tokenIter, context)
+        insertWithSeparator(
+          nextVal, children,
+          (token, key) => getNestedComponent(key, token, tokenIter, context),
+          false
         )
       }
     }
   }
 }
 
+function Separator() {
+  return <span> </span>
+}
+
+function isSeparator(component) {
+  if (!component) {
+    return false
+  }
+  return component.type.name === 'Separator'
+}
+
+
+function insertWithSeparator(token, collection, mapFunc, isLast) {
+  const prevComponent = collection[collection.length - 1]
+  if (token.clearLeft && isSeparator(prevComponent)) {
+    collection.pop()
+  }
+  collection.push(mapFunc(token, collection.length))
+  if (!isLast && !token.clearRight) {
+    collection.push(<Separator key={collection.length}/>)
+  }
+
+}
+
 
 function componentsFromTokens(tokens, context) {
-  const tokensIter = tokens.entries()
-  const components = []
+  const tokensIter = tokens.entries(),
+    components = []
+
   for (const [index, val] of tokensIter) {
-    components.push(getNestedComponent(index, val, tokensIter, context))
+    insertWithSeparator(
+      val, components,
+      (token, key) => getNestedComponent(key, token, tokensIter, context),
+      index === tokens.length - 1
+    )
   }
   return components
 }
@@ -68,17 +102,18 @@ export default class FormulaHandler {
   }
 
   _getTokenIdeces() {
-    let count = 0
+    let count = 0, noPrevSep = false
     const indeces = []
-    for (const token of this.tokens) {
+    for (const token of this.tokens.filter(t => t.display.length)) {
       // add one for each separator
-      if (indeces.length) {
+      if (indeces.length && !token.clearLeft && !noPrevSep) {
         count++
       }
       indeces.push({
         start: count,
         end: count += token.display.length
       })
+      noPrevSep = token.clearRight
     }
     return indeces
   }
@@ -138,6 +173,7 @@ export default class FormulaHandler {
     } else {
       this.tokens.splice(insertIndex, insertLength, newToken)
     }
+    // todo this doesn't work right
     return (
       this.tokens
           .slice(0, insertIndex + 1)
@@ -169,7 +205,19 @@ export default class FormulaHandler {
   }
 
   repr() {
-    return this.tokens.map(el => el.display).join(' ')
+    let display = '', noPrevSep = false
+    const sep = ' '
+    for (const [index, el] of this.tokens.entries()) {
+      if (el.clearLeft && !noPrevSep) {
+        display = display.slice(0, -1)
+      }
+      display += el.display
+      if (index !== this.tokens.length - 1 && !el.clearRight) {
+        display += sep
+      }
+      noPrevSep = el.clearRight
+    }
+    return display
   }
 
   eval(context) {
