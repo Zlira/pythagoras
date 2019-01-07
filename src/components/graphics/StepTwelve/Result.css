@@ -1,23 +1,30 @@
 .test-result {
-    font-size: 1.5em;
-    font-weight: bolder;
-    color: #ffcc5e;
-    margin-right: 50px;
-    margin-left: 70px;
+  font-size: 1.4em;
+  font-weight: bolder;
+  color: #0055fe;
+  margin-right: 50px;
+  margin-left: 70px;
+  text-transform: uppercase;
 }
 
 .test-result span, .test-result img {
-    display: block;
+  display: block;
 }
 
 .test-result span {
-    text-shadow: 1px 1px 4px black;
-    position: relative;
-    top: -40px;
-    width: 400px;
+  position: relative;
+  line-height: 1.7em;
+  font-family: 'PT Serif Caption', serif;
+  top: -40px;
+  width: 400px;
+}
+.test-result span span {
+  display: inline;
+  position: static;
+  background-color: #fdef00;
 }
 
 .test-result img {
-    position: relative;
-    left: 20px;
+  position: relative;
+  left: 20px;
 }

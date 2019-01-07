@@ -11,7 +11,7 @@ function Result({lawfullness, goodness}) {
         <div className='test-result'>
           <img src={closestChar.src} alt={closestChar.ukName}
             width={150} height={150} />
-          <span>{closestChar.quote}</span>
+          <span><span>{closestChar.quote}</span></span>
         </div>
     )
 }
