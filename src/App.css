@@ -60,34 +60,6 @@ button {
   margin-top: 20px;
 }
 
-.step.active .highlight {
-  border-bottom: 5px solid #0055fe;
-  padding-right: 2px;
-  padding-left: 2px;
-}
-
-.step.active blockquote .highlight {
-  border-bottom: 5px solid white;
-}
-
-.step.active blockquote span.highlight:hover {
-  color: #0055fe;
-  border-bottom: 4.8px solid white;
-  background: linear-gradient(0deg, white 70%, #0055fe00 30%);
-  background-repeat: no-repeat;
-}
-
-.step.active span.highlight:hover {
-  color: white;
-  border-bottom: 4.8px solid #0055fe;
-  background: linear-gradient(0deg, #0055fe 85%, #0055fe00 15%);
-  background-repeat: no-repeat;
-}
-
-.step span.highlight.active {
-  color: black;
-}
-
 .scroller-response-els > * {
   position: sticky;
   top: 100px;
@@ -105,10 +77,6 @@ svg text {
 
 .label .triangle-side {
   font-weight: bold;
-}
-
-svg .highlighted {
-  animation: pulse-opacity 1s linear 0s 3 normal running;
 }
 
 svg text.axis-label {

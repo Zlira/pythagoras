@@ -1,3 +1,13 @@
+svg .triangle text {
+  font-weight: bold;
+  fill: #2F343F;
+}
+
+svg .triangle .side-len,
+svg .triangle text{
+  font-size: 1.13rem;
+}
+
 svg .triangle line {
     stroke-width: 4.8px;
     stroke-linecap: square;
@@ -7,19 +17,16 @@ svg .triangle line.highlighted {
   stroke-width: 5px;
 }
 
-/* todo make one style for ALL highlight animations*/
-svg .triangle line.highlighted {
-  animation: pulse-opacity 1.5s linear 0s 3 normal running;
+svg .triangle .cathetus-1 {
+  stroke: #00CFFF
 }
 
-svg .triangle text {
-  font-weight: bold;
-  fill: #2F343F;
+svg .triangle .cathetus-2 {
+  stroke: #BC2CFF;
 }
 
-svg .triangle .side-len,
-svg .triangle text{
-  font-size: 1.13rem;
+svg .triangle .hypothenuse {
+  stroke: #32FF00;
 }
 
 svg .triangle .side-len.cathetus-1 {

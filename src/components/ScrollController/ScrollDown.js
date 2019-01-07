@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function ScrollDown({allowed}) {
   const text = allowed
-    ? "скорль донизу"
+    ? "скроль донизу"
     : "розв'яжи завдання, щоб перейти до наступного кроку"
   return (
     <div className="scroller-indicator">

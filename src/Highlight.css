@@ -1,0 +1,39 @@
+.step.active .highlight {
+  border-bottom: 5px solid #0055fe;
+  padding-right: 2px;
+  padding-left: 2px;
+}
+
+.step.active span.highlight:hover {
+  color: white;
+  border-bottom: 4.8px solid #0055fe;
+  background: linear-gradient(0deg, #0055fe 85%, #0055fe00 15%);
+  background-repeat: no-repeat;
+}
+
+.step.active blockquote .highlight {
+  border-bottom: 5px solid white;
+}
+
+.step.active blockquote span.highlight:hover {
+  color: #0055fe;
+  border-bottom: 4.8px solid white;
+  background: linear-gradient(0deg, white 70%, #0055fe00 30%);
+  background-repeat: no-repeat;
+}
+
+
+svg.fade line:not(.highlighted),
+svg.fade text:not(.highlighted) {
+  opacity: .2;
+}
+
+/*
+svg .highlighted {
+  animation: pulse-opacity 1s linear 0s 3 normal running;
+}
+
+
+.fade > *:not(.highlighted) {
+  opacity: .2;
+}*/

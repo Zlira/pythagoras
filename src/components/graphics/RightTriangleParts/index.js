@@ -136,7 +136,8 @@ class RightTriangleParts extends React.Component {
     const bCoords = {x: paddingLeft, y: 30}
     return (
       <div>
-        <Svg width={this.width} height={this.height} style={{overflow: 'visible'}}>
+        <Svg width={this.width} height={this.height} style={{overflow: 'visible'}}
+          className={this.props.highlightId? 'fade' : ''}>
             <Triangle contHeight={this.height}
               bCoords={bCoords} width={this.state.width}
               height={this.state.height}

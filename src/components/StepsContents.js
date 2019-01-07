@@ -16,7 +16,11 @@ const steps = [
         Ось теорема Піфагора
       </p>
       <blockquote>
-        {'Сума '}
+        {'У '}
+        <HighlightElement highlightId="highlight-right-triangle" step={0}>
+          <span>прямокутному трикутнику</span>
+        </HighlightElement>
+        {' сума '}
         <HighlightElement highlightId='highlight-square' step={0}>
           <span>квадратів</span>
         </HighlightElement>
@@ -25,9 +29,6 @@ const steps = [
           <span>катетів</span>
         </HighlightElement>
         {' '}
-        <HighlightElement highlightId="highlight-right-triangle" step={0}>
-          <span>прямокутного трикутника</span>
-        </HighlightElement>
         {' рівна квадрату '}
         <HighlightElement highlightId='highlight-hypothenuse' step={0}>
           <span>гіпотенузи</span>
@@ -36,7 +37,7 @@ const steps = [
       </blockquote>
       <PythagorasFormula />
       <p>
-        Для початку впевнимося, що ти добре розумієш усі викорисні слова.
+        Для початку впевнимося, що ти добре розумієш усі використані слова.
         Наводь мишкою на підкреслені терміни, щоби побачити визначення зліва.
       </p>
     </>,
